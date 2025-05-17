@@ -1,0 +1,52 @@
+<p>home-page works!</p>
+
+<app-action-button
+  [action]="ActionButton.Save"
+  [actionFunction]="handleSave">
+</app-action-button>
+
+<app-action-button
+  [action]="ActionButton.Edit"
+  [actionFunction]="handleEdit"
+  (click)="redirectEdit()">
+</app-action-button>
+
+<app-action-button
+  [action]="ActionButton.Delete"
+  [actionFunction]="handleDelete">
+</app-action-button>
+
+<br><br><br>
+
+<!-- Buton pentru a redirecționa utilizatorul către login -->
+<button class="redirect-button" (click)="redirectLogin()">
+  login
+</button>
+
+<br><br><br>
+
+<!-- Buton pentru a redirecționa utilizatorul către auth -->
+<button class="redirect-button" (click)="redirectAuth()">
+  auth
+</button>
+
+<br><br><br>
+
+<!-- Buton pentru a face logout -->
+<button class="redirect-button" (click)="logout()">
+  logout
+</button>
+
+<br><br><br>
+
+<!-- Buton pentru a adăuga un video/room -->
+<button class="redirect-button" (click)="addVideo()">
+  Add video/ room
+</button>
+
+<br><br><br>
+
+<!-- Buton pentru a descărca un videoclip -->
+<button class="redirect-button" (click)="downloadVideo()">
+  Download Video
+</button>

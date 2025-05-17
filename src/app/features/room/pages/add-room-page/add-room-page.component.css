@@ -1,0 +1,158 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Container */
+.form-container {
+  background-color: bisque;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 400px;
+  text-align: center;
+}
+
+/* Input Group Styles */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.input-field:focus {
+  border-color: #5b9bd5;
+  outline: none;
+}
+
+/* File Input Wrapper */
+.file-upload-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.file-upload-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.file-upload-btn:hover {
+  background-color: #45a049;
+}
+
+.file-upload-btn:focus {
+  outline: none;
+}
+
+.file-name {
+  font-size: 1rem;
+  color: #555;
+  margin-left: 10px;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Button Styles */
+.upload-btn-container {
+  margin-top: 20px;
+}
+
+.upload-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #45a049;
+}
+
+.upload-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.progress-text {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-filled {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}

@@ -1,0 +1,37 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username</label>
+    <input id="username" formControlName="username" type="text" />
+    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+      Username trebuie să aibă cel puțin 3 caractere.
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" />
+
+    <div *ngIf="registerForm.get('email')?.hasError('userLoggedIn') && registerForm.get('email')?.touched">
+      <small>Userul e logat - trebuie sa se delogheze, nu e bine pus acest validator pe email, just testing things.</small>
+    </div>
+
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" formControlName="password" type="password" />
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      Parola trebuie să aibă cel puțin 6 caractere.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid || isSubmitting">
+    {{ isSubmitting ? 'Se înregistrează...' : 'Register' }}
+  </button>
+
+  <div *ngIf="errorMessage && errorMessage.length > 0" class="error-messages">
+    <ul>
+      <li *ngFor="let error of errorMessage">{{ error }}</li>
+    </ul>
+  </div>
+</form>

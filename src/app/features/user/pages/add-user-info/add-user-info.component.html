@@ -1,0 +1,35 @@
+<p class="title">📌 Adaugă informații utilizator</p>
+
+<form [formGroup]="infoForm" (ngSubmit)="onSubmit()">
+  <!-- Număr de telefon -->
+  <div class="form-group">
+    <label for="phone">📱 Număr de telefon:</label>
+    <input type="text" id="phone" formControlName="phone" placeholder="Ex: 07XXXXXXXX, +407XXXXXXXX">
+
+    <div *ngIf="infoForm.get('phone')?.invalid && infoForm.get('phone')?.touched" class="error-container">
+      <small *ngIf="infoForm.get('phone')?.hasError('required')" class="show">
+        ⚠️ Introdu un număr de telefon!
+      </small>
+      <small *ngIf="infoForm.get('phone')?.hasError('pattern')" class="show">
+        ⚠️ Număr invalid! Ex: 07XXXXXXXX, +407XXXXXXXX, 00407XXXXXXXX
+      </small>
+    </div>
+  </div>
+
+  <!-- Regiune -->
+  <label for="region">🌍 Regiune/Județ:</label>
+  <input id="region" formControlName="person_region" placeholder="Ex: eu, as, na, sa">
+
+  <div *ngIf="infoForm.get('person_region')?.invalid && infoForm.get('person_region')?.touched" class="error-container">
+    <small *ngIf="infoForm.get('person_region')?.hasError('required')" class="show">
+      ⚠️ Regiunea este obligatorie!
+    </small>
+    <small *ngIf="infoForm.get('person_region')?.hasError('invalidRegion')" class="show">
+      ⚠️ Regiune invalidă! Doar: <b>eu, as, na, sa</b>
+    </small>
+  </div>
+
+
+  <!-- Buton Trimite -->
+  <button type="submit" [disabled]="infoForm.invalid">🚀 Trimite</button>
+</form>

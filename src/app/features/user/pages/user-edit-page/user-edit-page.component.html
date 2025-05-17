@@ -1,0 +1,31 @@
+<p>user-edit-page works!</p>
+
+<form [formGroup]="editForm" (ngSubmit)="editUser()">
+
+
+<div>
+  <label for="username">Username</label>
+  <input
+    id="username"
+    formControlName="username"
+    type="text"
+  >
+</div>
+
+
+<app-action-button
+  [action]="ActionButton.Edit"
+  [actionFunction]="log"
+>
+  </app-action-button>
+
+</form>
+
+
+<app-action-button
+  [action]="ActionButton.Delete"
+  [actionFunction]="log"
+
+  (click)="deleteUser()"
+>
+</app-action-button>
