@@ -11,18 +11,6 @@
 npm-debug.log
 yarn-error.log
 
-# Ignoră directoare din src
-/src/app/core/
-/src/app/features/
-/src/app/shared/
-
-
-# Ignore all files in styles folder
-src/styles/*
-
-# But do not ignore styles.css
-!src/styles.css
-
 # IDEs and editors
 .idea/
 .project
