@@ -1,0 +1,337 @@
+body {
+  overflow-x: visible;
+}
+.menu-spacer {
+  flex: 1 1 auto;
+}
+.custom-class{
+  color: white;
+}
+
+.custom-class-light {
+  color: white;
+}
+
+.theme {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-elements {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+.header {
+  margin-left: -10px;
+  width: 100%;
+  /*background: transparent;*/
+  background: var(--bg-color);
+  color: var(--text-color);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  /*box-shadow: 0px 0px 5px 0px var(--header-box-shadow-color);*/
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  position: fixed;
+  right: 0;
+  height: 80px!important;
+  z-index: 20;
+  top: 0;
+
+  transform: translateX(100%);
+  transition: transform 260ms ease-in-out;
+
+}
+
+
+.header h1{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  background: transparent;
+}
+
+.nav {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: visible;
+
+  /*display: flex;*/
+  /*flex-direction: column;*/
+
+
+
+  /*height: 100%;*/
+
+  position: fixed;
+  right: 0;
+  width: 100%;
+  margin-top: 75px;
+  transform: translateX(100%);
+  transition: transform 260ms ease-in-out;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding-bottom: 75px;
+  top: 0;
+}
+
+
+.nav-scroll-wrapper {
+  flex-grow: 1;
+  padding-bottom: 100px;
+}
+
+.nav-scroll-wrapper::-webkit-scrollbar {
+  width: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0.2em;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.nav ul {
+  margin:0;
+  padding:0;
+  border-top: 1px solid var(--nav-border-color);
+}
+
+.nav ul>li {
+  list-style: none;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: var(--nav-border-bottom-color);
+  transition: .25s
+}
+
+.nav ul>li span {
+  display: block;
+  font-size: 14px;
+  color: #353535;
+}
+
+/*.nav ul>li a {*/
+.nav ul>li {
+  color: var(--nav-li-color);
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav ul>li:hover {
+  background-color: var(--nav-li-color-hover);
+  color: var(--nav-text-color-hover)!important;
+  /*color: var(--nav-text-color-hover)!important;*/
+}
+
+nav li#nav-signup {
+  list-style: none;
+  background-color: #00B2D3;
+}
+nav ul>li#nav-signup span {
+  color: #00B2D3;
+}
+nav ul>li#nav-signup a {
+  color: #ffffff;
+}
+nav ul>li#nav-signup:hover {
+  background-color: #006375;
+}
+input[type="checkbox"]:checked, input[type="checkbox"]:checked ~ nav {
+  transform: translateX(0);
+  z-index: 40;
+}
+
+input[type="checkbox"]:checked ~ header {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+input[type=checkbox] {
+  box-sizing: border-box;
+  display: none;
+  transition: all 0.25s;
+}
+.menuIconToggle {
+  box-sizing: border-box;
+  cursor: pointer;
+  position: fixed;
+  z-index: 40;
+  top: 25px;
+  right: 30px;
+  height: 22px;
+  width: 22px;
+  transition: all 0.3s;
+}
+.hamb-line {
+  box-sizing: border-box;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #444;
+  transition: all 0.25s;
+}
+.hor {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+.dia.part-1 {
+  position: relative;
+  box-sizing: border-box;
+  float: left;
+  transition: all .25s;
+}
+.dia.part-2 {
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+  transition: all .25s;
+}
+input[type=checkbox]:checked ~ .menuIconToggle > .hor {
+  box-sizing: border-box;
+  opacity: 0;
+  transition: all .25s;
+}
+input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-1 {
+  box-sizing: border-box;
+  transform: rotate(135deg);
+  margin-top: 8px;
+  transition: all .25s;
+}
+input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
+  box-sizing: border-box;
+  transform: rotate(-135deg);
+  margin-top: -9px;
+  transition: all .25s;
+}
+@media screen and (max-width: 640px) {
+  nav {
+    height: 100%;
+    width: 100%;
+    transform: translateX(100%);
+  }
+}
+
+#nav-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.margin-fixed {
+  margin-left: 10px;
+}
+
+@media (min-width: 1200px) {
+
+  .header {
+    position: fixed;
+    right: 0;
+    width: 300px;
+  }
+
+  #nav-menu {
+    width: 300px;
+  }
+
+
+  .has-submenu > .submenu {
+    /*display: none;*/
+    position: relative;
+    top: 0;
+    /*box-shadow: 0 0 10px rgba(0,0,0,0.1);*/
+    padding: 0;
+
+    overflow: visible;
+  }
+
+
+  .submenu li {
+    /*padding: 12px 16px;*/
+    /*border-bottom: 1px solid var(--nav-border-color);*/
+  }
+
+
+}
+
+.privacy-name {
+  font-size: 1.2rem;
+}
+
+/*.has-submenu {*/
+/*  color: var(--nav-li-color-inverted);*/
+/*}*/
+
+/*.has-submenu:hover {*/
+/*  color: var(--nav-li-color-hover-inverted);*/
+/*}*/
+
+.has-submenu > .submenu {
+  overflow: visible;
+  display: none;
+  margin-top: 1rem;
+  /*padding-left: 20px;*/
+
+  position: relative;
+  left: 0;
+}
+
+.has-submenu > .submenu > li {
+  color: var(--nav-li-color-inverted)!important;
+}
+
+.has-submenu > .submenu > li:hover {
+  color: var(  --nav-li-color-hover-inverted)!important;
+  background-color: var(--bg-color-inverted)!important;
+}
+
+.has-submenu:hover > .submenu {
+  display: block;
+}
+
+.has-submenu > ul {
+  border: none;
+}
+
+.has-submenu:hover > li {
+  color: var(--nav-li-color-inverted);
+}
+.submenu li {
+  font-weight: normal;
+  background-color: var(--bg-color-inverted);
+}
+
+.has-submenu > .submenu {
+  background-color: var(--bg-color-inverted)!important;
+}
+
+.submenu li p {
+  color: var(--nav-li-color);
+  text-decoration: none;
+}
+
+.submenu li:hover {
+  background-color: var(--nav-li-color-hover);
+  color: var(--nav-text-color-hover);
+}
+

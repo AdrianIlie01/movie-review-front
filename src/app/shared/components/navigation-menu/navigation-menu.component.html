@@ -1,0 +1,44 @@
+<input type="checkbox" id="openSideMenu" class="openSideMenu">
+<label for="openSideMenu" class="menuIconToggle">
+  <div class="hamb-line dia part-1"></div>
+  <div class="hamb-line hor"></div>
+  <div class="hamb-line dia part-2"></div>
+</label>
+
+
+<header class="header">
+
+</header>
+
+<nav id="nav-menu" class="nav">
+    <div class="nav-scroll-wrapper">
+       <ul>
+          <li (click)="redirectHome(); hideNavMenu();"><a>Home</a></li>
+
+          <li *ngIf="isLogged && isAdmin" (click)="userList(); hideNavMenu();"><a>User List</a></li>
+          <li *ngIf="isLogged && isAdmin" (click)="roomList(); hideNavMenu();"><a>Movie List</a></li>
+          <li *ngIf="isLogged && isAdmin" (click)="createRoom(); hideNavMenu();"><a>Add Movie</a></li>
+          <!-- <li *ngIf="isLogged && isAdmin" (click)="donations(); hideNavMenu();"><a>Donații</a></li> -->
+<!--          <li *ngIf="isLogged && isAdmin" (click)="donationHistory(); hideNavMenu();"><a>Donation History</a></li>-->
+
+    <!--      <li *ngIf="isLogged && isAdmin" (click)="profile(); hideNavMenu();"><a>Profile</a></li>-->
+
+          <li class="has-submenu" *ngIf="isLogged">
+            <a id="profile">Profile</a>
+            <ul class="submenu">
+              <li (click)="userInfo(); hideNavMenu();"><a>User Info</a></li>
+              <li (click)="changeUsername(); hideNavMenu();"><a>Change Username</a></li>
+              <li (click)="updateContactInfo(); hideNavMenu();"><a>Change User Info</a></li>
+              <li (click)="changePassword(); hideNavMenu();"><a>Change Password</a></li>
+              <li (click)="changeEmail(); hideNavMenu();"><a>Change Email</a></li>
+            </ul>
+          </li>
+
+
+
+
+          <li (click)="toggleTheme(); hideNavMenu();"><a>Change Theme</a></li>
+          <li (click)="logInOut(); hideNavMenu();"><a>{{action}}</a></li>
+      </ul>
+    </div>
+</nav>

@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label [for]="controlName">{{ label }}</label>
+  <input
+    [id]="controlName"
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControlName]="controlName"
+  />
+
+  <div class="error" *ngIf="submitted">
+    <div *ngFor="let errorKey of Object.keys(errors)">
+      <div *ngIf="formGroup.get(controlName)?.hasError(errorKey)">
+        {{ errors[errorKey] }}
+      </div>
+    </div>
+  </div>
+</div>

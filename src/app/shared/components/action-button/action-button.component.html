@@ -1,0 +1,19 @@
+
+<button
+  type="button"
+  class="action-button"
+  [ngClass]="getCssClass(buttonName)"
+  (click)="handleClick()"
+>
+
+  {{
+  buttonName === buttonText.Save ? 'Save'
+    : buttonName === buttonText.Edit ? 'Edit'
+    : buttonName === buttonText.Delete ? 'Delete'
+    : buttonName === buttonText.Login ? 'Login'
+    : buttonName === buttonText.Register ? 'Register'
+    : buttonName === buttonText.VerifyOTP ? 'Verify'
+    : buttonName === buttonText.Next ? 'Next'
+    : buttonName === buttonText.ResetPassword ? 'Change Password'
+        : '' }}
+</button>

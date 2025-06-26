@@ -1,0 +1,22 @@
+<div class="form-container">
+
+  <div id="title" *ngIf="title" class="form-title">
+    {{ title }}
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="formFunction()">
+    <ng-content></ng-content>
+
+    <app-action-button
+      [buttonName]="formButtonName"
+      [buttonFunction]="formFunction"
+    ></app-action-button>
+
+    <div *ngIf="errorMessage && errorMessage.length > 0" class="error-messages">
+      <ul>
+        <li *ngFor="let error of errorMessage">{{ error }}</li>
+      </ul>
+    </div>
+  </form>
+
+</div>
