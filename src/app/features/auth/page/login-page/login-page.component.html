@@ -1,0 +1,35 @@
+<div class="wrapper">
+
+  <app-form
+    title="Login"
+    [formGroup]="registerForm"
+    [formButtonName]="ActionButton.Login"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Username or Email"
+      placeholder="username/email"
+      controlName="username"
+      [submitted]="submitted"
+      [errors]="{ required: 'Username or email is required!' }"
+    ></app-form-input>
+
+    <app-form-input
+      label="Password"
+      placeholder="password"
+      controlName="password"
+      type="password"
+      [submitted]="submitted"
+      [errors]="{ required: 'Password is required!' }"
+    ></app-form-input>
+  </app-form>
+
+  <div class="form-footer">
+    <p id="forgot-pass" (click)="forgotPassword()">Forgot password?</p>
+    <p>
+      Don't have an account?
+      <span id="sign-up" (click)="register()">Sign up!</span>
+    </p>
+  </div>
+</div>

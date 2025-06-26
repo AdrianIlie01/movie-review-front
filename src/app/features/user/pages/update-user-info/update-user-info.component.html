@@ -1,0 +1,34 @@
+<div class="wrapper">
+
+  <app-form
+    title="Update User Info"
+    [formGroup]="infoForm"
+    [formButtonName]="ActionButton.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Phone Number"
+      placeholder="e.g: 07XXXXXXXX, +407XXXXXXXX"
+      controlName="phone"
+      [submitted]="submitted"
+      [errors]="{
+      required: 'Enter a phone number.',
+      pattern: 'Invalid phone number! Use formats like: 07XXXXXXXX, +407XXXXXXXX, 00407XXXXXXXX'
+      }"
+    ></app-form-input>
+
+    <app-form-input
+      label="Region"
+      placeholder="e.g: eu, as, na, sa"
+      controlName="person_region"
+      [submitted]="submitted"
+      [errors]="{
+      required: 'Enter a region.',
+      invalidRegion: 'Invalid region! Patterns accepted: eu, as, na, sa.'
+      }"
+    ></app-form-input>
+  </app-form>
+</div>
+
+

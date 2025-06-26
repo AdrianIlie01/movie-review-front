@@ -1,0 +1,62 @@
+<p class="heading">Add Room Video</p>
+
+<div class="form-container">
+  <!-- Room Name Input -->
+  <div class="input-group">
+    <label for="roomName" class="input-label">Room Name</label>
+    <input
+      id="roomName"
+      type="text"
+      [(ngModel)]="roomName"
+      placeholder="Enter room name"
+      class="input-field"
+    />
+  </div>
+
+  <!-- File Upload Input -->
+  <div class="input-group file-upload-group">
+    <label for="file" class="input-label">Upload Video</label>
+
+    <div class="file-input-wrapper">
+      <!-- Button to trigger file input -->
+      <button
+        class="file-upload-btn"
+        (click)="fileInput.click()"
+      >
+        <span class="upload-icon">📁</span>
+        Select Video
+      </button>
+
+      <!-- Display the selected file's name -->
+      <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+
+      <!-- Hidden file input -->
+      <!-- todo
+      adica ascunde butonul  choosFile si unde scrie se file am selectat, care pe click poate alege un file
+       -->
+
+      <input
+        #fileInput
+        id="file"
+        type="file"
+        (change)="onFileSelected($event)"
+        class="file-input"
+        style="display: none;"
+        aria-label="Choose a video file"
+        accept="video/*"
+      />
+    </div>
+  </div>
+
+  <!-- Upload Button -->
+  <div class="upload-btn-container">
+    <button
+      (click)="uploadVideo()"
+      [disabled]="!roomName || roomName.trim().length == 0 || !selectedFile"
+      class="upload-btn"
+      aria-label="Upload Video"
+    >
+      Upload Video
+    </button>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <app-form
+    title="Register"
+    [formGroup]="registerForm"
+    [formButtonName]="ButtonName.Register"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+
+    <app-form-input
+      label="Username"
+      placeholder="username"
+      controlName="username"
+      [submitted]="submitted"
+      [errors]="{
+       required: 'Username is required!',
+       minlength: 'Username must be at least 3 characters long!',
+       usernameTaken: 'Username is already taken!'
+       }"
+    ></app-form-input>
+
+    <app-form-input
+      type="email"
+      label="email"
+      placeholder="email"
+      controlName="email"
+      [submitted]="submitted"
+      [errors]="{
+       required: 'Email is required!',
+       email: 'Please enter a valid email address!',
+       emailTaken: 'Email is already taken!'
+       }"
+    ></app-form-input>
+
+
+    <app-form-input
+      type="password"
+      label="Password"
+      placeholder="password"
+      controlName="password"
+      [submitted]="submitted"
+      [errors]="{
+       required: 'Password is required!',
+       minlength: 'Password must be at least 4 characters long!',
+       }"
+    ></app-form-input>
+
+  </app-form>
+</div>
+

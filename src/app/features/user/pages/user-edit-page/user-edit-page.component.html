@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <app-form
+    title="Update Username"
+    [formGroup]="editForm"
+    [formButtonName]="ButtonName.Edit"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Username"
+      placeholder="username"
+      controlName="username"
+      [submitted]="submitted"
+      [errors]="{
+       required: 'Username is required!',
+       minlength: 'Username must be at least 3 characters long.',
+       usernameTaken: 'Username is already taken.'
+        }"
+    ></app-form-input>
+  </app-form>
+</div>
+
+

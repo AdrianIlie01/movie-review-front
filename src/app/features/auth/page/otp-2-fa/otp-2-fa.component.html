@@ -1,0 +1,18 @@
+<div class="wrapper">
+  <app-form
+    title="Login Verification"
+    [formGroup]="otpForm"
+    [formButtonName]="ButtonName.Login"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="OTP"
+      placeholder="Insert otp"
+      controlName="otp"
+      [submitted]="submitted"
+      [errors]="{ required: 'OTP is required!' }"
+    ></app-form-input>
+  </app-form>
+</div>
+
