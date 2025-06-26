@@ -1,0 +1,52 @@
+[data-theme="light"] {
+  --bg-color: #fff;
+  --bg-color-inverted: #dddddd;
+
+  --text-color: #222;
+  /*---reverse-text-color: #222;*/
+  --login-hover-text: cyan;
+  --form-background: rgba(255,255,255, 0.2);
+  --form-box-shadow: rgba(0, 0, 0, 0.3);
+  --input-box-shadow: rgba(0, 0, 0, 0.3);
+  --input-bg-color: #dddddd;
+
+  --place-holder-color: rgba(0, 0, 0, 0.5);
+  --question-text: #00a2c7;
+
+  --nav-border-color: rgba(0,0,0, 0.1);
+  --nav-border-bottom-color: rgba(0,0,0, 0.1);
+  --nav-li-color: #353535;
+  --nav-li-color-inverted: #353535;
+
+  --nav-li-color-hover: #dddddd;
+  --nav-li-color-hover-inverted: rgba(0,0,0, 0.5);
+
+  --nav-text-color-hover: #221;
+  --header-box-shadow-color: #ddd;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --bg-color-inverted: rgba(255, 255, 255, 0.1);
+
+  --input-bg-color: #222;
+  --text-color: #eee;
+  /*---reverse-text-color: #222;*/
+  --login-hover-text: cyan;
+  --form-background: #353535;
+  --form-box-shadow: rgba(255, 255, 255, 0.1);
+  --input-box-shadow: rgba(0, 0, 0, 0.3);
+
+  --place-holder-color: rgba(255, 255, 255, 0.3);
+  --question-text: #00a2c7;
+
+  --nav-border-color: rgba(255,255,255, 0.5);
+  --nav-border-bottom-color: rgba(255,255,255, 0.2);
+  --nav-li-color: rgba(255, 255, 255, 0.7);
+  --nav-li-color-inverted: #353535;
+  --nav-li-color-hover: rgba(255, 255, 255, 0.9);
+  --nav-li-color-hover-inverted: rgba(0,0,0, 0.6);
+
+  --nav-text-color-hover: #222;
+  --header-box-shadow-color: rgba(0, 0, 0, 0.1);
+}
