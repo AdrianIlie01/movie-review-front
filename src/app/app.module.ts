@@ -4,8 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {FeaturesModule} from './features/features.module';
 import {AuthInterceptor} from './core/interceptors/auth.interceptor';
 import {RefreshTokenInterceptor} from './core/interceptors/refresh-token.interceptor';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import {RefreshTokenInterceptor} from './core/interceptors/refresh-token.interce
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FeaturesModule,
+    SharedModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
