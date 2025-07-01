@@ -8,6 +8,7 @@ import {FeaturesModule} from './features/features.module';
 import {AuthInterceptor} from './core/interceptors/auth.interceptor';
 import {RefreshTokenInterceptor} from './core/interceptors/refresh-token.interceptor';
 import {SharedModule} from './shared/shared.module';
+import { PersonModule } from './features/person/person.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {SharedModule} from './shared/shared.module';
     AppRoutingModule,
     FeaturesModule,
     SharedModule,
+    PersonModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
