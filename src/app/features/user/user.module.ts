@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import {UserEditPageComponent} from './pages/user-edit-page/user-edit-page.component';
 import {UserListPageComponent} from './pages/user-list-page/user-list-page.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from '../../shared/shared.module';
 import { UpdateUserInfoComponent } from './pages/update-user-info/update-user-info.component';
 import {ChangeEmailComponent} from './pages/change-email/change-email.component';
@@ -11,6 +11,7 @@ import {ChangePasswordComponent} from './pages/change-password/change-password.c
 import {FormComponent} from '../../shared/components/form/form.component';
 import {FormInputComponent} from '../../shared/components/form-input/form-input.component';
 import { InfoComponent } from './pages/info/info.component';
+import { DeleteAccountComponent } from './pages/delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +20,17 @@ import { InfoComponent } from './pages/info/info.component';
     UpdateUserInfoComponent,
     ChangeEmailComponent,
     ChangePasswordComponent,
-    InfoComponent
+    InfoComponent,
+    DeleteAccountComponent,
   ],
-  imports: [
-    CommonModule,
-    UserRoutingModule,
-    ReactiveFormsModule,
-    SharedModule,
-    FormComponent,
-    FormInputComponent
-  ]
+    imports: [
+        CommonModule,
+        UserRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
+        FormComponent,
+        FormInputComponent,
+        FormsModule
+    ]
 })
 export class UserModule { }

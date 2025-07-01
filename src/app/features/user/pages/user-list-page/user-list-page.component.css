@@ -1,3 +1,232 @@
-p {
+.users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 5rem auto;
+  justify-content: center;
+}
+
+.user-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 19rem;
+  animation: fadeSlideUp 0.5s ease forwards;
+  opacity: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes fadeSlideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.user-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007bff, #00d4ff);
   color: var(--text-color);
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+h2 {
+  font-size: 1.4rem;
+  /*margin-bottom: 2rem;*/
+  color: var(--text-color);
+}
+
+.underline {
+  width: 90%;
+  height: 3px;
+  background: linear-gradient(to right, #007bff, #00d4ff);
+  /*margin: 0 auto 1.2rem auto;*/
+  margin-top: 0.8rem;
+  border-radius: 2px;
+}
+
+.role {
+  font-style: italic;
+  color: var(--text-color);
+  margin-top: 1.5rem;
+}
+
+.email {
+  color: var(--text-color);
+  margin: 0.8rem 0 0.8rem;
+  word-break: break-word;
+  max-width: 90%;
+}
+
+.status {
+  color: var(--text-color);
+  margin-bottom: 0.8rem;
+
+}
+
+.current-user-msg {
+  margin-top: 1.5rem;
+}
+
+.fa {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.fa-enabled {
+  color: #28a745;
+}
+.fa-disabled {
+  color: #dc3545;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.role-select {
+  flex: 1 1 140px;
+  padding: 8px 12px;
+  border: 1.5px solid #28a745;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #28a745;
+  cursor: pointer;
+  background-color: #e6f4ea;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+option:hover {
+  cursor: pointer;
+}
+
+.role-select:hover,
+.role-select:focus {
+  border-color: #1e7e34;
+  background-color: #d0e9d8;
+  outline: none;
+}
+
+.btn {
+  flex: 1 1 120px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.25s ease;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.ban-btn {
+  background-color: #dc3545;
+  border-radius: 25px;
+  position: relative;
+}
+.ban-btn:hover {
+  background-color: #a71d2a;
+}
+.ban-btn:hover::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 10px;
+  background: rgba(220, 53, 69, 0.2);
+  animation: pulse 0.5s ease forwards;
+  z-index: -1;
+}
+@keyframes pulse {
+  from { opacity: 0.6; transform: scale(0.95); }
+  to { opacity: 0; transform: scale(1.1); }
+}
+
+.no-users {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  padding: 40px 20px;
+  font-size: 1.1rem;
+}
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #28a745;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .users-grid {
+    justify-content: center;
+    padding: 16px;
+  }
+  .user-card {
+  }
+  .actions {
+    gap: 12px;
+  }
+  .role-select, .btn {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .users-grid {
+    padding: 12px;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
 }

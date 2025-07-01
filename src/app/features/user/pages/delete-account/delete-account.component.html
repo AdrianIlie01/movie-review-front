@@ -1,0 +1,31 @@
+<div class="wrapper">
+
+  <h1 class="title">Deleting Account</h1>
+
+  <p class="delete-account-warning">
+    Deleting your account will remove all of your information from our database. This cannot be undone.
+  </p>
+
+
+  <app-form
+    autocomplete="off"
+    [formGroup]="deleteForm"
+    [formButtonName]="ActionButton.Delete"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      [paste]="disablePaste"
+      label="Type 'DELETE' to confirm"
+      placeholder="DELETE"
+      controlName="confirmation"
+      [submitted]="submitted"
+      [errors]="{
+      required: 'Please type DELETE to confirm account deletion!',
+      }"
+    ></app-form-input>
+
+  </app-form>
+</div>
+
+

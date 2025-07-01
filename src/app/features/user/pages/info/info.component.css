@@ -1,0 +1,149 @@
+.container {
+  height: 50vh;
+}
+
+.profile-card {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  top: 50%;
+}
+/* Animation on appear */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-slide-in {
+  animation: fadeSlideIn 0.8s ease forwards;
+}
+
+/* Glow border effect fără rotație */
+.glass-card {
+  position: relative;
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(17, 25, 40, 0);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/*  gradientul static */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 180deg at 50% 50%, #00fff2, #ff00ff, #00fff2);
+  z-index: -2;
+  opacity: 0.2;
+  /* fără animation */
+}
+
+/* Avatar */
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: var(--bg-color-transparent-dark);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  margin: 0 auto 1rem;
+  overflow: hidden;
+}
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+/* Name & Role */
+.name {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--question-text);
+}
+.designation {
+  margin: 0.3rem 0 1rem;
+  color: var(--place-holder-color);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+/* Info rows cu fundal translucid */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;  /* spațiu liber între label și span */
+
+  word-break: break-word;
+  background: rgba(255, 255, 255, 0.11);
+  padding: 0.6rem;
+  border-radius: 0.6rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.07);
+}
+.info-row label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+.info-row i {
+  animation: pulse 2s infinite;
+  color: #00fff2;
+}
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .glass-card {
+    display: flex;
+    gap: 2rem;
+    text-align: left;
+    padding: 2.5rem 3rem;
+  }
+  .profile-img {
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    margin: 0;
+  }
+  .info-row {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .profile-card {
+    width: 95%;
+  }
+}

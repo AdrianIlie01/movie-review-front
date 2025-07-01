@@ -7,6 +7,7 @@ import {UpdateUserInfoComponent} from './pages/update-user-info/update-user-info
 import {ChangePasswordComponent} from './pages/change-password/change-password.component';
 import {ChangeEmailComponent} from './pages/change-email/change-email.component';
 import {InfoComponent} from './pages/info/info.component';
+import {DeleteAccountComponent} from './pages/delete-account/delete-account.component';
 
 const routes: Routes = [
   { path: '', redirectTo:"/not-found", pathMatch: 'full' },
@@ -30,6 +31,10 @@ const routes: Routes = [
   },
   { path: 'info',
     component: InfoComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'delete-account',
+    component: DeleteAccountComponent,
     canActivate: [AuthGuard]
   },
 ];

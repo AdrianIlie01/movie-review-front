@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
+import {UserListInterface} from '../../../shared/interfaces/user-list.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class UserService {
     protected httpClient: HttpClient
   ) { }
 
+  getAllUsers(): Observable<UserListInterface[]>  {
+    return this.httpClient.get<UserListInterface[]>(this.apiUrl);
+  }
+
   getUserInfo() {
     return this.httpClient.get(this.apiUrl + '/get-user');
   }
@@ -25,6 +30,19 @@ export class UserService {
     console.log(body)
     return this.httpClient.patch(url, body);
   }
+
+  changeRole(body: {role: string }, id:string) {
+    return this.httpClient.patch(`${this.apiUrl}/change-role/${id}`, body);
+  }
+
+  banUser(id:string) {
+    return this.httpClient.patch(`${this.apiUrl}/ban-user/${id}`, {});
+  }
+
+  unBanUser(id:string) {
+    return this.httpClient.patch(`${this.apiUrl}/unban-user/${id}`, {});
+  }
+
 
   deleteUser(id: string) {
     return this.httpClient.delete(this.apiUrl + '/' + id);
@@ -39,14 +57,25 @@ export class UserService {
     return this.httpClient.get(`${this.userInfoUrl}/user/${id}`);
   }
 
-  editUserInfo(body: any, id: string) {
-    console.log('body');
-    console.log(body);
-    console.log(`${this.userInfoUrl}/${id}`)
+  sendOtpResetEmail(id: string) {
+    return this.httpClient.post(`${this.apiUrl}/send-otp-change-email/${id}`, {});
+  }
 
+  changeEmail(body: any, id: string) {
+    return this.httpClient.patch(`${this.apiUrl}/change-email/${id}`, body);
+  }
+
+  changePassword(body: any, id: string) {
+    return this.httpClient.patch(`${this.apiUrl}/update-pass-log/${id}`, body);
+  }
+
+  editUserInfo(body: any, id: string) {
     return this.httpClient.patch(`${this.userInfoUrl}/${id}`, body)
   }
 
+  enableDisable2Fa(id: string) {
+    return this.httpClient.post(`${this.apiUrl}/enableDisable2fa/${id}`, {})
+  }
  regionValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) {

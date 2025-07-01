@@ -1,1 +1,33 @@
-<p>change-email works!</p>
+<div class="wrapper">
+  <app-form
+    title="Change Email"
+    [formGroup]="emailForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+
+    <app-form-input
+      label="OTP"
+      placeholder="Insert otp"
+      controlName="otp"
+      [submitted]="submitted"
+      [errors]="{ required: 'OTP is required!' }"
+    ></app-form-input>
+
+    <app-form-input
+      type="email"
+      label="Email"
+      placeholder="email"
+      controlName="email"
+      [submitted]="submitted"
+      [errors]="{
+       required: 'Email is required!',
+       email: 'Please enter a valid email address!',
+       emailTaken: 'Email is already taken!'
+       }"
+    ></app-form-input>
+
+  </app-form>
+</div>
+

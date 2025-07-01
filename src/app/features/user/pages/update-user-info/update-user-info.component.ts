@@ -48,10 +48,10 @@ export class UpdateUserInfoComponent implements OnInit {
             console.log(data);
 
             // this.infoForm.patchValue({ phone: data.phone });
-            if (data && data.phone) {
+            if (data.userInfo && data.userInfo.phone) {
               this.hasInfo = true;
 
-              this.infoForm.setValue({ phone: data.phone, person_region: data.person_region });
+              this.infoForm.setValue({ phone: data.userInfo.phone, person_region: data.userInfo.person_region });
             }
 
           },
@@ -98,11 +98,18 @@ export class UpdateUserInfoComponent implements OnInit {
     }
 
     this.userService.addUserInfo(this.infoForm.value, this.userInfo.id).subscribe({
-      next: (d) => {
-        console.log(d)
+      next: d => {
+        this.router.navigateByUrl('home').then();
       },
-      error: (e) => {
-        console.log(e)
+      error: (error) => {
+        console.log(error)
+        if (error.error?.message.length > 0) {
+          error.error.message.forEach((e: string) => {
+            this.errorMessage?.push(e)
+          })
+        } else {
+          this.errorMessage = error.error.message;
+        }
       }
     })
   }
