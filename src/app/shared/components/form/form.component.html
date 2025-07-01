@@ -4,7 +4,7 @@
     {{ title }}
   </div>
 
-  <form [formGroup]="formGroup" (ngSubmit)="formFunction()">
+  <form [autocomplete]="autocomplete" [formGroup]="formGroup" (ngSubmit)="formFunction()">
     <ng-content></ng-content>
 
     <app-action-button

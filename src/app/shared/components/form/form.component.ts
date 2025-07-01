@@ -16,10 +16,11 @@ import {SharedModule} from '../../shared.module';
 })
 export class FormComponent {
   @Input() title?: string;
+  @Input() autocomplete?: string;
   @Input() formGroup!: FormGroup; // the usual formGroup from a form
   // if i use other name than formGroup it will not work
   // - it needs to be the same name with the Angular directive from a normal form
   @Input() formButtonName!: ButtonName;
   @Input() formFunction!: () => void | Promise<void> | Promise<boolean>;
-  @Input() errorMessage: string[] | null = [];
+  @Input() errorMessage: string[] | null | undefined = [];
 }
