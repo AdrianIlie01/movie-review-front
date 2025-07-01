@@ -1,10 +1,12 @@
 <div class="form-group">
   <label [for]="controlName">{{ label }}</label>
   <input
+    (paste)="onPaste($event)"
     [id]="controlName"
     [type]="type"
     [placeholder]="placeholder"
     [formControlName]="controlName"
+    [attr.autocomplete]="autocomplete"
   />
 
   <div class="error" *ngIf="submitted">

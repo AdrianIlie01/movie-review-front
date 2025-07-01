@@ -14,15 +14,24 @@ export class FormInputComponent {
   @Input() label!: string;
   @Input() placeholder = '';
   @Input() type = 'text';
+  @Input() paste?: (event: ClipboardEvent) => void;
+  @Input() autocomplete?: string;
   @Input() controlName!: string;
   @Input() submitted = false;
   @Input() errors: { [key: string]: string } = {};
 
+
   constructor(private controlContainer: ControlContainer) {}
+  protected readonly Object = Object;
 
   get formGroup(): FormGroup {
     return this.controlContainer.control as FormGroup;
   }
 
-  protected readonly Object = Object;
+  onPaste(event: ClipboardEvent) {
+    if (this.paste) {
+      this.paste(event);
+    }
+  }
+
 }
