@@ -23,21 +23,21 @@
 
     <!--      <li *ngIf="isLogged && isAdmin" (click)="profile(); hideNavMenu();"><a>Profile</a></li>-->
 
-          <li class="has-submenu" *ngIf="isLogged">
-            <a id="profile">Profile</a>
-            <ul class="submenu">
-              <li (click)="userInfo(); hideNavMenu();"><a>User Info</a></li>
-              <li (click)="changeUsername(); hideNavMenu();"><a>Change Username</a></li>
-              <li (click)="updateContactInfo(); hideNavMenu();"><a>Change User Info</a></li>
-              <li (click)="changePassword(); hideNavMenu();"><a>Change Password</a></li>
-              <li (click)="changeEmail(); hideNavMenu();"><a>Change Email</a></li>
-            </ul>
-          </li>
+         <li class="has-submenu" *ngIf="isLogged" [class.open]="submenuOpen" (click)="toggleSubmenu($event)">
+           <a id="profile">Profile</a>
+           <ul class="submenu">
+             <li (click)="userInfo(); hideNavMenu(); toggleSubmenu($event);"><a>User Info</a></li>
+             <li (click)="changeUsername(); hideNavMenu(); toggleSubmenu($event);"><a>Change Username</a></li>
+             <li (click)="updateContactInfo(); hideNavMenu(); toggleSubmenu($event);"><a>Change User Info</a></li>
+             <li (click)="changePassword(); hideNavMenu(); toggleSubmenu($event);"><a>Change Password</a></li>
+             <li (click)="changeEmail(); hideNavMenu(); toggleSubmenu($event);"><a>Change Email</a></li>
+             <li *ngIf="isLogged" (click)="twoFA(); hideNavMenu(); toggleSubmenu($event);"><a>{{_2fa}}</a></li>
+             <li (click)="deleteAccount(); hideNavMenu(); toggleSubmenu($event);"><a>Delete Account</a></li>
+           </ul>
+         </li>
 
 
-
-
-          <li (click)="toggleTheme(); hideNavMenu();"><a>Change Theme</a></li>
+         <li (click)="toggleTheme(); hideNavMenu();"><a>Change Theme</a></li>
           <li (click)="logInOut(); hideNavMenu();"><a>{{action}}</a></li>
       </ul>
     </div>

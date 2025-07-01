@@ -278,60 +278,81 @@ input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
   font-size: 1.2rem;
 }
 
-/*.has-submenu {*/
-/*  color: var(--nav-li-color-inverted);*/
-/*}*/
-
-/*.has-submenu:hover {*/
-/*  color: var(--nav-li-color-hover-inverted);*/
-/*}*/
-
-.has-submenu > .submenu {
-  overflow: visible;
-  display: none;
-  margin-top: 1rem;
-  /*padding-left: 20px;*/
-
-  position: relative;
-  left: 0;
-}
-
-.has-submenu > .submenu > li {
-  color: var(--nav-li-color-inverted)!important;
-}
-
-.has-submenu > .submenu > li:hover {
-  color: var(  --nav-li-color-hover-inverted)!important;
+/*profile*/
+.has-submenu:hover #profile {
+  color: black!important;
   background-color: var(--bg-color-inverted)!important;
 }
 
-.has-submenu:hover > .submenu {
+.has-submenu:hover > .submenu li {
+  color: black!important;
+}
+
+/* Stilul general pentru li este deja setat corect în .nav ul>li */
+.has-submenu > a {
+  position: relative;
+  display: block;
+  color: var(--nav-li-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hover exact ca restul */
+.has-submenu > a:hover {
+  /*background-color: var(--nav-li-color-hover);*/
+  color: var(--nav-li-color);
+}
+
+.has-submenu > #profile::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--nav-li-color);
+  transition: transform 0.3s ease, border-top-color 0.3s ease;
+}
+
+.has-submenu:hover > #profile::after {
+  border-top: 6px solid black;
+  transition: transform 0.3s ease, border-top-color 0.3s ease;
+}
+
+/* Răsucire săgeată când e deschis submenu */
+.has-submenu.open > #profile::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Submenu pe click */
+.has-submenu > .submenu {
+  margin-top: 1rem;
+  display: none;
+  /*background-color: var(--bg-color)!important;*/
+  color: var(--nav-li-color)!important;
+  list-style: none;
+  border: none;
+  padding: 0;
+}
+
+.has-submenu.open > .submenu {
   display: block;
 }
 
-.has-submenu > ul {
-  border: none;
-}
+/* Stiluri pentru elementele din submenu */
 
-.has-submenu:hover > li {
-  color: var(--nav-li-color-inverted);
-}
-.submenu li {
-  font-weight: normal;
-  background-color: var(--bg-color-inverted);
-}
-
-.has-submenu > .submenu {
+.has-submenu > .submenu > li:hover {
+  /*color: var(--nav-li-color-hover-inverted)!important;*/
+  color: var(--nav-li-color-hover-submenu)!important;
   background-color: var(--bg-color-inverted)!important;
 }
 
-.submenu li p {
-  color: var(--nav-li-color);
+.has-submenu > .submenu > li a {
+  color: inherit;
   text-decoration: none;
-}
-
-.submenu li:hover {
-  background-color: var(--nav-li-color-hover);
-  color: var(--nav-text-color-hover);
+  display: block;
 }
 

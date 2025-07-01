@@ -24,21 +24,30 @@ export class NavigationMenuComponent implements OnInit {
   // @Output() componentName = new EventEmitter<void>();
   @Input() component_name !: string;
 
-  currentComponentName!: string;
-  closed: boolean = false;
-  isLogged!: boolean;
-  isAdmin: boolean = false;
-  action!: string;
+  protected userId!: string;
+  protected currentComponentName!: string;
+  protected closed: boolean = false;
+  protected isLogged!: boolean;
+  protected isAdmin: boolean = false;
+  protected action!: string;
+  protected _2fa!: string;
+  protected _2fa_enabled: boolean = false;
+  protected submenuOpen = false;
+
   async ngOnInit() {
 
     this.checkLoggedInStatus();
 
     const isLoggedIn = await firstValueFrom(this.authService.isAuthenticated());
+
     console.log('isLoggedIn');
     console.log(isLoggedIn);
 
     if (isLoggedIn) {
       this.checkRole();
+      this.userService.getUserInfo().subscribe((res: any) => {
+        this.userId = res.id;
+      });
     }
 
     this.router.events.subscribe( async event => {
@@ -53,22 +62,32 @@ export class NavigationMenuComponent implements OnInit {
     });
   }
 
+
+  toggleSubmenu(event: Event) {
+    event.preventDefault();
+    this.submenuOpen = !this.submenuOpen;
+  }
+
   hideNavMenu() {
     const checkboxElement = document.getElementById('openSideMenu') as HTMLInputElement;
     if (checkboxElement !== null) {
       checkboxElement.checked = false;
       this.closed = true;
+      this.submenuOpen = false;
     }
   }
 
+  openCloseSubMenu() {
+    const listElement = document.getElementById('profile') as HTMLInputElement;
+    if (listElement !== null) {
+      console.log('click on profile')
+    }
+  }
 
   async checkLoggedInStatus() {
     this.authService.isAuthenticated().subscribe((res: any) => {
 
       this.isLogged = res;
-
-      console.log('isLogged');
-      console.log(res)
 
       if (res) {
         this.action = 'Log out';
@@ -81,6 +100,12 @@ export class NavigationMenuComponent implements OnInit {
               this.isAdmin = false;
             }
 
+            if (res._2fa === true) {
+              this._2fa = 'Disable 2FA';
+            } else {
+              this._2fa = 'Enable 2FA';
+            }
+
           }
         );
       }
@@ -88,6 +113,8 @@ export class NavigationMenuComponent implements OnInit {
       if (!res) {
         this.isLogged = false;
         this.action = 'Log in';
+        this._2fa_enabled = false;
+        this._2fa = '';
       }
 
     });
@@ -113,31 +140,51 @@ export class NavigationMenuComponent implements OnInit {
       await this.router.navigateByUrl('auth/login');
     }
   }
+  async twoFA() {
+    await this.checkLoggedInStatus()
+    await this.router.navigateByUrl('auth/two-fa');
+  }
 
   async redirectHome() {
+    await this.checkLoggedInStatus()
     await this.router.navigateByUrl('home');
   }
 
-  async userInfo() {
+  async userInfo(){
+    await this.checkLoggedInStatus()
+    this.checkRole();
     await this.router.navigateByUrl('user/info');
   }
   async changeUsername() {
+    await this.checkLoggedInStatus()
     await this.router.navigateByUrl('user/edit');
   }
 
   async updateContactInfo() {
+    await this.checkLoggedInStatus()
     await this.router.navigateByUrl('user/update-info');
   }
 
   async changePassword() {
+    await this.checkLoggedInStatus()
     await this.router.navigateByUrl('user/change-password');
   }
 
+  async deleteAccount() {
+    await this.checkLoggedInStatus()
+    await this.router.navigateByUrl('user/delete-account');
+  }
+
   async changeEmail() {
-    await this.router.navigateByUrl('user/change-email');
+    await this.checkLoggedInStatus()
+
+    // this.userService.sendOtpResetEmail(this.userId).subscribe(async (res) => {
+      await this.router.navigateByUrl('user/change-email');
+    // })
   }
 
   async userList() {
+    await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
       await this.router.navigateByUrl('user/list');
@@ -146,6 +193,7 @@ export class NavigationMenuComponent implements OnInit {
   }
 
   async roomList() {
+    await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
       await this.router.navigateByUrl('room/list');
@@ -154,6 +202,7 @@ export class NavigationMenuComponent implements OnInit {
   }
 
   async createRoom() {
+    await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
       await this.router.navigateByUrl('room/add');
@@ -195,8 +244,6 @@ export class NavigationMenuComponent implements OnInit {
     if (isLoggedIn) {
       this.userService.getUserInfo().subscribe(
         (res: any) => {
-          console.log('checkRole');
-          console.log(res);
           if (res.roles == 'admin') {
             this.isAdmin = true;
           } else {
