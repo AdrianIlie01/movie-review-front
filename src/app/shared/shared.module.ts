@@ -5,6 +5,7 @@ import { PaymentFormComponent } from './components/payment-form/payment-form.com
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 import {NavigationMenuComponent} from './components/navigation-menu/navigation-menu.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { FormSelectComponent } from './components/form-select/form-select.component';
 
 
 
@@ -14,6 +15,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     PaymentFormComponent,
     ActionButtonComponent,
     NavigationMenuComponent,
+    FormSelectComponent,
   ],
     imports: [
         CommonModule,
@@ -21,7 +23,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     ],
   exports: [
     ActionButtonComponent,
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    FormSelectComponent,
   ]
 })
 export class SharedModule { }
