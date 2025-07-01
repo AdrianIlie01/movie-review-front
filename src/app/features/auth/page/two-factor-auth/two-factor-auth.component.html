@@ -1,0 +1,23 @@
+<div class="wrapper">
+
+  <h1 class="title">{{_2fa_enabled ? 'Disable Two Factor Authentication' : 'Enable Two Factor Authentication'}}</h1>
+
+  <p *ngIf="!_2fa_enabled" class="info">Receive verification codes via email!</p>
+
+  <app-form
+    autocomplete="off"
+    [formGroup]="_2faForm"
+    [formButtonName]="_2fa_enabled ? ButtonName.Disable : ButtonName.Enable"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      [paste]="disablePaste"
+      [label]="_2fa_enabled ? 'Type DISABLE' : 'Type ENABLE'"
+      [placeholder]="_2fa_enabled ? 'DISABLE' : 'ENABLE'"
+      controlName="confirmation"
+      [submitted]="submitted"
+    />
+  </app-form>
+</div>
+

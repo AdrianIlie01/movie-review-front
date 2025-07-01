@@ -75,13 +75,12 @@ export class RegisterPageComponent {
         if ( typeof error.error?.message == "string" && error.error?.message.includes('Duplicate entry')) {
           this.errorMessage = [];
           // this.errorMessage[0] = error.error?.message;
-          this.errorMessage[0] = 'Date duplicate, deja exista in baza de date';
+          this.errorMessage[0] = 'Duplicate entry. Please try again with a different username or email.';
         }
         this.isSubmitting = false;
       },
     });
   }
 
-  protected readonly ActionButton = ButtonName;
   protected readonly ButtonName = ButtonName;
 }

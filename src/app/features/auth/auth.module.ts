@@ -10,6 +10,7 @@ import { ResetForgottenPasswordComponent } from './page/reset-forgotten-password
 import {SharedModule} from "../../shared/shared.module";
 import {FormComponent} from '../../shared/components/form/form.component';
 import {FormInputComponent} from '../../shared/components/form-input/form-input.component';
+import { TwoFactorAuthComponent } from './page/two-factor-auth/two-factor-auth.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {FormInputComponent} from '../../shared/components/form-input/form-input.
     Otp2FaComponent,
     ForgotPasswordComponent,
     ResetForgottenPasswordComponent,
+    TwoFactorAuthComponent,
   ],
   imports: [
     CommonModule,

@@ -48,7 +48,11 @@ export class LoginPageComponent {
       error: (error) => {
         if (error.error?.message == 'wrong username' || error.error?.message == 'wrong password') {
           this.errorMessage = ['Username or password is incorrect!'];
-        } else {
+        }
+        if (error.error?.message == 'User is banned') {
+          this.errorMessage = ['This user profile is banned!'];
+        }
+        else {
           this.errorMessage = ['Authentication failed.'];
         }
       },

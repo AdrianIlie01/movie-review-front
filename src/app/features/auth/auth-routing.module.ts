@@ -6,6 +6,8 @@ import {NonAuthGuard} from '../../core/guards/non-auth.guard';
 import {Otp2FaComponent} from './page/otp-2-fa/otp-2-fa.component';
 import {ForgotPasswordComponent} from './page/forgot-password/forgot-password.component';
 import {ResetForgottenPasswordComponent} from './page/reset-forgotten-password/reset-forgotten-password.component';
+import {AuthGuard} from '../../core/guards/auth.guard';
+import {TwoFactorAuthComponent} from './page/two-factor-auth/two-factor-auth.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,11 @@ const routes: Routes = [
     path: 'reset-forgotten-password',
     canActivate: [NonAuthGuard],
     component: ResetForgottenPasswordComponent
+  },
+  {
+    path: 'two-fa',
+    canActivate: [AuthGuard],
+    component: TwoFactorAuthComponent
   }
 ];
 
