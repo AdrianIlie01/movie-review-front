@@ -26,18 +26,28 @@
 }
 
 .action-button.delete {
+  width: 100%;
   color: white;
   background-color: red;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .action-button.delete:hover {
   background-color: darkred;
+  transform: translateY(-2px);
 }
 
 .action-button.save,
 .action-button.login,
 .action-button.register,
 .action-button.next,
+.action-button.enable,
+.action-button.disable,
 .action-button.reset-password,
 .action-button.verify-otp {
   width: 100%;
@@ -55,6 +65,8 @@
 .action-button.login:hover,
 .action-button.register:hover,
 .action-button.next:hover,
+.action-button.enable:hover,
+.action-button.disable:hover,
 .action-button.reset-password:hover,
 .action-button.verify-otp:hover {
   background-color: #0056b3;
