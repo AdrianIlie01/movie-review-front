@@ -1,0 +1,34 @@
+<div class="form-group">
+  <label>{{ label }}</label>
+
+  <div class="multiselect-container"
+       [class.open]="isOpen"
+       (click)="toggleDropdown()"
+  >
+<!--    display the selected option or generic message-->
+    <div class="selected-text"
+         [class.placeholder]="!selectedOptions"
+    >
+      {{ selectedLabels }}
+    </div>
+    <div class="arrow" [class.open]="isOpen">&#9662;</div>
+  </div>
+
+  <div class="options" *ngIf="isOpen">
+    <div
+      class="option"
+      *ngFor="let option of options"
+      (click)="selectOption(option)"
+      [class.selected]="isSelected(option)"
+    >
+      <input type="checkbox" [checked]="isSelected(option)" readonly />
+      <span>{{ toTitleCase(option) }}</span>
+    </div>
+  </div>
+
+<!--  <div class="error" *ngIf="submitted && control?.invalid">-->
+<!--    <div *ngFor="let errorKey of (control?.errors || {}) | keyvalue">-->
+<!--      {{ errors[errorKey.key] }}-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
