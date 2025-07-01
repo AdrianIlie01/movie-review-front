@@ -8,7 +8,10 @@ import {VideoComponent} from './components/video/video.component';
 import {AddRoomPageComponent} from './pages/add-room-page/add-room-page.component';
 import {ListRoomPageComponent} from './pages/list-room-page/list-room-page.component';
 import {RoomPageComponent} from './pages/room-page/room-page.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormComponent} from "../../shared/components/form/form.component";
+import {FormInputComponent} from '../../shared/components/form-input/form-input.component';
+import {SharedModule} from '../../shared/shared.module';
 
 
 @NgModule({
@@ -18,12 +21,16 @@ import {FormsModule} from "@angular/forms";
     VideoComponent,
     AddRoomPageComponent,
     ListRoomPageComponent,
-    RoomPageComponent
+    RoomPageComponent,
   ],
-    imports: [
-        CommonModule,
-        RoomRoutingModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    RoomRoutingModule,
+    FormsModule,
+    FormComponent,
+    FormInputComponent,
+    SharedModule,
+    ReactiveFormsModule
+  ]
 })
 export class RoomModule { }

@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {RoomService} from '../../services/room.service';
 import {AuthService} from '../../../../core/services/auth.service';
 import {HttpEvent, HttpEventType} from '@angular/common/http';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ButtonName} from '../../../../shared/enums/button-name';
+import {MovieTypes} from '../../../../shared/enums/movie-types';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-room-page',
@@ -17,23 +21,36 @@ export class AddRoomPageComponent implements OnInit {
   roomName!: string;
 
   constructor(
+    protected router: Router,
     protected roomService: RoomService,
     protected authService: AuthService,
+    private fb: FormBuilder,
+
   ) {
+    this.movieForm = this.fb.group({
+      name: ['', [
+        Validators.required,
+        this.roomService.validateRoomName()
+      ]],
+      type: [[], [
+        // Validators.required,
+      ]],
+      stream_url: ['', Validators.required],
+      release_year: ['', Validators.required],
+    })
   }
+
+  protected movieForm!: FormGroup;
+  protected readonly ActionButton = ButtonName;
+  protected errorMessage: string[] | null = null;
+  protected submitted = false;
+  protected movieTypes = Object.values(MovieTypes);
 
   ngOnInit() {
     this.getUserInfo();
   }
 
 
-  onFileSelected(event: any) {
-    // this.selectedFile = event.target.files[0];
-    const input = event.target as HTMLInputElement;
-    if (input?.files?.[0]) {
-      this.selectedFile = input.files[0];
-    }
-  }
 
   getUserInfo() {
     this.authService.getUserInfo()
@@ -45,31 +62,53 @@ export class AddRoomPageComponent implements OnInit {
           this.userInfo = data;
         },
         error: (e) => {
-          console.error('Eroare este:', e);
+          console.error('Eroare:', e);
         }
       });
   }
 
-  uploadVideo() {
-    if (!this.roomName || !this.selectedFile)  {
-      console.log('no file or no name');
+  onSubmit(): void {
+    this.errorMessage = [];
+    const typeValue = this.movieForm.get('type')?.value;
+
+    this.submitted = true;
+    if (this.movieForm.invalid) {
+      if (typeValue.length <= 0) {
+        this.errorMessage = ['Please select at least one movie type.']
+      }
+
       return;
     }
 
-    this.roomService.addRoomVideo(this.userInfo.id, this.selectedFile, this.roomName.trim())
-      .subscribe({
-        next: (data: any) => {
-          console.log('roomName');
+    console.log('typeValue')
+    console.log(typeValue)
 
-          console.log(this.roomName);
+    if (typeValue.length <= 0) {
+      this.errorMessage = ['Please select at least one movie type.']
+    } else  {
+      this.errorMessage = [];
+    }
 
-          this.roomName = '';
-          this.selectedFile = null;
-        },
-        error: (error) => {
-          console.error('Upload failed', error);
-        }
-      });
+    this.roomService.addMovie(this.movieForm.value).subscribe({
+      next: (res) => {
+        this.router.navigateByUrl('home').then();
+      },
+      error: (error) => {
+        console.log(error);
+
+      if (Array.isArray(error.error?.message) && error.error?.message.length > 0) {
+        error.error.message.forEach((e: string) => {
+          this.errorMessage?.push(e)
+        })
+      } else {
+        console.log(error.error.message)
+        this.errorMessage = [error.error.message];
+      }
+    }
+    })
+
   }
 
+  protected readonly ButtonName = ButtonName;
+  protected readonly MovieTypes = MovieTypes;
 }

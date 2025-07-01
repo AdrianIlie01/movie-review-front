@@ -1,62 +1,45 @@
-<p class="heading">Add Room Video</p>
+<div class="wrapper">
+  <app-form
+    title="Add Movie"
+    [formGroup]="movieForm"
+    [formButtonName]= "ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Name"
+      placeholder="Movie title"
+      controlName="name"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter a movie name.',
+        nameTaken: 'This name is already taken!'
+         }"
+    ></app-form-input>
 
-<div class="form-container">
-  <!-- Room Name Input -->
-  <div class="input-group">
-    <label for="roomName" class="input-label">Room Name</label>
-    <input
-      id="roomName"
-      type="text"
-      [(ngModel)]="roomName"
-      placeholder="Enter room name"
-      class="input-field"
-    />
-  </div>
+    <app-form-select
+      label="Movie Type"
+      controlName="type"
+      [formGroup]="movieForm"
+      [options]="movieTypes"
+      [submitted]="submitted"
+    ></app-form-select>
 
-  <!-- File Upload Input -->
-  <div class="input-group file-upload-group">
-    <label for="file" class="input-label">Upload Video</label>
 
-    <div class="file-input-wrapper">
-      <!-- Button to trigger file input -->
-      <button
-        class="file-upload-btn"
-        (click)="fileInput.click()"
-      >
-        <span class="upload-icon">📁</span>
-        Select Video
-      </button>
+    <app-form-input
+      label="Stream URL"
+      placeholder="Paste the stream URL"
+      controlName="stream_url"
+      [submitted]="submitted"
+      [errors]="{ required: 'Please enter the stream URL.' }"
+    ></app-form-input>
 
-      <!-- Display the selected file's name -->
-      <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
-
-      <!-- Hidden file input -->
-      <!-- todo
-      adica ascunde butonul  choosFile si unde scrie se file am selectat, care pe click poate alege un file
-       -->
-
-      <input
-        #fileInput
-        id="file"
-        type="file"
-        (change)="onFileSelected($event)"
-        class="file-input"
-        style="display: none;"
-        aria-label="Choose a video file"
-        accept="video/*"
-      />
-    </div>
-  </div>
-
-  <!-- Upload Button -->
-  <div class="upload-btn-container">
-    <button
-      (click)="uploadVideo()"
-      [disabled]="!roomName || roomName.trim().length == 0 || !selectedFile"
-      class="upload-btn"
-      aria-label="Upload Video"
-    >
-      Upload Video
-    </button>
-  </div>
+    <app-form-input
+      label="Release Year"
+      placeholder="e.g. 2024"
+      controlName="release_year"
+      [submitted]="submitted"
+      [errors]="{ required: 'Please enter the release year.' }"
+    ></app-form-input>
+  </app-form>
 </div>
