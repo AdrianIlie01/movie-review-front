@@ -1,8 +1,12 @@
 [data-theme="light"] {
   --bg-color: #fff;
   --bg-color-inverted: #dddddd;
+  --bg-color-transparent-dark: rgba(18, 18, 18, 0.1);
 
   --text-color: #222;
+  --text-color-inverted: #eee;
+  --text-color-option-hover: #222;
+
   /*---reverse-text-color: #222;*/
   --login-hover-text: cyan;
   --form-background: rgba(255,255,255, 0.2);
@@ -20,18 +24,25 @@
 
   --nav-li-color-hover: #dddddd;
   --nav-li-color-hover-inverted: rgba(0,0,0, 0.5);
+  --nav-li-color-hover-submenu: rgba(255,255,255, 1);
 
   --nav-text-color-hover: #221;
   --header-box-shadow-color: #ddd;
+
+  --checkbox-accent-color: purple;
 }
 
 [data-theme="dark"] {
   --bg-color: #121212;
   --bg-color-inverted: rgba(255, 255, 255, 0.1);
+  --bg-color-transparent-dark: rgba(18, 18, 18, 0.2);
 
   --input-bg-color: #222;
   --text-color: #eee;
-  /*---reverse-text-color: #222;*/
+  --text-color-inverted: #222;
+  --text-color-option-hover: #222;
+
+    /*---reverse-text-color: #222;*/
   --login-hover-text: cyan;
   --form-background: #353535;
   --form-box-shadow: rgba(255, 255, 255, 0.1);
@@ -46,7 +57,10 @@
   --nav-li-color-inverted: #353535;
   --nav-li-color-hover: rgba(255, 255, 255, 0.9);
   --nav-li-color-hover-inverted: rgba(0,0,0, 0.6);
+  --nav-li-color-hover-submenu: rgba(0,0,0, 0.5);
 
   --nav-text-color-hover: #222;
   --header-box-shadow-color: rgba(0, 0, 0, 0.1);
+
+  --checkbox-accent-color: purple;
 }
