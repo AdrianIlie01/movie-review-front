@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
        if (isAuth.authenticate) {
          return true;
        }
-         if (isAuth && isAuth._2fa) {
+         if (isAuth && isAuth._2fa_required) {
            this.router.navigateByUrl('auth/login/verify-otp');
            return false;
          } else {
