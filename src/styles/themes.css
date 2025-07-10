@@ -11,6 +11,7 @@
   --login-hover-text: cyan;
   --form-background: rgba(255,255,255, 0.2);
   --form-box-shadow: rgba(0, 0, 0, 0.3);
+  --form-box-shadow-inverted: rgba(255, 255, 255, 0.1);
   --input-box-shadow: rgba(0, 0, 0, 0.3);
   --input-bg-color: #dddddd;
 
@@ -46,6 +47,8 @@
   --login-hover-text: cyan;
   --form-background: #353535;
   --form-box-shadow: rgba(255, 255, 255, 0.1);
+  --form-box-shadow-inverted: rgba(0, 0, 0, 0.3);
+
   --input-box-shadow: rgba(0, 0, 0, 0.3);
 
   --place-holder-color: rgba(255, 255, 255, 0.3);
