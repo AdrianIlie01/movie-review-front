@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   // apiUrl: 'http://localhost:3001'
   // apiUrl: 'https://movie-review-back.onrender.com',
-  apiUrl: 'https://vercel-movie-back.vercel.app/',
+  apiUrl: 'https://vercel-movie-back.vercel.app',
 
   firebaseConfig: {
     apiKey: "AIzaSyAjvXJ6zIgwo2EHeFhaB_NS2jmjnDQuguE",
