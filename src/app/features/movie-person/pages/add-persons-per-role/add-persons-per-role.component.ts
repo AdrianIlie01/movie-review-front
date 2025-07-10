@@ -80,11 +80,11 @@ export class AddPersonsPerRoleComponent implements OnInit {
     const persons = this.formGroup.get('persons')?.value;
 
     if (!role?.length) {
-      this.errorMessage.push('Please select at least one role.');
+      this.errorMessage.push('Please select one role.');
     }
 
     if (!persons?.length) {
-      this.errorMessage.push('Please select at least one person.');
+      this.errorMessage.push('Please select at least one cast member.');
     }
 
     if (this.formGroup.invalid || this.errorMessage.length > 0) {

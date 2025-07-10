@@ -17,14 +17,9 @@
 
           <li *ngIf="isLogged && isAdmin" (click)="userList(); hideNavMenu();"><a>User List</a></li>
 
-<!--          <li *ngIf="isLogged && isAdmin" (click)="roomList(); hideNavMenu();"><a>Movie List</a></li>-->
-<!--          <li *ngIf="isLogged && isAdmin" (click)="createRoom(); hideNavMenu();"><a>Add Movie</a></li>-->
-<!--         <li *ngIf="isLogged && isAdmin" (click)="personList(); hideNavMenu();"><a>Person List</a></li>-->
-<!--         <li *ngIf="isLogged && isAdmin" (click)="createPerson(); hideNavMenu();"><a>Add Person</a></li>-->
-
          <!-- Movie -->
          <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="movieSubmenuOpen" (click)="toggleMovieSubmenu($event)">
-           <a class="submenu-trigger">Movie</a>
+           <a class="submenu-trigger">Movies</a>
            <ul class="submenu">
              <li (click)="roomList(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Movie List</a></li>
              <li (click)="createRoom(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Add Movie</a></li>
@@ -33,10 +28,10 @@
 
          <!-- Person -->
          <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="personSubmenuOpen" (click)="togglePersonSubmenu($event)">
-           <a class="submenu-trigger">Person</a>
+           <a class="submenu-trigger">Cast</a>
            <ul class="submenu">
-             <li (click)="personList(); hideNavMenu(); togglePersonSubmenu($event);"><a>Person List</a></li>
-             <li (click)="createPerson(); hideNavMenu(); togglePersonSubmenu($event);"><a>Add Person</a></li>
+             <li (click)="personList(); hideNavMenu(); togglePersonSubmenu($event);"><a>Cast List</a></li>
+             <li (click)="createPerson(); hideNavMenu(); togglePersonSubmenu($event);"><a>Add Cast Member</a></li>
            </ul>
          </li>
 
