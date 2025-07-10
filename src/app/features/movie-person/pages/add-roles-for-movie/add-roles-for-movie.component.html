@@ -1,0 +1,28 @@
+<div class="cast-wrapper add-roles">
+
+  <app-form
+    title="Select a movie and assign {{ personName }} to one or more roles"
+    [formGroup]="formGroup"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-select
+      label="Roles"
+      controlName="roles"
+      [formGroup]="formGroup"
+      [options]="roleOptions"
+      [submitted]="submitted"
+    ></app-form-select>
+
+    <app-form-select
+      label="Movie"
+      controlName="movie"
+      [formGroup]="formGroup"
+      [options]="moviesOptions"
+      [submitted]="submitted"
+      [multiple]="false"
+    ></app-form-select>
+  </app-form>
+
+</div>

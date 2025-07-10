@@ -1,0 +1,45 @@
+<div class="cast-container">
+
+  <div class="container-header">
+
+    <div>
+      <h1 class="person-title">{{personName}}</h1>
+    </div>
+
+    <app-action-button class="btn"
+                       [buttonName]="ButtonName.AddMovie"
+                       [buttonFunction]="addRolesPerMovie.bind(this)">
+    </app-action-button>
+
+  </div>
+
+  <div *ngFor="let role of groupedMovieKeys" class="role-group">
+    <div class="role-header">
+
+      <h2 class="role-title">{{ role | titlecase }}</h2>
+
+        <app-action-button class="btn"
+                           [buttonName]="ButtonName.ManageMovies"
+                           [buttonFunction]="manageMovies.bind(this, role)">
+        </app-action-button>
+    </div>
+
+
+    <ng-container *ngIf="groupedMovies[role] as moviesForRole">
+      <div class="person-list" *ngIf="moviesForRole.length > 0; else noMovies">
+        <div (click)="redirectMovie(item)"  *ngFor="let item of moviesForRole" class="person-card">
+          <div class="placeholder-avatar">{{ item.person?.name?.charAt(0) }}</div>
+          <div class="person-name">{{ item.room?.name }}</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noMovies>
+      <div class="no-persons-message">No movies assigned yet.</div>
+    </ng-template>
+
+  </div>
+
+
+
+</div>

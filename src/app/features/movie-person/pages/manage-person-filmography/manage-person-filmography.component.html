@@ -1,0 +1,17 @@
+<div class="cast-wrapper add-movies">
+  <app-form
+    [title]="'Add or remove movies for ' + personName + ' as ' + role"
+    [formGroup]="personForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-select
+      label="Movies"
+      controlName="movies"
+      [formGroup]="personForm"
+      [options]="movieOptions"
+      [submitted]="submitted"
+    ></app-form-select>
+  </app-form>
+</div>

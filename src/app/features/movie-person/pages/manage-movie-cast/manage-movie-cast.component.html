@@ -1,0 +1,17 @@
+<div class="cast-wrapper add-persons">
+  <app-form
+    title="Add or remove cast members for the role {{ role }} in movie {{ movieTitle }}"
+    [formGroup]="personForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-select
+      label="Persons"
+      controlName="persons"
+      [formGroup]="personForm"
+      [options]="personOptions"
+      [submitted]="submitted"
+    ></app-form-select>
+  </app-form>
+</div>

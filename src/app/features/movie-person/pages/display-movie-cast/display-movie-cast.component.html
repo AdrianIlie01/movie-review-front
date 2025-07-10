@@ -1,0 +1,51 @@
+<div class="cast-container">
+
+  <div class="container-header">
+
+    <div>
+      <h1 class="movie-title">{{movieName}}</h1>
+    </div>
+
+    <app-action-button class="btn"
+                       [buttonName]="ButtonName.AddCast"
+                       [buttonFunction]="addPersons.bind(this)">
+    </app-action-button>
+
+  </div>
+
+
+  <div *ngFor="let role of groupedCastKeys" class="role-group">
+    <div class="role-header">
+      <h2 class="role-title">{{ role | titlecase }}</h2>
+
+      <app-action-button class="btn"
+                         [buttonName]="ButtonName.ManageCast"
+                         [buttonFunction]="manageCast.bind(this, role)">
+      </app-action-button>
+
+    </div>
+
+<!--    <app-action-button class="btn"-->
+<!--                       [buttonName]="ButtonName.ManageCast"-->
+<!--                       [buttonFunction]="manageCast.bind(this, role)">-->
+<!--    </app-action-button>-->
+
+    <ng-container *ngIf="groupedCast[role] as personsForRole">
+      <div class="person-list" *ngIf="personsForRole.length > 0; else noPersons">
+        <div (click)="personInfo(item)" *ngFor="let item of personsForRole" class="person-card" >
+            <div class="placeholder-avatar">{{ item.person?.name?.charAt(0) }}</div>
+          <div class="person-name">{{ item.person?.name }}</div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-template #noPersons>
+      <div class="no-persons-message">No persons assigned yet.</div>
+    </ng-template>
+
+  </div>
+
+
+
+</div>
