@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   // apiUrl: 'http://localhost:3001'
-  apiUrl: 'https://backend-session-auth-video.onrender.com',
+  apiUrl: 'https://movie-review-back.onrender.com',
 
   firebaseConfig: {
     apiKey: "AIzaSyAjvXJ6zIgwo2EHeFhaB_NS2jmjnDQuguE",
