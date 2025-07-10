@@ -28,12 +28,9 @@ export class PersonListComponent implements OnInit{
 
   ngOnInit() {
     this.loading = true;
-    console.log(this.personApi);
 
     this.personService.getAllPersons().subscribe({
       next: (data: PersonInterface[]) => {
-        console.log('data')
-        console.log(data)
         this.people = data;
         this.loading = false;
         this.errorDataBase = false;
@@ -41,7 +38,6 @@ export class PersonListComponent implements OnInit{
 
       },
       error: (err) => {
-        console.error('Error loading persons:', err);
         this.loading = false;
         this.errorDataBase = true;
       }
@@ -79,15 +75,16 @@ export class PersonListComponent implements OnInit{
   }
 
   getPersonMovies(person: any) {
-    console.log('person')
-    console.log(person)
     const movies = person.movieRoles.map((data: any) => {
       return data.room.name
     })
 
-    console.log('movies')
-    console.log(movies)
-
     return movies;
+  }
+
+  onImageError(event: Event, video: any) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.personService.getDefaultImage('default_person.jpg');
+
   }
 }

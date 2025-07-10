@@ -7,6 +7,7 @@
 
             <img class="image-container"
                  [src]="getPersonImage(person)"
+                 (error)="onImageError($event, person)"
                  alt="{{ person.name }}"
             />
 
