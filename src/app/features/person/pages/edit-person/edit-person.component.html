@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <app-form
+    title="Edit Person"
+    [formGroup]="personForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Name"
+      placeholder="Person name"
+      controlName="name"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter the person\'s name.',
+        nameTaken: 'This name is already taken!'
+      }"
+    ></app-form-input>
+
+    <app-form-select
+      label="Roles"
+      controlName="roles"
+      [formGroup]="personForm"
+      [options]="personRoles"
+      [submitted]="submitted"
+    ></app-form-select>
+
+    <app-form-input
+      label="Born"
+      type="date"
+      controlName="born"
+      [submitted]="submitted"
+    ></app-form-input>
+
+    <app-form-input
+      label="Description"
+      placeholder="Short description (optional)"
+      controlName="description"
+      [submitted]="submitted"
+    ></app-form-input>
+  </app-form>
+</div>

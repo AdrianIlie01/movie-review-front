@@ -1,0 +1,70 @@
+<div *ngIf="loading">Loading person data...</div>
+
+<div *ngIf="error">Error loading person data.</div>
+
+<div *ngIf="person && !loading && !error" class="person-list-container">
+  <div class="person-card">
+
+    <div *ngIf="person?.images as images" class="image-carousel-wrapper">
+
+      <div *ngIf="images.length > 1" class="image-carousel">
+
+        <img class="carousel-image"
+             [src]="getPersonImageByIndex(currentImageIndex)"
+             alt="{{ person.name }}" />
+
+        <div class="nav-button-wrapper">
+          <button class="nav-button left" (click)="prevImage()">❮</button>
+          <button class="nav-button right" (click)="nextImage()">❯</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="defaultImage" class="image-carousel-wrapper">
+
+      <img
+           class="image-container"
+           [src]="getDefaultImage()"
+           alt="{{ person.name }}" />
+    </div>
+
+    <h2>{{ person.name }}</h2>
+
+    <div class="underline"></div>
+
+<!--    <p class="role" *ngIf="person.roles?.length">-->
+<!--      Roles: {{ getRoleList(person.roles) }}-->
+<!--    </p>-->
+
+    <div class="info">
+
+
+    <p class="description" *ngIf="person.description">
+      About: {{ person.description }}
+    </p>
+
+    <p class="born" *ngIf="person.born">
+      Born: {{ person.born | date:'dd MMM yyyy' }}
+    </p>
+
+    <p class="title" *ngIf="moviesStarred">
+      Movies and Roles
+    </p>
+
+    <div *ngIf="moviesStarred">
+      <div *ngFor="let entry of moviesStarred | keyvalue" class="role-group">
+        <h3 class="role-title">{{ entry.key | titlecase }}:</h3>
+
+        <div class="movie-list-inline">
+      <span *ngFor="let movie of entry.value" class="movie-pill" (click)="redirectMovie(movie)">
+        {{ movie.name }}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>

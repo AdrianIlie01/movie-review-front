@@ -1,0 +1,47 @@
+<div class="wrapper">
+  <app-form
+    title="Add Person"
+    [formGroup]="personForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Name"
+      placeholder="Enter full name"
+      controlName="name"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter a name.',
+        nameTaken: 'This name is already taken!'
+      }"
+    ></app-form-input>
+
+    <app-form-input
+      label="Description"
+      placeholder="Short bio or description"
+      controlName="description"
+      [submitted]="submitted"
+    ></app-form-input>
+
+    <app-form-input
+      label="Date of Birth"
+      type="date"
+      controlName="born"
+      [submitted]="submitted"
+      [errors]="{
+    invalidDate: 'Invalid date format.',
+    futureDate: 'Date cannot be in the future.',
+    tooOld: 'Date is too far in the past.'
+  }"
+    ></app-form-input>
+
+    <app-form-select
+      label="Roles"
+      controlName="roles"
+      [formGroup]="personForm"
+      [options]="personRoles"
+      [submitted]="submitted"
+    ></app-form-select>
+  </app-form>
+</div>
