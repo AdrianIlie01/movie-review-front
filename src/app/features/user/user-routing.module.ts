@@ -8,10 +8,14 @@ import {ChangePasswordComponent} from './pages/change-password/change-password.c
 import {ChangeEmailComponent} from './pages/change-email/change-email.component';
 import {InfoComponent} from './pages/info/info.component';
 import {DeleteAccountComponent} from './pages/delete-account/delete-account.component';
+import {RoleGuard} from '../../core/guards/role.guard';
 
 const routes: Routes = [
   { path: '', redirectTo:"/not-found", pathMatch: 'full' },
-  { path: 'list', component: UserListPageComponent },
+  { path: 'list', component: UserListPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {roles: 'admin'}
+  },
   {
     path: 'edit',
     component: UserEditPageComponent,

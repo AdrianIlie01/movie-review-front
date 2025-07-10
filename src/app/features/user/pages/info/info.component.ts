@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
+import {UserInterface} from '../../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-info',
@@ -15,7 +16,7 @@ export class InfoComponent implements OnInit{
   ) {
   }
 
-  protected user!: any;
+  protected user!: UserInterface;
   protected userInfo!: any;
   protected hasInfo: boolean = false;
 

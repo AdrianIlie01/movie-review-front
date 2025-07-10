@@ -1,60 +1,65 @@
-<div *ngIf="users?.length;">
-  <div class="users-grid">
-    <div *ngFor="let user of users" class="user-card">
-      <div class="avatar">
-        {{ user.username.charAt(0) }}
-      </div>
-      <h2>{{ user.username }}</h2>
+<div *ngIf="loading" class="loader"></div>
 
-      <div class="underline"></div>
+<div *ngIf="users?.length" class="person-list-container">
+  <div *ngFor="let user of users" class="person-card">
 
+    <div class="avatar">
+      {{ user.username.charAt(0) }}
+    </div>
 
-      <p class="role">
-        <i class="fa fa-user-tag"></i> Role: {{ user.role }}
-      </p>
-      <p class="email">Email: {{ user.email }}</p>
+    <h2 id="name" title="{{ user.username }}">{{ user.username }}</h2>
 
-      <p class="status">Status: {{ user.status }}</p>
+    <div class="underline"></div>
 
+    <p class="role">
+      <span class="label"><i class="fa fa-user-tag"></i> Role:</span> {{ user.role }}
+    </p>
+    <p class="email">
+      <span class="label">Email:</span> {{ user.email }}
+    </p>
+    <p class="status">
+      <span class="label">Status:</span> {{ user.status }}
+    </p>
+    <p class="fa" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
+  <span class="label">
+    <i class="fa" [ngClass]="user.is_2_fa_active ? 'fa-lock' : 'fa-unlock'"></i>
+    2FA
+  </span> {{ user.is_2_fa_active ? 'enabled' : 'disabled' }}
+    </p>
+    <p class="date">
+      <span class="label">Joined:</span> {{ user.create_date | date:'dd MMM yyyy' }}
+    </p>
 
-      <p class="fa" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
-        <i class="fa" [ngClass]="user.is_2_fa_active ? 'fa-lock' : 'fa-unlock'"></i>
-        {{ user.is_2_fa_active ? '2FA enabled' : '2FA disabled' }}
-      </p>
-      <p class="date">Joined: {{ user.create_date | date:'dd MMM yyyy' }}</p>
-
-      <div class="actions">
-        <!-- Dacă user-ul NU e cel logat -->
-        <ng-container *ngIf="user.id !== currentUserId; else currentUserInfo">
-          <ng-container *ngIf="loadingUserId !== user.id; else spinner">
-            <select class="role-select" [(ngModel)]="user.role" (change)="onRoleChange(user)">
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-              <option value="moderator">Moderator</option>
-            </select>
-          </ng-container>
-          <ng-template #spinner>
-            <div class="loader"></div>
-          </ng-template>
-
-          <button
-            class="btn ban-btn"
-            (click)="toggleBanUser(user)"
-            [disabled]="loadingUserId === user.id"
-          >
-            <i class="fa"></i>&nbsp;{{ user.status == 'banned' ? 'Unban' : 'Ban' }}
-          </button>
-
-
+    <div class="actions">
+      <ng-container *ngIf="user.id !== currentUserId; else currentUserInfo">
+<!--        <ng-container *ngIf="loadingUserId !== user.id; else spinner">-->
+        <ng-container *ngIf="loadingUserId !== user.id">
+          <select class="role-select" [(ngModel)]="user.role" (change)="onRoleChange(user)">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="moderator">Moderator</option>
+          </select>
         </ng-container>
+<!--        <ng-template #spinner>-->
+<!--          <div class="loader"></div>-->
+<!--        </ng-template>-->
 
-        <ng-template #currentUserInfo>
-          <p class="current-user-msg">
-            👤 This is your account
-          </p>
-        </ng-template>
-      </div>
+        <button
+          class="btn ban-btn"
+          (click)="toggleBanUser(user)"
+          [disabled]="loadingUserId === user.id"
+        >
+          <div *ngIf="loadingUserId === user.id" class="loader"></div>
+
+          &nbsp;{{ user.status == 'banned' ? 'Unban' : 'Ban' }}
+        </button>
+      </ng-container>
+
+      <ng-template #currentUserInfo>
+        <p class="current-user-msg">
+          👤 This is your account
+        </p>
+      </ng-template>
     </div>
   </div>
 </div>
-

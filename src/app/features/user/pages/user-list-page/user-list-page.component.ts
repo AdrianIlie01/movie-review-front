@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
-import {UserListInterface} from '../../../../shared/interfaces/user-list.interface';
+import {UserInterface} from '../../../../shared/interfaces/user.interface';
 import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
@@ -18,10 +18,13 @@ export class UserListPageComponent implements OnInit {
   ) {
   }
 
-  protected users!: UserListInterface[];
+  protected users!: UserInterface[];
   protected currentUserId!: string;
   protected loadingUserId: string | null = null;
+  protected loading = false;
   ngOnInit() {
+    this.loading = true;
+
     this.authService.isAuthenticated().subscribe((loggedIn) => {
       if (loggedIn) {
         this.userService.getUserInfo().subscribe((user: any) => {
@@ -29,6 +32,8 @@ export class UserListPageComponent implements OnInit {
 
           this.userService.getAllUsers().subscribe({
             next: (data) => {
+              this.loading = false;
+
               console.log('Users fetched successfully:');
               console.log(data)
               this.users = data;
@@ -38,6 +43,7 @@ export class UserListPageComponent implements OnInit {
               console.log(Array.isArray(this.users));
             },
             error: (error) => {
+              this.loading = false;
               console.error('Error fetching users:', error);
             }
           });
@@ -48,7 +54,7 @@ export class UserListPageComponent implements OnInit {
 
   }
 
-  onRoleChange(user: UserListInterface) {
+  onRoleChange(user: UserInterface) {
     this.loadingUserId = user.id;
     const oldRole = user.role;
 
@@ -63,7 +69,7 @@ export class UserListPageComponent implements OnInit {
     });
   }
 
-  toggleBanUser(user: UserListInterface): void {
+  toggleBanUser(user: UserInterface): void {
     this.loadingUserId = user.id;
 
     if (user.status === 'banned') {

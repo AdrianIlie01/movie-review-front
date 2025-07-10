@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {UserListInterface} from '../../../shared/interfaces/user-list.interface';
+import {UserInterface} from '../../../shared/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class UserService {
     protected httpClient: HttpClient
   ) { }
 
-  getAllUsers(): Observable<UserListInterface[]>  {
-    return this.httpClient.get<UserListInterface[]>(this.apiUrl);
+  getAllUsers(): Observable<UserInterface[]>  {
+    return this.httpClient.get<UserInterface[]>(this.apiUrl);
   }
 
   getUserInfo() {

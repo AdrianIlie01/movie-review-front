@@ -1,14 +1,13 @@
-.users-grid {
+.person-list-container {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
   padding: 24px;
-  max-width: 1200px;
   margin: 5rem auto;
   justify-content: center;
 }
 
-.user-card {
+.person-card {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -16,10 +15,16 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 20px;
   text-align: center;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+
   width: 19rem;
+  /*height: 100%;*/
+  min-height: 400px;
+
   animation: fadeSlideUp 0.5s ease forwards;
   opacity: 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -30,7 +35,7 @@
   100% { transform: translateY(0); opacity: 1; }
 }
 
-.user-card:hover {
+.person-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 16px 40px rgba(0,0,0,0.25);
 }
@@ -53,60 +58,61 @@
 
 h2 {
   font-size: 1.4rem;
-  /*margin-bottom: 2rem;*/
   color: var(--text-color);
+  margin: 0.5rem 0 1rem 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
+  max-width: 100%;
+
+
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
 }
 
 .underline {
   width: 90%;
   height: 3px;
   background: linear-gradient(to right, #007bff, #00d4ff);
-  /*margin: 0 auto 1.2rem auto;*/
-  margin-top: 0.8rem;
+  margin-bottom: 1rem;
   border-radius: 2px;
 }
 
-.role {
+.role, .email, .status, .fa, .date {
+  color: var(--text-color);
   font-style: italic;
-  color: var(--text-color);
-  margin-top: 1.5rem;
-}
-
-.email {
-  color: var(--text-color);
-  margin: 0.8rem 0 0.8rem;
-  word-break: break-word;
-  max-width: 90%;
-}
-
-.status {
-  color: var(--text-color);
+  font-size: 0.9rem;
   margin-bottom: 0.8rem;
-
+  width: 100%;
+  word-break: break-word;
+  cursor: default;
 }
 
-.current-user-msg {
-  margin-top: 1.5rem;
+#name {
+  cursor: default;
 }
+
+.label {
+  font-weight: 700;
+  cursor: default;
+}
+
 
 .fa {
   font-weight: 700;
-  margin-bottom: 12px;
 }
+
 .fa-enabled {
   color: #28a745;
 }
+
 .fa-disabled {
   color: #dc3545;
 }
 
-.date {
-  font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 20px;
-}
-
 .actions {
+  margin-top: auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -118,18 +124,13 @@ h2 {
   flex: 1 1 140px;
   padding: 8px 12px;
   border: 1.5px solid #28a745;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 12px 12px 0 0;
   font-weight: 600;
   font-size: 1rem;
   color: #28a745;
   cursor: pointer;
   background-color: #e6f4ea;
   transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
-}
-
-option:hover {
-  cursor: pointer;
 }
 
 .role-select:hover,
@@ -156,31 +157,33 @@ option:hover {
 }
 
 .ban-btn {
-  background-color: #dc3545;
+  background-color: rgb(225, 0, 0);
   border-radius: 25px;
   position: relative;
-}
-.ban-btn:hover {
-  background-color: #a71d2a;
-}
-.ban-btn:hover::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  border-radius: 10px;
-  background: rgba(220, 53, 69, 0.2);
-  animation: pulse 0.5s ease forwards;
-  z-index: -1;
-}
-@keyframes pulse {
-  from { opacity: 0.6; transform: scale(0.95); }
-  to { opacity: 0; transform: scale(1.1); }
+  transition: background-color 0.3s ease, box-shadow 0.5s ease;
 }
 
-.no-users {
+.ban-btn:hover {
+  background-color: red;
+  animation: pulse 0.5s ease-out forwards;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 10px 8px rgba(220, 53, 69, 0.8);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    transform: scale(1);
+  }
+}
+
+.no-persons {
   text-align: center;
   font-style: italic;
   color: #666;
@@ -188,25 +191,10 @@ option:hover {
   font-size: 1.1rem;
 }
 
-.loader {
-  width: 24px;
-  height: 24px;
-  border: 3px solid #28a745;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 @media (max-width: 768px) {
-  .users-grid {
+  .person-list-container {
     justify-content: center;
     padding: 16px;
-  }
-  .user-card {
   }
   .actions {
     gap: 12px;
@@ -217,7 +205,7 @@ option:hover {
 }
 
 @media (max-width: 480px) {
-  .users-grid {
+  .person-list-container {
     padding: 12px;
   }
   h2 {
