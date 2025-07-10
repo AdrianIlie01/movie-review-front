@@ -5,6 +5,8 @@ import {catchError, map, Observable, of} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {MovieTypeInterface} from '../../../shared/interfaces/movie-type.interface';
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+import {RoomDataInterface} from '../../../shared/interfaces/room-data.interface';
+import {PersonInterface} from '../../../shared/interfaces/person.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,59 @@ export class RoomService {
 
   ) { }
 
+  getAllRooms(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.roomApi}`);
+  }
+
+  getRoom(id: string)  {
+    return this.httpClient.get<RoomDataInterface>(`${this.roomApi}/id/${id}`);
+  }
+
+  //default thumbnail based on theme
+
+// room.service.ts
+  getDefaultThumbnail(filename: string): string {
+    return `${this.roomApi}/default-theme-thumbnail/${filename}`;
+  }
+
+  getThumbnailUrl(filename: string): string {
+    return `${this.roomApi}/thumbnail/${filename}`;
+  }
+
+  updateRoom(body: {name: string, stream_url: string, type: MovieTypeInterface[], release_year: string}, id: string) {
+    return this.httpClient.patch(`${this.roomApi}/id/${id}`, body);
+  }
+
+
+  // getDefaultThumbnail(name: string) {
+  //   console.log('default thumbnail')
+  //   return this.httpClient.get(`${this.roomApi}/default-theme-thumbnail/${name}`);
+  // }
+  //
+  // getThumbnail(name: string) {
+  //   console.log('get thumbnail')
+  //   return this.httpClient.get(`${this.roomApi}/thumbnail/${name}`);
+  // }
+
+  // getThumbnailUrl(thumbnail: string | null, isVideo: boolean) {
+  //   if (thumbnail === null && isVideo) {
+  //     return this.defaultThumbnail = `${environment.urlBackend}/video/default-video-thumbnail`;
+  //   }
+  //   if (thumbnail === null && !isVideo) {
+  //     return this.defaultThumbnail = `${environment.urlBackend}/video/default-thumbnail`;
+  //   }
+  //   if (thumbnail !== null && isVideo) {
+  //     return `${environment.urlBackend}/video/thumbnail/${thumbnail}`;
+  //   }
+  //   if (thumbnail !== null && !isVideo) {
+  //     return `${environment.urlBackend}/video/thumbnail/${thumbnail}`;
+  //   }
+  //   else {
+  //     return this.defaultThumbnail = ''
+  //   }
+  // }
+
+
   getVideo(name: string) {
     const encodedName = encodeURIComponent(name);
 
@@ -32,7 +87,7 @@ export class RoomService {
    return this.httpClient.get(this.roomApi + '/get-video/' + name, { responseType: 'blob' });
   }
 
-  addMovie(body: {name: string, stream_url: string, type: MovieTypeInterface[], release_year: string}) {
+  addMovie(body: PersonInterface) {
     return this.httpClient.post(this.roomApi, body);
   }
 
@@ -50,9 +105,27 @@ export class RoomService {
   }
 
   checkNameAvailability(name: string){
-    console.log('check name');
     return this.httpClient.get(this.roomApi + `/check-name-availability/${name}`);
   }
+
+  validateRoomNameEdit(id: string): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const newUsername = control.value;
+
+      return this.checkNameEditAvailability(newUsername, id).pipe(
+        map((response: any) => {
+          console.log('async validator response:', response);
+          return response.message === 'name taken' ? { nameTaken: true } : null;
+        }),
+        catchError(() => of(null))
+      );
+    };
+  }
+
+  checkNameEditAvailability(name: string, id: string){
+    return this.httpClient.get(this.roomApi + `/check-name-edit-availability/${name}/${id}`);
+  }
+
   // addRoomVideo(id: string, file: File, roomName: any) {
   //   const formData = new FormData();
   //   formData.append('file', file);

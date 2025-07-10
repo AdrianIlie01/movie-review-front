@@ -1,0 +1,48 @@
+<div class="wrapper">
+  <app-form
+    title="Edit Movie"
+    [formGroup]="roomForm"
+    [formButtonName]="ButtonName.Save"
+    [formFunction]="onSubmit.bind(this)"
+    [errorMessage]="errorMessage"
+  >
+    <app-form-input
+      label="Name"
+      placeholder="Movie title"
+      controlName="name"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter a movie name.',
+        nameTaken: 'This name is already taken!'
+      }"
+    ></app-form-input>
+
+    <app-form-select
+      label="Movie Type"
+      controlName="type"
+      [formGroup]="roomForm"
+      [options]="movieTypes"
+      [submitted]="submitted"
+    ></app-form-select>
+
+    <app-form-input
+      label="Stream URL"
+      placeholder="Paste the stream URL"
+      controlName="stream_url"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter an url for this movie.',
+         }"
+    ></app-form-input>
+
+    <app-form-input
+      label="Release Year"
+      placeholder="e.g. 2024"
+      controlName="release_year"
+      [submitted]="submitted"
+      [errors]="{
+        required: 'Please enter the release year.'
+      }"
+    ></app-form-input>
+  </app-form>
+</div>

@@ -12,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormComponent} from "../../shared/components/form/form.component";
 import {FormInputComponent} from '../../shared/components/form-input/form-input.component';
 import {SharedModule} from '../../shared/shared.module';
+import {RoomEditComponent} from './pages/room-edit/room-edit.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {SharedModule} from '../../shared/shared.module';
     AddRoomPageComponent,
     ListRoomPageComponent,
     RoomPageComponent,
+    RoomEditComponent
   ],
   imports: [
     CommonModule,

@@ -61,21 +61,4 @@ export class RoomPageComponent implements OnInit {
     });
   }
 
-  // getImage() {
-  //   const name = 'imagine.png';
-  //
-  //   this.roomService.getImage(name).subscribe({
-  //     next: (data)=> {
-  //     const imageBlob = new Blob([data], {type: 'image/png'}); // Specificăm tipul imaginii
-  //     const imageObjectUrl = URL.createObjectURL(imageBlob);
-  //
-  //     this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageObjectUrl);
-  //   },
-  //     error: (error) => {
-  //       console.error('Eroare la obținerea image:', error);
-  //     }
-  // });
-//
-  // }
-
 }

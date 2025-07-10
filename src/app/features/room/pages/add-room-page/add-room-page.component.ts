@@ -16,6 +16,8 @@ import {Router} from '@angular/router';
 })
 export class AddRoomPageComponent implements OnInit {
   protected userInfo!: any;
+  protected readonly ButtonName = ButtonName;
+  protected readonly MovieTypes = MovieTypes;
 
   selectedFile!: File | null;
   roomName!: string;
@@ -28,10 +30,14 @@ export class AddRoomPageComponent implements OnInit {
 
   ) {
     this.movieForm = this.fb.group({
-      name: ['', [
-        Validators.required,
-        this.roomService.validateRoomName()
-      ]],
+      name: ['', {
+        validators: [Validators.required],
+        asyncValidators:
+          [
+            this.roomService.validateRoomName()
+          ],
+        updateOn: 'blur'
+      }],
       type: [[], [
         // Validators.required,
       ]],
@@ -70,27 +76,27 @@ export class AddRoomPageComponent implements OnInit {
   onSubmit(): void {
     this.errorMessage = [];
     const typeValue = this.movieForm.get('type')?.value;
-
     this.submitted = true;
+
     if (this.movieForm.invalid) {
       if (typeValue.length <= 0) {
         this.errorMessage = ['Please select at least one movie type.']
+        return;
       }
-
       return;
     }
 
-    console.log('typeValue')
-    console.log(typeValue)
-
     if (typeValue.length <= 0) {
-      this.errorMessage = ['Please select at least one movie type.']
+      this.errorMessage = ['Please select at least one movie type.'];
+      return;
     } else  {
       this.errorMessage = [];
     }
 
     this.roomService.addMovie(this.movieForm.value).subscribe({
       next: (res) => {
+        console.log('succesfullly added movie');``
+        console.log(this.movieForm.value);
         this.router.navigateByUrl('home').then();
       },
       error: (error) => {
@@ -109,6 +115,4 @@ export class AddRoomPageComponent implements OnInit {
 
   }
 
-  protected readonly ButtonName = ButtonName;
-  protected readonly MovieTypes = MovieTypes;
 }

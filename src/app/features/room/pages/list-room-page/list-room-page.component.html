@@ -1,1 +1,38 @@
-<p>list-room-page works!</p>
+<div *ngIf="loading" class="loader"></div>
+
+<div *ngIf="!loading && videos.length > 0" class="movies-list-container">
+  <div *ngFor="let video of videos" class="movie-card">
+
+    <img class="thumbnail"
+         [src]="getThumbnailUrl(video)"
+         (error)="onImageError($event, video)"
+         alt="{{ video.name }}" />
+
+    <h3 class="name" [title]="video.name">{{ video.name }}</h3>
+
+    <p *ngIf="video.type" class="type">
+      <span class="label">Type:</span> {{ video.type?.join(', ') }}
+    </p>
+
+    <p *ngIf="video.release_year" class="release-year">
+      <span class="label">Year:</span> {{ video.release_year }}
+    </p>
+
+    <div class="buttons-container">
+      <app-action-button class="btn-container"
+                         [buttonName]="ButtonName.Edit"
+                         [buttonFunction]="editVideo.bind(this, video.id)">
+      </app-action-button>
+
+      <app-action-button class="btn-container"
+                         [buttonName]="ButtonName.Cast"
+                         [buttonFunction]="managePersonsPerRolePerMovie.bind(this, video.id)">
+      </app-action-button>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="!loading && videos.length === 0" class="no-movies">
+  No movies available.
+</div>
