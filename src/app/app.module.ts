@@ -9,6 +9,7 @@ import {AuthInterceptor} from './core/interceptors/auth.interceptor';
 import {RefreshTokenInterceptor} from './core/interceptors/refresh-token.interceptor';
 import {SharedModule} from './shared/shared.module';
 import { PersonModule } from './features/person/person.module';
+import { MoviePersonModule } from './features/movie-person/movie-person.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { PersonModule } from './features/person/person.module';
     FeaturesModule,
     SharedModule,
     PersonModule,
+    MoviePersonModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
