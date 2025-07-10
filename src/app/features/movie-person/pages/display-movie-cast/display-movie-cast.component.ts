@@ -4,6 +4,7 @@ import {MoviePersonService} from '../../services/movie-person.service';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {PersonRoles} from '../../../../shared/enums/person-roles';
 import {PersonInterface} from '../../../../shared/interfaces/person.interface';
+import {RoomService} from '../../../room/services/room.service';
 
 @Component({
   selector: 'app-display-movie-cast',
@@ -17,7 +18,8 @@ export class DisplayMovieCastComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private castService: MoviePersonService
+    private castService: MoviePersonService,
+    private movieService: RoomService
   ) {
   }
 
@@ -33,11 +35,12 @@ export class DisplayMovieCastComponent implements OnInit {
     this.route.params.subscribe(params => {
         this.movieId = params['movieId'];
 
+        this.movieService.getRoom(this.movieId).subscribe((d: any) => {
+          this.movieName = d.name || 'Movie';
+        })
+
       this.getCast(this.movieId).subscribe((data: any) => {
-        console.log('data')
-        console.log(data)
         this.cast = data;
-        this.movieName = data[0]?.room?.name || 'Movie';
         this.groupCastByRole();
       });
     });
@@ -66,11 +69,6 @@ export class DisplayMovieCastComponent implements OnInit {
   addPersons() {
     this.router.navigateByUrl(`credits/add-cast/${this.movieId}`);
   }
-
-  // addPersonPerRole(roles: PersonRoles, persons: string[]) {
-  //
-  // }
-
 
   personInfo(item: any){
     // this.router.navigateByUrl(`/person/${item.person.id}`);
