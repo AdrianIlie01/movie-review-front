@@ -1,3 +1,59 @@
-p {
+.not-found-full-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
   color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+  padding: 2rem;
+}
+
+.code {
+  font-size: 8rem;
+  margin: 0;
+  color: var(--question-text);
+  /*color: #007bff;*/
+  font-weight: bold;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.message {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 0 1.5rem;
+  color: var(--text-color);
+}
+
+.countdown {
+  font-size: 0.95rem;
+  color: var(--place-holder-color);
+  margin-bottom: 2rem;
+}
+
+.btn-go-home {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 24px;
+  /*background-color: #00a2c7;*/
+  background-color: #0085a3;
+  /*background-color: #007bff;*/
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-go-home:hover {
+  background-color: #00a2c7;
+  /*color: black;*/
+  transition: 0.3s ease;
+  transform: translateY(-2px);
 }

@@ -1,6 +1,8 @@
-<p>not-found-page works!</p>
+<div class="not-found-full-page">
+  <h1 class="code">404</h1>
+  <h2 class="title">Page Not Found</h2>
+  <p class="message">{{ message }}</p>
+  <p class="countdown">Redirecting to home in {{ countdown }} seconds...</p>
 
-
-<p>
-  message: {{message}}
-</p>
+  <button class="btn-go-home" (click)="redirectNow()">Go to Home Now</button>
+</div>
