@@ -5,12 +5,19 @@
        [class.open]="isOpen"
        (click)="toggleDropdown()"
   >
-<!--    display the selected option or generic message-->
-    <div class="selected-text"
-         [class.placeholder]="!selectedOptions"
-    >
+<!--    display the selected option or generic message and add placeholder class only for the generic message-->
+<!--    <div class="selected-text" [class.placeholder]="controlValue.length === 0">-->
+<!--      {{ selectedLabels }}-->
+<!--    </div>-->
+
+    <div class="selected-text" [class.placeholder]="isPlaceholder()">
       {{ selectedLabels }}
     </div>
+
+
+
+
+
     <div class="arrow" [class.open]="isOpen">&#9662;</div>
   </div>
 
@@ -22,13 +29,20 @@
       [class.selected]="isSelected(option)"
     >
       <input type="checkbox" [checked]="isSelected(option)" readonly />
-      <span>{{ toTitleCase(option) }}</span>
+      <span>{{ getOptionLabel(option) }}</span>
     </div>
   </div>
-
-<!--  <div class="error" *ngIf="submitted && control?.invalid">-->
-<!--    <div *ngFor="let errorKey of (control?.errors || {}) | keyvalue">-->
-<!--      {{ errors[errorKey.key] }}-->
+<!--  <div class="options" *ngIf="isOpen">-->
+<!--    <div-->
+<!--      class="option"-->
+<!--      *ngFor="let option of options"-->
+<!--      (click)="selectOption(option)"-->
+<!--      [class.selected]="isSelected(option)"-->
+<!--    >-->
+<!--      <input type="checkbox" [checked]="isSelected(option)" readonly />-->
+<!--      <span>{{ toTitleCase(option) }}</span>-->
 <!--    </div>-->
 <!--  </div>-->
+
+
 </div>

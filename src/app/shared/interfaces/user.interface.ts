@@ -1,4 +1,4 @@
-export interface UserListInterface {
+export interface UserInterface {
   id: string;
   email: string;
   email_verified_at: string | null;

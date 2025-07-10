@@ -242,7 +242,7 @@ input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
   margin-left: 10px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
 
   .header {
     position: fixed;
@@ -279,7 +279,7 @@ input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
 }
 
 /*profile*/
-.has-submenu:hover #profile {
+.has-submenu:hover .submenu-trigger {
   color: black!important;
   background-color: var(--bg-color-inverted)!important;
 }
@@ -303,7 +303,7 @@ input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
   color: var(--nav-li-color);
 }
 
-.has-submenu > #profile::after {
+.has-submenu > .submenu-trigger::after {
   content: "";
   position: absolute;
   right: 20px;
@@ -317,13 +317,13 @@ input[type=checkbox]:checked ~ .menuIconToggle > .dia.part-2 {
   transition: transform 0.3s ease, border-top-color 0.3s ease;
 }
 
-.has-submenu:hover > #profile::after {
+.has-submenu:hover > .submenu-trigger::after {
   border-top: 6px solid black;
   transition: transform 0.3s ease, border-top-color 0.3s ease;
 }
 
 /* Răsucire săgeată când e deschis submenu */
-.has-submenu.open > #profile::after {
+.has-submenu.open > .submenu-trigger::after {
   transform: translateY(-50%) rotate(180deg);
 }
 

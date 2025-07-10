@@ -2,7 +2,7 @@
 <button
   type="button"
   class="action-button"
-  [ngClass]="getCssClass(buttonName)"
+  [ngClass]="[getCssClass(buttonName)]"
   (click)="handleClick()"
 >
 
@@ -17,5 +17,11 @@
     : buttonName === buttonText.VerifyOTP ? 'Verify'
     : buttonName === buttonText.Next ? 'Next'
     : buttonName === buttonText.ResetPassword ? 'Change Password'
+    : buttonName === buttonText.ManageCast ? 'Manage Cast'
+    : buttonName === buttonText.AddCast ? 'Add Cast'
+    : buttonName === buttonText.AddMovie ? 'Add Movie'
+    : buttonName === buttonText.ManageMovies ? 'Manage Movies'
+    : buttonName === buttonText.Movies ? 'Movies'
+    : buttonName === buttonText.Cast ? 'Cast'
         : '' }}
 </button>

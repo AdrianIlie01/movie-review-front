@@ -16,23 +16,42 @@
           <li (click)="redirectHome(); hideNavMenu();"><a>Home</a></li>
 
           <li *ngIf="isLogged && isAdmin" (click)="userList(); hideNavMenu();"><a>User List</a></li>
-          <li *ngIf="isLogged && isAdmin" (click)="roomList(); hideNavMenu();"><a>Movie List</a></li>
-          <li *ngIf="isLogged && isAdmin" (click)="createRoom(); hideNavMenu();"><a>Add Movie</a></li>
-          <!-- <li *ngIf="isLogged && isAdmin" (click)="donations(); hideNavMenu();"><a>Donații</a></li> -->
-<!--          <li *ngIf="isLogged && isAdmin" (click)="donationHistory(); hideNavMenu();"><a>Donation History</a></li>-->
 
-    <!--      <li *ngIf="isLogged && isAdmin" (click)="profile(); hideNavMenu();"><a>Profile</a></li>-->
+<!--          <li *ngIf="isLogged && isAdmin" (click)="roomList(); hideNavMenu();"><a>Movie List</a></li>-->
+<!--          <li *ngIf="isLogged && isAdmin" (click)="createRoom(); hideNavMenu();"><a>Add Movie</a></li>-->
+<!--         <li *ngIf="isLogged && isAdmin" (click)="personList(); hideNavMenu();"><a>Person List</a></li>-->
+<!--         <li *ngIf="isLogged && isAdmin" (click)="createPerson(); hideNavMenu();"><a>Add Person</a></li>-->
 
-         <li class="has-submenu" *ngIf="isLogged" [class.open]="submenuOpen" (click)="toggleSubmenu($event)">
-           <a id="profile">Profile</a>
+         <!-- Movie -->
+         <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="movieSubmenuOpen" (click)="toggleMovieSubmenu($event)">
+           <a class="submenu-trigger">Movie</a>
            <ul class="submenu">
-             <li (click)="userInfo(); hideNavMenu(); toggleSubmenu($event);"><a>User Info</a></li>
-             <li (click)="changeUsername(); hideNavMenu(); toggleSubmenu($event);"><a>Change Username</a></li>
-             <li (click)="updateContactInfo(); hideNavMenu(); toggleSubmenu($event);"><a>Change User Info</a></li>
-             <li (click)="changePassword(); hideNavMenu(); toggleSubmenu($event);"><a>Change Password</a></li>
-             <li (click)="changeEmail(); hideNavMenu(); toggleSubmenu($event);"><a>Change Email</a></li>
-             <li *ngIf="isLogged" (click)="twoFA(); hideNavMenu(); toggleSubmenu($event);"><a>{{_2fa}}</a></li>
-             <li (click)="deleteAccount(); hideNavMenu(); toggleSubmenu($event);"><a>Delete Account</a></li>
+             <li (click)="roomList(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Movie List</a></li>
+             <li (click)="createRoom(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Add Movie</a></li>
+           </ul>
+         </li>
+
+         <!-- Person -->
+         <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="personSubmenuOpen" (click)="togglePersonSubmenu($event)">
+           <a class="submenu-trigger">Person</a>
+           <ul class="submenu">
+             <li (click)="personList(); hideNavMenu(); togglePersonSubmenu($event);"><a>Person List</a></li>
+             <li (click)="createPerson(); hideNavMenu(); togglePersonSubmenu($event);"><a>Add Person</a></li>
+           </ul>
+         </li>
+
+
+<!--         Profile-->
+         <li class="has-submenu" *ngIf="isLogged" [class.open]="profileSubmenuOpen" (click)="toggleProfileSubmenu($event)">
+           <a class="submenu-trigger">Profile</a>
+           <ul class="submenu">
+             <li (click)="userInfo(); hideNavMenu(); toggleProfileSubmenu($event);"><a>User Info</a></li>
+             <li (click)="changeUsername(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Username</a></li>
+             <li (click)="updateContactInfo(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change User Info</a></li>
+             <li (click)="changePassword(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Password</a></li>
+             <li (click)="changeEmail(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Email</a></li>
+             <li *ngIf="isLogged" (click)="twoFA(); hideNavMenu(); toggleProfileSubmenu($event);"><a>{{_2fa}}</a></li>
+             <li (click)="deleteAccount(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Delete Account</a></li>
            </ul>
          </li>
 

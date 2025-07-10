@@ -32,8 +32,9 @@ export class NavigationMenuComponent implements OnInit {
   protected action!: string;
   protected _2fa!: string;
   protected _2fa_enabled: boolean = false;
-  protected submenuOpen = false;
-
+  protected profileSubmenuOpen = false;
+  protected movieSubmenuOpen = false;
+  protected personSubmenuOpen = false;
   async ngOnInit() {
 
     this.checkLoggedInStatus();
@@ -63,9 +64,31 @@ export class NavigationMenuComponent implements OnInit {
   }
 
 
-  toggleSubmenu(event: Event) {
+  toggleProfileSubmenu(event: Event) {
     event.preventDefault();
-    this.submenuOpen = !this.submenuOpen;
+    this.profileSubmenuOpen = !this.profileSubmenuOpen;
+    if (this.profileSubmenuOpen) {
+      this.movieSubmenuOpen = false;
+      this.personSubmenuOpen = false;
+    }
+  }
+
+  toggleMovieSubmenu(event: Event) {
+    event.preventDefault();
+    this.movieSubmenuOpen = !this.movieSubmenuOpen;
+    if (this.movieSubmenuOpen) {
+      this.personSubmenuOpen = false;
+      this.profileSubmenuOpen = false;
+    }
+  }
+
+  togglePersonSubmenu(event: Event) {
+    event.preventDefault();
+    this.personSubmenuOpen = !this.personSubmenuOpen;
+    if (this.personSubmenuOpen) {
+      this.movieSubmenuOpen = false;
+      this.profileSubmenuOpen = false;
+    }
   }
 
   hideNavMenu() {
@@ -73,7 +96,9 @@ export class NavigationMenuComponent implements OnInit {
     if (checkboxElement !== null) {
       checkboxElement.checked = false;
       this.closed = true;
-      this.submenuOpen = false;
+      this.profileSubmenuOpen = false;
+      this.movieSubmenuOpen = false;
+      this.personSubmenuOpen = false;
     }
   }
 
@@ -201,12 +226,30 @@ export class NavigationMenuComponent implements OnInit {
     }
   }
 
+  async personList() {
+    await this.checkLoggedInStatus()
+    this.checkRole();
+    if (this.isLogged && this.isAdmin) {
+      await this.router.navigateByUrl('person/list');
+      this.currentComponentName= 'Person List';
+    }
+  }
+
   async createRoom() {
     await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
       await this.router.navigateByUrl('room/add');
       this.currentComponentName= 'Create Room';
+    }
+  }
+
+  async createPerson() {
+    await this.checkLoggedInStatus()
+    this.checkRole();
+    if (this.isLogged && this.isAdmin) {
+      await this.router.navigateByUrl('person/add');
+      this.currentComponentName= 'Create Person';
     }
   }
 

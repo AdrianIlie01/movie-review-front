@@ -9,4 +9,10 @@ export enum ButtonName {
   VerifyOTP = 'Verify OTP',
   Next = 'Next',
   ResetPassword = 'Reset Password',
+  ManageCast = 'Manage Cast',
+  ManageMovies = 'Manage Movies',
+  AddCast = 'Add Cast',
+  AddMovie = 'Add Movie',
+  Movies = 'Movies',
+  Cast = 'Cast',
 }

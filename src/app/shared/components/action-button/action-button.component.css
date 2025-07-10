@@ -6,7 +6,6 @@
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-
 .action-button.save {
   color: white;
   background-color: green;
@@ -49,7 +48,13 @@
 .action-button.enable,
 .action-button.disable,
 .action-button.reset-password,
-.action-button.verify-otp {
+.action-button.verify-otp,
+.action-button.manage-movies,
+.action-button.add-movie,
+.action-button.add-cast,
+.action-button.movies,
+.action-button.cast,
+.action-button.manage-cast{
   width: 100%;
   background-color: #007bff;
   color: white;
@@ -68,7 +73,13 @@
 .action-button.enable:hover,
 .action-button.disable:hover,
 .action-button.reset-password:hover,
-.action-button.verify-otp:hover {
+.action-button.verify-otp:hover,
+.action-button.add-movie:hover,
+.action-button.add-cast:hover,
+.action-button.movies:hover,
+.action-button.cast:hover,
+.action-button.manage-movies:hover,
+.action-button.manage-cast:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
 }
