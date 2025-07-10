@@ -14,9 +14,14 @@ body {
 }
 
 #title {
+  max-width: 60%;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 1.2rem;
+  margin: 0 auto 1.2rem;
 }
 
 .form-container {

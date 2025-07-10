@@ -45,13 +45,13 @@ p {
   gap: 1rem;
 }
 
-.add-movies, .add-roles, .add-persons {
-  margin: 0 auto;
-  max-width: 60%;
-  text-align: center;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
+/*.add-movies, .add-roles, .add-persons {*/
+/*  margin: 0 auto;*/
+/*  max-width: 60%;*/
+/*  text-align: center;*/
+/*  word-break: break-word;*/
+/*  overflow-wrap: break-word;*/
+/*}*/
 
 .cast-wrapper {
   min-height: 100vh;
