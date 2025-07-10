@@ -49,7 +49,7 @@
 </div>
 
 <ng-template #noPeople>
-  <div class="no-persons">
+  <div *ngIf="!loading" class="no-persons">
     No people available.
   </div>
 </ng-template>
