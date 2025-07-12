@@ -83,7 +83,7 @@ export class RoomEditComponent implements OnInit {
       next: () => {
         // this.router.navigateByUrl('/room/list'),
         console.log('updated')
-        this.router.navigateByUrl('home')
+        this.router.navigateByUrl('room/list')
       },
       error: (error) => {
         if (Array.isArray(error.error?.message)) {
