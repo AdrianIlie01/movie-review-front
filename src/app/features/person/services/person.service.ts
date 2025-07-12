@@ -5,6 +5,7 @@ import {MovieTypeInterface} from '../../../shared/interfaces/movie-type.interfac
 import {AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {catchError, map, Observable, of} from 'rxjs';
 import {PersonInterface} from '../../../shared/interfaces/person.interface';
+import {UserInterface} from '../../../shared/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,12 @@ export class PersonService {
   ) { }
 
   getAllPersons() {
-    console.log(this.personApi);
     return this.httpClient.get<PersonInterface[]>(`${this.personApi}`);
   }
+  getAllPaginated(limit: number, offset: number): Observable<PersonInterface[]> {
+    return this.httpClient.get<PersonInterface[]>(`${this.personApi}/paginated?limit=${limit}&offset=${offset}`);
+  }
+
   getPerson(id: string) {
     return this.httpClient.get<PersonInterface>(`${this.personApi}/id/${id}`);
   }

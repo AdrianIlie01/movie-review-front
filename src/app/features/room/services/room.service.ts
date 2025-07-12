@@ -25,6 +25,10 @@ export class RoomService {
     return this.httpClient.get<any[]>(`${this.roomApi}`);
   }
 
+  getAllPaginated(limit: number, offset: number): Observable<RoomDataInterface[]> {
+    return this.httpClient.get<RoomDataInterface[]>(`${this.roomApi}/paginated?limit=${limit}&offset=${offset}`);
+  }
+
   getRoom(id: string)  {
     return this.httpClient.get<RoomDataInterface>(`${this.roomApi}/id/${id}`);
   }

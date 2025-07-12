@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {UserInterface} from '../../../shared/interfaces/user.interface';
+import {RoomDataInterface} from '../../../shared/interfaces/room-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class UserService {
 
   getAllUsers(): Observable<UserInterface[]>  {
     return this.httpClient.get<UserInterface[]>(this.apiUrl);
+  }
+
+  getAllPaginated(limit: number, offset: number): Observable<UserInterface[]> {
+    return this.httpClient.get<UserInterface[]>(`${this.apiUrl}/paginated?limit=${limit}&offset=${offset}`);
   }
 
   getUserInfo() {

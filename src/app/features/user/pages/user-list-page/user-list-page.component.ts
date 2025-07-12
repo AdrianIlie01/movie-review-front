@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {UserInterface} from '../../../../shared/interfaces/user.interface';
 import {AuthService} from '../../../../core/services/auth.service';
+import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
 
 @Component({
   selector: 'app-user-list-page',
@@ -11,48 +12,104 @@ import {AuthService} from '../../../../core/services/auth.service';
   styleUrl: './user-list-page.component.css'
 })
 export class UserListPageComponent implements OnInit {
+  @ViewChild('container') containerRef!: ElementRef;
 
   constructor(
     protected authService: AuthService,
-    protected userService: UserService
+    protected userService: UserService,
+    private gridVisibilityService: CardsVisibilityService,
   ) {
   }
 
-  protected users!: UserInterface[];
+  protected users: UserInterface[] = [];
   protected currentUserId!: string;
   protected loadingUserId: string | null = null;
   protected loading = false;
-  ngOnInit() {
-    this.loading = true;
+  protected currentUserData!: UserInterface;
+  protected noMore = false;
+  protected limit = 10;
+  protected offset = 0;
+  protected initialAutoloadDone = false;
 
+
+  ngOnInit(): void {
     this.authService.isAuthenticated().subscribe((loggedIn) => {
       if (loggedIn) {
         this.userService.getUserInfo().subscribe((user: any) => {
           this.currentUserId = user.id;
-
-          this.userService.getAllUsers().subscribe({
-            next: (data) => {
-              this.loading = false;
-
-              console.log('Users fetched successfully:');
-              console.log(data)
-              this.users = data;
-
-              console.log(this.users);
-
-              console.log(Array.isArray(this.users));
-            },
-            error: (error) => {
-              this.loading = false;
-              console.error('Error fetching users:', error);
-            }
-          });
+          this.currentUserData = user;
+          this.users = [user];
+          this.checkIfInitialLoadNeeded();
         });
       }
     });
-
-
   }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if (this.loading || this.noMore) return;
+
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 300;
+
+    if (scrollPosition >= threshold) {
+      this.loadMoreUsers();
+    }
+  }
+
+
+  loadMoreUsers(checkAfterLoad = false): void {
+    if (this.loading || this.noMore) return;
+
+    this.loading = true;
+
+    this.userService.getAllPaginated(this.limit, this.offset).subscribe({
+      next: (fetched: UserInterface[]) => {
+        if (fetched.length === 0) {
+          this.noMore = true;
+        } else {
+          this.users.push(...fetched);
+          this.offset += this.limit;
+        }
+        this.loading = false;
+
+        if (checkAfterLoad && !this.initialAutoloadDone) {
+          this.checkIfInitialLoadNeeded();
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Error fetching users:', err);
+      }
+    });
+  }
+
+  checkIfInitialLoadNeeded(): void {
+    if (!this.containerRef) {
+      this.loadMoreUsers(true);
+      return;
+    }
+
+    const container = this.containerRef.nativeElement as HTMLElement;
+    const { cardsPerRow, visibleRows } = this.gridVisibilityService.getCardsPerRowAndVisibleRows(container, '.person-card');
+
+
+    if (cardsPerRow === 0 || visibleRows === 0) {
+      this.loadMoreUsers(true);
+      return;
+    }
+
+    const maxCardsVisible = cardsPerRow * visibleRows;
+    const currentCardsCount = this.users.length;
+
+
+    if (currentCardsCount < maxCardsVisible) {
+      this.loadMoreUsers(true);
+    } else {
+      this.initialAutoloadDone = true;
+    }
+  }
+
 
   onRoleChange(user: UserInterface) {
     this.loadingUserId = user.id;

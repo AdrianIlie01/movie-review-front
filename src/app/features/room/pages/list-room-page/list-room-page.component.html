@@ -1,6 +1,5 @@
-<div *ngIf="loading" class="loader"></div>
-
-<div *ngIf="!loading && videos.length > 0" class="movies-list-container">
+<div *ngIf="loading && videos.length === 0" class="loader"></div>
+<div  #moviesContainer *ngIf="!loading || videos.length > 0" class="movies-list-container">
   <div *ngFor="let video of videos" class="movie-card">
 
     <img class="thumbnail"
@@ -32,6 +31,9 @@
 
   </div>
 </div>
+
+<div *ngIf="loading && videos.length > 0" class="loader"></div>
+
 
 <div *ngIf="!loading && videos.length === 0" class="no-movies">
   No movies available.

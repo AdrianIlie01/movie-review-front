@@ -1,6 +1,6 @@
-<div *ngIf="loading" class="loader"></div>
+<div *ngIf="loading && users.length === 0" class="loader"></div>
 
-<div *ngIf="users?.length" class="person-list-container">
+<div #container *ngIf="users?.length" class="person-list-container">
   <div *ngFor="let user of users" class="person-card">
 
     <div class="avatar">
@@ -32,7 +32,6 @@
 
     <div class="actions">
       <ng-container *ngIf="user.id !== currentUserId; else currentUserInfo">
-<!--        <ng-container *ngIf="loadingUserId !== user.id; else spinner">-->
         <ng-container *ngIf="loadingUserId !== user.id">
           <select class="role-select" [(ngModel)]="user.role" (change)="onRoleChange(user)">
             <option value="user">User</option>
@@ -40,9 +39,6 @@
             <option value="moderator">Moderator</option>
           </select>
         </ng-container>
-<!--        <ng-template #spinner>-->
-<!--          <div class="loader"></div>-->
-<!--        </ng-template>-->
 
         <button
           class="btn ban-btn"
@@ -50,8 +46,7 @@
           [disabled]="loadingUserId === user.id"
         >
           <div *ngIf="loadingUserId === user.id" class="loader"></div>
-
-          &nbsp;{{ user.status == 'banned' ? 'Unban' : 'Ban' }}
+          &nbsp;{{ user.status === 'banned' ? 'Unban' : 'Ban' }}
         </button>
       </ng-container>
 
@@ -62,4 +57,10 @@
       </ng-template>
     </div>
   </div>
+</div>
+
+<div *ngIf="loading && users.length > 0" class="loader"></div>
+
+<div *ngIf="!loading && users.length === 0" class="no-users">
+  No users found.
 </div>
