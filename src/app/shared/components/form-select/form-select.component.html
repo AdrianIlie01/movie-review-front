@@ -14,17 +14,14 @@
       {{ selectedLabels }}
     </div>
 
-
-
-
-
     <div class="arrow" [class.open]="isOpen">&#9662;</div>
   </div>
 
   <div class="options" *ngIf="isOpen">
+
     <div
       class="option"
-      *ngFor="let option of options"
+      *ngFor="let option of sortedOptions"
       (click)="selectOption(option)"
       [class.selected]="isSelected(option)"
     >
@@ -32,17 +29,6 @@
       <span>{{ getOptionLabel(option) }}</span>
     </div>
   </div>
-<!--  <div class="options" *ngIf="isOpen">-->
-<!--    <div-->
-<!--      class="option"-->
-<!--      *ngFor="let option of options"-->
-<!--      (click)="selectOption(option)"-->
-<!--      [class.selected]="isSelected(option)"-->
-<!--    >-->
-<!--      <input type="checkbox" [checked]="isSelected(option)" readonly />-->
-<!--      <span>{{ toTitleCase(option) }}</span>-->
-<!--    </div>-->
-<!--  </div>-->
 
 
 </div>

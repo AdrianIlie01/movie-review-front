@@ -22,6 +22,13 @@ export class FormSelectComponent implements OnInit{
   @Input() submitted = false;
   @Input() errors: { [key: string]: string } = {};
 
+  @HostListener('document:click', ['$event.target'])
+  onClickOutside(targetElement: any) {
+    if (!this.el.nativeElement.contains(targetElement)) {
+      this.isOpen = false;
+    }
+  }
+
   isOpen = false;
 
   getOptionValue(option: any): string {
@@ -176,11 +183,27 @@ export class FormSelectComponent implements OnInit{
       .replace(/([a-z0-9])([A-Z])/g, '$1 $2')             // adaugă spațiu înainte de litere mari
       .replace(/\b\w/g, c => c.toUpperCase());      }
 
-  @HostListener('document:click', ['$event.target'])
-  onClickOutside(targetElement: any) {
-    if (!this.el.nativeElement.contains(targetElement)) {
-      this.isOpen = false;
-    }
+
+  get sortedOptions() {
+    if (!this.options || !this.control) return [];
+
+    const selectedValues = this.control.value;
+
+    const selectedArray = this.multiple
+      ? (Array.isArray(selectedValues) ? selectedValues : [])
+      : [selectedValues];
+
+    return [...this.options].sort((a, b) => {
+      const aVal = this.getOptionValue(a);
+      const bVal = this.getOptionValue(b);
+
+      const aSelected = selectedArray.includes(aVal);
+      const bSelected = selectedArray.includes(bVal);
+
+      if (aSelected && !bSelected) return -1;
+      if (!aSelected && bSelected) return 1;
+      return 0;
+    });
   }
 
 }
