@@ -3,6 +3,7 @@ import {RoomService} from '../../services/room.service';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {Router} from '@angular/router';
 import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-list-room-page',
@@ -18,7 +19,7 @@ export class ListRoomPageComponent implements OnInit {
   protected loading = false;
   protected ButtonName = ButtonName;
   protected noMore = false;
-  protected limit = 2;
+  protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
   constructor(

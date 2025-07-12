@@ -3,6 +3,7 @@ import {UserService} from '../../services/user.service';
 import {UserInterface} from '../../../../shared/interfaces/user.interface';
 import {AuthService} from '../../../../core/services/auth.service';
 import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-list-page',
@@ -27,7 +28,7 @@ export class UserListPageComponent implements OnInit {
   protected loading = false;
   protected currentUserData!: UserInterface;
   protected noMore = false;
-  protected limit = 10;
+  protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
 

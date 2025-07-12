@@ -28,7 +28,7 @@ export class PersonListComponent implements OnInit {
   protected readonly ButtonName = ButtonName;
   protected errorDataBase: boolean = false;
   protected noMore = false;
-  protected limit = 2;
+  protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
 
