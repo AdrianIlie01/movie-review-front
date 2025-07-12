@@ -6,6 +6,7 @@ import { ActionButtonComponent } from './components/action-button/action-button.
 import {NavigationMenuComponent} from './components/navigation-menu/navigation-menu.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormSelectComponent } from './components/form-select/form-select.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 
 
@@ -16,6 +17,7 @@ import { FormSelectComponent } from './components/form-select/form-select.compon
     ActionButtonComponent,
     NavigationMenuComponent,
     FormSelectComponent,
+    SafeUrlPipe,
   ],
     imports: [
         CommonModule,
@@ -25,6 +27,7 @@ import { FormSelectComponent } from './components/form-select/form-select.compon
     ActionButtonComponent,
     NavigationMenuComponent,
     FormSelectComponent,
+    SafeUrlPipe,
   ]
 })
 export class SharedModule { }
