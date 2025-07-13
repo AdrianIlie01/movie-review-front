@@ -1,13 +1,133 @@
-<p>room-page works!</p>
+<div class="room-page-container">
 
-room - id {{roomId}}
-
-<video *ngIf="videoUrl" width="600" controls [src]="videoUrl"></video>
-
-
-<!--<img *ngIf="imageUrl" [src]="encImage" alt="Imagine încărcată din backend" width="300">-->
-
-<br>
+  <div *ngIf="room" class="movie-header-container">
+    <div class="movie-header">
+      <h1 class="movie-title">{{ room.name }} <span class="release-year">({{ room.release_year }})</span></h1>
+    </div>
+  </div>
 
 
-<!--<img  [src]="image1" alt="Imagine încărcată din backend" width="300">-->
+  <!-- Trailer Video -->
+  <section class="video-wrapper" aria-label="Trailer video" *ngIf="sanitizedUrl">
+    <iframe [src]="sanitizedUrl" allowfullscreen title="Film trailer"></iframe>
+  </section>
+
+  <!-- Rating Section -->
+  <section *ngIf="currentUserLoaded" class="rating-section" aria-label="Film rating">
+    <h2 class="rating-header">Movie Rating</h2>
+    <div class="rating-display">
+      <div class="stars-container" aria-label="Rating stars">
+        <ng-container *ngFor="let star of stars; let i = index">
+          <span
+            class="star"
+            [ngClass]="getStarClass(i)"
+            (click)="rateMovie(i + 1)"
+            (mouseenter)="hoveredStarIndex = i + 1"
+            (mouseleave)="hoveredStarIndex = null"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="'Rate ' + (i + 1) + ' stars'"
+          >
+            ★
+          </span>
+        </ng-container>
+
+
+      </div>
+      <div class="rating-value" aria-live="polite">{{ averageRating.toFixed(1) }}/10 ({{ ratingCount }} votes)</div>
+    </div>
+  </section>
+
+
+  <section  class="cast-crew-section" *ngIf="castAndCrewGroupedByRole.length > 0" aria-label="Cast and Crew">
+    <h2 class="cast-crew-title">Cast & Crew</h2>
+
+    <div
+      class="crew-group-container" #crewGroupContainer
+      [class.expanded]="showFullCastCrew"
+    >
+      <div class="crew-group" *ngFor="let group of castAndCrewGroupedByRole">
+        <h3 class="role-title">{{ group.role | titlecase }}</h3>
+
+        <div class="crew-list">
+          <div *ngFor="let person of group.people" class="crew-person-card" tabindex="0">
+            <img
+              (click)="castInfo(person.id)"
+              [src]="getPersonImage(person)"
+              [alt]="person.name"
+              loading="lazy"
+              class="crew-person-photo"
+            />
+
+            <div class="crew-person-name">{{ person.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="show-more-button-container">
+      <button *ngIf="isCastCrewOverflow" (click)="toggleShowMore()" class="show-more-button">
+        {{ showFullCastCrew ? 'Show Less' : 'Show More' }}
+      </button>
+    </div>
+  </section>
+
+
+  <!-- Reviews Section -->
+  <section
+    class="comments-section"
+    *ngIf="currentUserLoaded" aria-label="Reviews">
+    <header class="comments-header">Reviews & Comments</header>
+
+    <div class="comments-scrollable"  #scrollContainer>
+      <div *ngIf="(comments ?? []).length > 0; else noComments">
+        <div *ngFor="let comment of comments; let i = index" class="comment-item">
+
+<!--    <div *ngIf="(comments ?? []).length > 0; else noComments">-->
+<!--      <div *ngFor="let comment of comments; let i = index" class="comment-item">-->
+          <div class="comment-header">
+            <span class="username">{{comment.userName || 'Unknown User'}}:</span>
+
+            <div class="comment-actions">
+              <div class="dropdown" tabindex="0">
+                <button class="dropdown-toggle">⋮</button>
+                <div class="dropdown-menu">
+                  <button *ngIf="comment.canDelete" (click)="deleteComment(comment, i)">Delete</button>
+                  <button *ngIf="comment.canBan" (click)="banUserByComment(comment)">Ban</button>
+                  <button *ngIf="comment.canUnban" (click)="unbanUserByComment(comment)">Unban</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-text">{{comment.text}}</div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <ng-template #noComments>
+      <p>No reviews yet. Be the first to add one!</p>
+    </ng-template>
+
+    <!-- Add Review Form -->
+    <div class="review-input-area">
+      <input
+        type="text"
+        [(ngModel)]="newReviewText"
+        placeholder="Write your review here..."
+        class="review-input"
+        [disabled]="isAddReviewDisabled"
+        (keydown.enter)="onEnter()"
+      />
+      <button
+        class="add-review-button"
+        (click)="submitReview()"
+        [disabled]="isAddReviewDisabled || !newReviewText.trim()"
+      >
+        {{ isAddReviewDisabled ? 'Wait ' + countdown + 's' : 'Add Review' }}
+      </button>
+    </div>
+
+  </section>
+</div>
