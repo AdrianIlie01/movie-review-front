@@ -120,7 +120,7 @@ export class PersonListComponent implements OnInit {
   }
 
   editPerson(id: string) {
-    this.router.navigateByUrl(`/person/edit/${id}`);
+    this.router.navigateByUrl(`/cast/edit/${id}`);
   }
 
   getRoleList(roles: string[]): string {
@@ -141,12 +141,27 @@ export class PersonListComponent implements OnInit {
   }
 
   getPersonMovies(person: any) {
-    const movies = person.movieRoles.map((data: any) => {
-      return data.room.name
-    })
+    const unique = new Set(
+      person.movieRoles
+        .map((p: any) => p.room?.name)   // extrage numele filmului
+        .filter(Boolean)                // elimină null / undefined
+    );
 
-    return movies;
+    return Array.from(unique);          // întoarce array fără duplicate
   }
+
+
+  // getPersonMovies(person: any) {
+  //   const movies = person.movieRoles.map((data: any) => {
+  //     return data.room.name
+  //   })
+  //
+  //   console.log('movies')
+  //   console.log(movies)
+  //   console.log(Array.isArray(movies))
+  //   console.log(typeof movies)
+  //   return movies;
+  // }
 
   onImageError(event: Event, video: any) {
     const imgElement = event.target as HTMLImageElement;
