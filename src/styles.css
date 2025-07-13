@@ -2,6 +2,11 @@
 @import "styles/themes.css";
 
 :root {
+  --star-filled-color: #ffca28;
+  --star-empty-color: #ccc;
+  --review-btn--bckg-focus: #3f51b5;
+  --review-btn--bckg-disabled: #162169;
+  --review-btn--bckg: #2739b7;
 }
 
 
