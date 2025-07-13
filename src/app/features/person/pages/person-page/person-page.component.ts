@@ -89,7 +89,9 @@ export class PersonPageComponent implements OnInit {
   currentImageIndex = 0;
 
   getPersonImageByIndex(index: number): string {
-    if (this.person?.images && this.person.images[index]) {
+    if (this.person?.images && this.person.images.length === 1) {
+      return this.personService.getImage(this.person.images[0]);
+    } else if (this.person?.images && this.person.images[index]) {
       return this.personService.getImage(this.person.images[index]);
     }
     // return this.personService.getDefaultImage('default_person.jpg');
@@ -116,7 +118,7 @@ export class PersonPageComponent implements OnInit {
     console.log('movie yo')
     console.log(movie.id)
 
-    this.router.navigate(['/room', movie.id]);
+    this.router.navigate(['/movie', movie.id]);
   }
 
 }

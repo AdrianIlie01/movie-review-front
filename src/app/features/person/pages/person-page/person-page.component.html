@@ -7,13 +7,13 @@
 
     <div *ngIf="person?.images as images" class="image-carousel-wrapper">
 
-      <div *ngIf="images.length > 1" class="image-carousel">
+      <div *ngIf="images.length >= 1" class="image-carousel">
 
         <img class="carousel-image"
              [src]="getPersonImageByIndex(currentImageIndex)"
              alt="{{ person.name }}" />
 
-        <div class="nav-button-wrapper">
+        <div *ngIf="images.length > 1" class="nav-button-wrapper">
           <button class="nav-button left" (click)="prevImage()">❮</button>
           <button class="nav-button right" (click)="nextImage()">❯</button>
         </div>
