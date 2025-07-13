@@ -364,6 +364,12 @@ export class RoomPageComponent implements OnInit {
     }
   }
 
+  onImageError(event: Event, video: any) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.personService.getDefaultImage('default_person.jpg');
+
+  }
+
   castInfo(id: string) {
     this.router.navigateByUrl(`cast/${id}`)
   }

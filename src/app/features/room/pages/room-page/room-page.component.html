@@ -54,6 +54,7 @@
             <img
               (click)="castInfo(person.id)"
               [src]="getPersonImage(person)"
+              (error)="onImageError($event, person)"
               [alt]="person.name"
               loading="lazy"
               class="crew-person-photo"
