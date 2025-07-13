@@ -72,6 +72,6 @@ export class DisplayMovieCastComponent implements OnInit {
 
   personInfo(item: any){
     // this.router.navigateByUrl(`/person/${item.person.id}`);
-    this.router.navigateByUrl(`/person/edit/${item.person.id}`);
+    this.router.navigateByUrl(`/cast/edit/${item.person.id}`);
   }
 }

@@ -73,7 +73,7 @@ export class DisplayPersonFilmographyComponent implements OnInit {
   }
 
   redirectMovie(movie: any) {
-    this.router.navigateByUrl(`room/edit/${movie.room.id}`);
+    this.router.navigateByUrl(`movie/edit/${movie.room.id}`);
   }
 
 }
