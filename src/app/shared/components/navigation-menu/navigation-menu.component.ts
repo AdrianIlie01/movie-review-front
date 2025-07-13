@@ -221,7 +221,7 @@ export class NavigationMenuComponent implements OnInit {
     await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
-      await this.router.navigateByUrl('room/list');
+      await this.router.navigateByUrl('movie/list');
       this.currentComponentName= 'Room List';
     }
   }
@@ -230,7 +230,7 @@ export class NavigationMenuComponent implements OnInit {
     await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
-      await this.router.navigateByUrl('person/list');
+      await this.router.navigateByUrl('cast/list');
       this.currentComponentName= 'Person List';
     }
   }
@@ -239,7 +239,7 @@ export class NavigationMenuComponent implements OnInit {
     await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
-      await this.router.navigateByUrl('room/add');
+      await this.router.navigateByUrl('movie/add');
       this.currentComponentName= 'Create Room';
     }
   }
@@ -248,7 +248,7 @@ export class NavigationMenuComponent implements OnInit {
     await this.checkLoggedInStatus()
     this.checkRole();
     if (this.isLogged && this.isAdmin) {
-      await this.router.navigateByUrl('person/add');
+      await this.router.navigateByUrl('cast/add');
       this.currentComponentName= 'Create Person';
     }
   }
