@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, where, query, orderBy } from 'firebase/firestore';
+import { onSnapshot, getFirestore, collection, addDoc, getDocs, where, query, orderBy } from 'firebase/firestore';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {RoomDataInterface} from '../../shared/interfaces/room-data.interface';
-import {PersonInterface} from '../../shared/interfaces/person.interface';
+import {Observable} from 'rxjs';
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +35,22 @@ export class FirebaseService {
       throw error;
     }
   }
+
+
+  getCommentsLive(movieId: string): Observable<any[]> {
+    return new Observable(observer => {
+      const commentsRef = collection(this.db, 'movies-comments', movieId, 'comments');
+      const q = query(commentsRef, orderBy('timestamp', 'asc'));   // vechi sus, noi jos
+
+      const unsubscribe = onSnapshot(q, snap => {
+        const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        observer.next(list);
+      }, err => observer.error(err));
+
+      return () => unsubscribe();
+    });
+  }
+
 
   async getDonationComments(movieId: string) {
     try {
@@ -71,16 +88,35 @@ export class FirebaseService {
     return this.httpClient.post(`${this.commentsApi}/add/${movieId}`, body);
   }
 
+  updateCommentsStatusByUserInRoom(userId: string, movieId: string, body: {status: string}) {
+    console.log(movieId)
+    return this.httpClient.post(`${this.commentsApi}/update-comment-status/${userId}/${movieId}`, body);
+  }
+
+  async addCommentToFirestore(movieId: string, text: string, userId: string, userName: string) {
+    const commentRef = doc(collection(this.db, "movies-comments", movieId, "comments")); // generez id automat
+    await setDoc(commentRef, {
+      text,
+      userId,
+      userName,
+      timestamp: serverTimestamp()
+    });
+  }
+
+  // addComment(movieId: string, body: {text: string}) {
+  //   return this.httpClient.post(`${this.commentsApi}/add/${movieId}`, body);
+  // }
+
   addDonationComment(movieId: string, body: {text: string, amount: string}) {
     return this.httpClient.post(`${this.commentsApi}/add-donation-message/${movieId}`, body);
   }
 
-  userDeleteOwnComment(movieId: string, commentId: string) {
-    return this.httpClient.delete(`${this.commentsApi}/delete/${movieId}/${commentId}`);
+  userDeleteOwnComment(userId: string, movieId: string, commentId: string) {
+    return this.httpClient.post(`${this.commentsApi}/delete/${userId}/${movieId}/${commentId}`, {});
   }
 
   deleteComment(movieId: string, commentId: string) {
-    return this.httpClient.delete(`${this.commentsApi}admin//delete/${movieId}/${commentId}`);
+    return this.httpClient.post(`${this.commentsApi}/admin/delete/${movieId}/${commentId}`, {});
   }
 
 }
