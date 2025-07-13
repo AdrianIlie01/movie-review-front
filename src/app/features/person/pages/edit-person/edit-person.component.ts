@@ -55,7 +55,7 @@ export class EditPersonComponent implements OnInit {
         },
         error: (err) => {
           console.error('Person not found', err);
-          this.router.navigateByUrl('/person/list').then();
+          this.router.navigateByUrl('/cast/list').then();
         }
       });
     }
@@ -83,7 +83,7 @@ export class EditPersonComponent implements OnInit {
 
     this.personService.updatePerson(this.personForm.value, this.personId).subscribe({
       next: (data) => {
-        this.router.navigateByUrl('/person/list').then();
+        this.router.navigateByUrl('/cast/list').then();
         console.log('Person updated successfully');
         console.log(this.personForm.value);
         console.log('res')
