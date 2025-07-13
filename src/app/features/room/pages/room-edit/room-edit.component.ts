@@ -61,7 +61,7 @@ export class RoomEditComponent implements OnInit {
         },
         error: (e) => {
           console.error('Room not found', e);
-          this.router.navigateByUrl('/room/list').then();
+          this.router.navigateByUrl('/movie/list').then();
         }
       });
     }
@@ -83,7 +83,7 @@ export class RoomEditComponent implements OnInit {
       next: () => {
         // this.router.navigateByUrl('/room/list'),
         console.log('updated')
-        this.router.navigateByUrl('room/list')
+        this.router.navigateByUrl('movie/list')
       },
       error: (error) => {
         if (Array.isArray(error.error?.message)) {

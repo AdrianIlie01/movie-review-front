@@ -111,7 +111,7 @@ export class ListRoomPageComponent implements OnInit {
   }
 
   editVideo(id: any){
-    this.router.navigateByUrl(`/room/edit/${id}`);
+    this.router.navigateByUrl(`/movie/edit/${id}`);
   }
 
   managePersonsPerRolePerMovie(movieId: any){
