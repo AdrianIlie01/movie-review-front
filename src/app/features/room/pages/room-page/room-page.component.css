@@ -32,6 +32,7 @@
 
 
 .room-page-container {
+  overflow-x: hidden;
   /*max-width: 960px;*/
   margin: 2rem auto;
   padding: 20px;
@@ -79,7 +80,9 @@
 
 .rating-display {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   font-size: 1.3rem;
   font-weight: 600;
@@ -279,10 +282,14 @@
   display: flex;
   gap: 12px;
   align-items: center;
+
+  width: 100%;
   margin-top: 12px;
 }
 
 .review-input {
+  min-width: 0;
+
   background-color: var(--text-color-inverted);
   color: var(--text-color);
   flex: 1;
@@ -304,6 +311,9 @@
   color: white;
   padding: 12px 20px;
   font-size: 1.1rem;
+
+  flex-shrink: 0; /* Nu se micșorează sub dimensiunea minimă a conținutului */
+  min-width: 0;
 
   border: none;
   border-radius: 25px;
@@ -334,10 +344,6 @@
 
   .comments-header {
     font-size: 1.2rem;
-  }
-
-  .add-review-button {
-    width: 100%;
   }
 
   .rating-header {
@@ -396,7 +402,7 @@
   outline: none;
   border-radius: 10px;
   padding: 8px;
-  background-color: var(--background-color);
+  background-color: var(--bg-color);
   margin-left: 0.2rem;
 
   word-wrap: break-word;       /* 🔹 rupe cuvintele lungi */
@@ -464,4 +470,5 @@
 .show-more-button:hover {
   background-color: gold;
   color: black;
+  font-weight: 600;
 }
