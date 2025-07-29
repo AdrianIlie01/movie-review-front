@@ -1,109 +1,144 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ButtonName} from '../../../../shared/enums/button-name';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../../core/services/auth.service';
-import {HomeService} from '../../services/home.service';
+import {RoomService} from '../../../room/services/room.service';
+import {PersonService} from '../../../person/services/person.service';
+import {map} from 'rxjs/operators';
+import {RoomDataInterface} from '../../../../shared/interfaces/room-data.interface';
+import {MovieTypes} from '../../../../shared/enums/movie-types';
+import {PersonRoles} from '../../../../shared/enums/person-roles';
 
 @Component({
   selector: 'app-home-page',
   standalone: false,
-
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrl: './home-page.component.css',
 })
-export class HomePageComponent implements OnInit, OnDestroy {
-  protected ActionButton = ButtonName;
+export class HomePageComponent implements OnInit {
+  homeSearchParams!: {
+    name: string;
+    category: 'movie' | 'cast';
+    filterValue: any;
+    sortField: string;
+    sortOrder: 'ASC' | 'DESC';
+  };
+  movies: RoomDataInterface[] = [];
+  trendingMovies: any[] = [];
+  topRatedMovies: any[] = [];
+  topActors: any[] = [];
 
+  readonly pageSize = 10;
+  private offset = 0;
+  loading = false;
+
+
+
+  searchClicked = false;
+  resetClicked = false;
   constructor(
-    private homeService: HomeService,
-    private authService: AuthService,
+    private roomService: RoomService,
+    private personService: PersonService,
     private router: Router
-  ) {
-  }
+  ) {}
 
-  async ngOnInit() {
+  ngOnInit(): void {
 
-    // document.cookie = "username=angular_user; path=/; max-age=604800"; // 7 zile
+    this.roomService.filterMovie({limit: 0, page: 0, type: [MovieTypes.Horror]}).subscribe({
+      next: (m) => {
+        console.log('Filtered movies:', m);
+      }
+    })
 
-  //   this.authService.verify().subscribe({
-  //     next: (r) => {
-  //       console.log('works');
-  //     },
-  //
-  //     error: (e) => {
-  //       console.error('Eroare la verificare:', e);
-  //     }
-  //   });
-
-  }
-
-  ngOnDestroy() {
-    // document.cookie = "username=; path=/; max-age=0;";
-
-  }
-
-  async redirectAuth() {
-    await this.router.navigateByUrl('auth/register')
-  }
-
-  handleSave() {
-    console.log('Save action triggered');
-    // Adaugă logica pentru salvare
-  }
-
-  handleEdit() {
-    console.log('Edit action triggered');
-    // Adaugă logica pentru editare
-  }
-
-  handleDelete() {
-    console.log('Delete action triggered');
-  }
-
-  async redirectLogin() {
-   await this.router.navigateByUrl('auth/login');
-  }
-
-  async redirectEdit() {
-    console.log('try');
-
-   await this.router.navigateByUrl('user/edit');
-  }
-
-  async addVideo() {
-    console.log('try');
-
-    await this.router.navigateByUrl('room/add');
-  }
-  logout() {
-    this.authService.logout().subscribe((data) => {
-      console.log(data)
+    this.personService.filterCast({limit: 5, page: 1, roles: [PersonRoles.Cinematographer]}).subscribe({
+      next: (c) => {
+        console.log('Filtered cast:', c);
+      }
     });
+
+    this.loadTrendingMovies();
+    this.loadTopRatedMovies();
+    this.loadTopActors();
   }
 
-  // downloadVideo() {
-  //   const name = 'Connect-R - Vara Nu Dorm - Official Video (20)(1).mp4';
-  //
-  //   this.homeService.getVideo(name).subscribe((data: Blob) => {
-  //
-  //     const videoUrl = window.URL.createObjectURL(data);
-  //
-  //     // const videoBlob = new Blob([data], { type: 'video/mp4' });
-  //     // const videoObjectUrl = URL.createObjectURL(videoBlob);
-  //
-  //
-  //     // Crează un element link (a) pentru a permite utilizatorului să descarce fișierul
-  //     const link = document.createElement('a');
-  //     // link.href = videoObjectUrl;
-  //
-  //     link.href = videoUrl;
-  //     link.download = name; // Numele fișierului pentru descărcare
-  //
-  //     // Simulează un click pe link pentru a iniția descărcarea
-  //     link.click();
-  //
-  //     // Revocă URL-ul Blob după descărcare
-  //     window.URL.revokeObjectURL(videoUrl);
-  //   });
-  // }
+  private loadTrendingMovies(): void {
+    this.roomService.getAllPaginated(12, 0).subscribe(movies => (this.trendingMovies = movies));
+  }
+
+  private loadTopRatedMovies(): void {
+    this.roomService
+      .getAllPaginated(50, 0)
+      .pipe(map(arr => arr.sort((a: any, b: any) => (b.averageRating ?? 0) - (a.averageRating ?? 0)).slice(0, 12)))
+      .subscribe(sorted => (this.topRatedMovies = sorted));
+  }
+
+  private loadTopActors(): void {
+    this.personService
+      .getAllPaginated(50, 0)
+      .pipe(map(arr => arr.sort((a: any, b: any) => (b.averageRating ?? 0) - (a.averageRating ?? 0)).slice(0, 12)))
+      .subscribe(sorted => (this.topActors = sorted));
+  }
+
+  // ======================= helpers ========================
+  getThumbnailUrl(video: any) {
+    const theme = localStorage.getItem('theme') || 'light';
+
+    if (video.thumbnail !== 'thumbnail') {
+      return this.roomService.getThumbnailUrl(video.thumbnail);
+    } else if (theme === 'dark') {
+      return this.roomService.getDefaultThumbnail('thumbnail_black.png');
+    } else {
+      return this.roomService.getDefaultThumbnail('thumbnail_white.png');
+    }
+  }
+
+  getMoviePoster(movie: any): string {
+    return this.roomService.getThumbnailUrl(movie.thumbnail);
+  }
+  getActorImage(actor: any): string {
+    return this.personService.getImage(actor.profilePicture);
+  }
+
+  getRatingColor(r: number): string {
+    if (r >= 8) return '#21d07a';
+    if (r >= 6) return '#d2d531';
+    return '#db2360';
+  }
+
+  goToMovie(id: string): void {
+    this.router.navigate(['/movie', id]);
+  }
+  goToActor(id: string): void {
+    this.router.navigate(['/cast', id]);
+  }
+
+  onResetHandler() {
+    this.resetClicked = true;
+    this.searchClicked = false;
+    console.log('Reset apăsat');
+  }
+  handleSearch(queryParams: {
+    name: string;
+    category: 'movie' | 'cast';
+    filterValue: any;
+    sortField: string;
+    sortOrder: 'ASC' | 'DESC';
+  }) {
+
+    const isDefault =
+      queryParams.name === '' &&
+      queryParams.category === 'movie' &&
+      Array.isArray(queryParams.filterValue?.type) &&
+      queryParams.filterValue.type.length === 0 &&
+      queryParams.sortField === 'name' &&
+      queryParams.sortOrder === 'ASC';
+
+    this.searchClicked = !isDefault;
+    this.resetClicked = false;
+
+    if (!isDefault) {
+      this.homeSearchParams = queryParams;
+    }
+
+  }
+
+
 }

@@ -1,18 +1,53 @@
-.redirect-button {
-  color: wheat;
-  background-color: #007bff ;
-
-
-
-padding: 10px 20px;
-font-size: 16px;
-border: none;
-cursor: pointer;
-border-radius: 5px;
-transition: background-color 0.3s ease;
+.home-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
-.home-container {
-  background-color: var(--bg-color);
+.title {
+  text-align: center;
+  width: 80%;
+  margin: 1.2rem auto 0;
   color: var(--text-color);
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search {
+  max-width: 1200px;
+  width: 80%;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+}
+
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .title {
+    width: 70%;
+  }
+}
+
+@media (max-width: 420px) {
+  h1 {
+    font-size: 1.3rem;
+  }
 }

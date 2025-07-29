@@ -1,4 +1,31 @@
 <div class="home-container">
-  <p>home-page works!</p>
+    <section class="hero">
+      <div class="title">
+        <h1>Movies & Stars - All in One Place</h1>
+      </div>
+    </section>
+
+
+  <div class="search">
+    <app-search-filter
+      (search)="handleSearch($event)"
+      (reset)="onResetHandler()"
+    ></app-search-filter>
+  </div>
+
+  <!--  <ng-container *ngIf="searchClicked">-->
+  <section *ngIf="searchClicked" class="section home-container">
+    <app-cast-and-movie-carousel
+      [newSearch] = "searchClicked"
+      [searchParams]="homeSearchParams"
+    ></app-cast-and-movie-carousel>
+  </section>
+  <!--  </ng-container>-->
+
+
+    <section *ngIf="!searchClicked" class="section home-container">
+      <app-movie-carousel></app-movie-carousel>
+    </section>
+
 
 </div>
