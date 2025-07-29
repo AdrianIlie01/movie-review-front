@@ -180,7 +180,7 @@
   /*color: var(--text-color);*/
   color: gold;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   padding-bottom: 8px;
   margin-bottom: 12px;
 }
@@ -203,10 +203,11 @@
 
 .comment-text {
   flex: 1;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.3;
   word-wrap: break-word;
   margin-left: 2rem;
+  margin-right: 1.2rem;
 }
 
 .comment-header {
@@ -220,7 +221,7 @@
 
 .username {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.2rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -338,12 +339,29 @@
 
 
 @media screen and (max-width: 640px) {
+  .movie-title {
+    font-size: 2rem;
+  }
+  .release-year {
+    font-size: 1.6rem;
+  }
+  .cast-crew-title {
+    font-size: 1.4rem!important;
+  }
+  .role-title {
+    font-size: 1.2rem!important;
+  }
   .room-page-container {
     padding: 12px;
   }
-
+  .username {
+    font-size: 1rem;
+  }
+  .comment-text, .add-review-button {
+    font-size: 0.9rem;
+  }
   .comments-header {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .rating-header {
@@ -373,7 +391,7 @@
 .cast-crew-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #f5c518; /* galben IMDb */
+  color: #f5c518;
   margin-bottom: 20px;
 }
 

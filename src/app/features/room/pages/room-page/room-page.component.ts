@@ -61,6 +61,7 @@ export class RoomPageComponent implements OnInit {
   protected isModerator!: boolean
   protected showFullCastCrew = false;
   protected isCastCrewOverflow = false;
+  protected loading = false;
 
   castAndCrewGroupedByRole: CrewGroup[] = [];
 
@@ -94,7 +95,7 @@ export class RoomPageComponent implements OnInit {
           }
         }
       })
-
+      this.loading = true;
       this.roomService.getRoom(this.roomId).subscribe({
         next: (d: RoomDataInterface) => {
           this.room = d;
@@ -105,6 +106,8 @@ export class RoomPageComponent implements OnInit {
           } else {
             this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
           }
+
+          this.loading = false;
 
           this.castService.getMovieCast(d.id).subscribe({
             next: (data: any) => {
