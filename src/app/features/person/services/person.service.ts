@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MovieTypeInterface} from '../../../shared/interfaces/movie-type.interface';
 import {AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {catchError, map, Observable, of} from 'rxjs';
 import {PersonInterface} from '../../../shared/interfaces/person.interface';
 import {UserInterface} from '../../../shared/interfaces/user.interface';
+import {FilterCast} from '../../../shared/interfaces/filter-cast.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -110,4 +111,24 @@ export class PersonService {
 
   }
 
+  filterCast(query: FilterCast) {
+    let params = new HttpParams();
+
+    for (const key in query) {
+      const typedKey = key as keyof FilterCast;
+      const value = query[typedKey];
+      if (value !== undefined && value !== null) {
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            params = params.append(key, v.toString());
+          });
+        } else {
+          // set query params to our HttpParams
+          params = params.set(key, value.toString());
+        }
+      }
+    }
+
+    return this.httpClient.get(`${this.personApi}/filter`, { params });
+  }
 }
