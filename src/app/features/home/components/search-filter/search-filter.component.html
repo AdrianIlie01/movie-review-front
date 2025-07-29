@@ -1,0 +1,133 @@
+<form [formGroup]="form" (ngSubmit)="onSearch()" class="search-filter" novalidate>
+
+  <div class="top-row">
+
+    <div class="search-container">
+
+      <input
+        type="text"
+        placeholder="Search by name..."
+        class="search-input"
+        formControlName="name"
+      />
+
+      <button type="submit" class="icon-search-btn">
+        <fa-icon icon="search" class="icon-search"></fa-icon>
+      </button>
+    </div>
+
+    <fa-icon
+      icon="filter"
+      class="icon-filter"
+      [ngClass]="{ 'filter-active': filterPanelOpen }"
+      (click)="toggleFilterPanel()"
+    ></fa-icon>
+
+  </div>
+
+  <div class="filter-content" *ngIf="filterPanelOpen">
+
+    <div class="select-wrapper" [class.open]="isOpenCategory">
+      <label class="label">Category :</label>
+
+      <select
+        *ngIf="filterPanelOpen"
+        formControlName="category"
+        (change)="onCategoryChange($event)"
+        class="select-category"
+        (click)="toggleOpenCategory($event)"
+        (blur)="closeDropdownCategory()"
+      >
+        <option value="movie">Movie</option>
+        <option value="cast">Cast</option>
+      </select>
+      <span *ngIf="filterPanelOpen" class="arrow" [class.rotated]="isOpenCategory"></span>
+    </div>
+
+    <div *ngFor="let filter of activeFilters" class="filter-item">
+
+      <label class="label">{{ filter.label }} :</label>
+
+      <ng-container
+        *ngIf="filter.type === 'select'"
+      >
+        <app-form-select
+          class="select-from"
+          [formGroup]="form"
+          [controlName]="'filterValue' + filter.key.charAt(0).toUpperCase() + filter.key.slice(1)"
+          [options]="filter.options"
+          [multiple]="true"
+          label=""
+        ></app-form-select>
+      </ng-container>
+
+
+      <ng-container *ngIf="filter.type == 'string' || filter.type == 'number'"
+      >
+        <input
+          [type]="filter.type === 'number' ? 'number' : 'text'"
+          [formControlName]="'filterValue_' + filter.key"
+          [placeholder]="'Enter ' + filter.label"
+          class="input-filter-value"
+        />
+      </ng-container>
+
+    </div>
+
+
+      <div *ngIf="form.get('filterValue_ratingMin')?.invalid && form.get('filterValue_ratingMin')?.touched" class="error-message">
+        Rating must be between 0 and 10.
+      </div>
+
+      <div *ngIf="movie && form.get('filterValue_releaseYear')?.invalid && form.get('filterValue_releaseYear')?.touched" class="error-message">
+       Release Year must be a positive number without decimals between {{minYear}} and {{currentYear}}.
+      </div>
+
+      <div *ngIf="person && form.get('filterValue_born')?.invalid && form.get('filterValue_born')?.touched" class="error-message">
+        Year of Birth must be a positive number without decimals between {{minYear}} and {{currentYear}}.
+      </div>
+
+
+
+    <!-- Sortare -->
+    <div class="sort-container" >
+      <label class="sort-label">Sort by:</label>
+      <div class="sort-row">
+        <div class="select-wrapper" [class.open]="isOpen">
+          <select
+            formControlName="sortField"
+            class="select-sort-field"
+            (click)="toggleOpen($event)"
+            (blur)="closeDropdown()"
+          >
+            <option *ngFor="let o of activeSortOptions" [value]="o.value">
+              {{ o.label }}
+            </option>
+          </select>
+          <span class="arrow" [class.rotated]="isOpen"></span>
+        </div>
+
+        <div class="select-wrapper" [class.open]="isOpenOrder">
+          <select
+            formControlName="sortOrder"
+            class="select-sort-field"
+            (click)="toggleOpenOrder($event)"
+            (blur)="closeDropdownOrder()"
+          >
+            <option *ngFor="let o of sortOrderOptions" [value]="o.key">
+              {{ o.label }}
+            </option>
+          </select>
+          <span class="arrow" [class.rotated]="isOpenOrder"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-reset-container">
+      <button type="button" class="btn-reset" (click)="resetFilters()">Reset</button>
+      <button type="submit" class="btn-search" [disabled]="form.invalid">Search</button>
+
+    </div>
+
+  </div>
+</form>
