@@ -10,7 +10,7 @@
     <h3 class="name" [title]="video.name">{{ video.name }}</h3>
 
     <p *ngIf="video.type" class="type">
-      <span class="label">Type:</span> {{ video.type?.join(', ') }}
+      <span class="label">Genres:</span> {{ video.type?.join(', ') }}
     </p>
 
     <p *ngIf="video.release_year" class="release-year">
