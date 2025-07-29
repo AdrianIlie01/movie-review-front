@@ -1,0 +1,46 @@
+<div class="carousel" *ngIf="currentItem">
+  <div
+    class="frame"
+    (pointerdown)="onDragStart($event)"
+    (pointermove)="onDragMove($event)"
+    (pointerup)="onDragEnd($event)"
+    (pointerleave)="onDragCancel()"
+  >
+    <!-- Previous -->
+    <img
+      class="thumb previous-thumb"
+      *ngIf="previousItem"
+      [src]="searchParams.category === 'movie' ? getThumbnailUrl(previousItem) : getPersonImage(previousItem)"
+      [ngClass]="{
+        'slide-out-left': animationDirection === 'left',
+        'slide-out-right': animationDirection === 'right'
+      }"
+      (error)="onImageError($event, previousItem)"
+      draggable="false"
+    />
+
+    <!-- Current -->
+    <img
+      class="thumb current-thumb"
+      *ngIf="currentItem"
+      [src]="getThumbnailUrl(currentItem)"
+      [ngClass]="{
+        'slide-in-left': animationDirection === 'left',
+        'slide-in-right': animationDirection === 'right'
+      }"
+      (error)="onImageError($event, currentItem)"
+      (click)="goToDetails(currentItem)"
+      draggable="false"
+    />
+
+    <!-- Nav Buttons -->
+    <button class="nav prev" aria-label="Previous" (click)="previous()">‹</button>
+    <button class="nav next" aria-label="Next" (click)="next()">›</button>
+  </div>
+
+  <div class="movie-title">{{ currentItem.name }}</div>
+</div>
+
+<ng-template [ngIf]="!loading && !currentItem && newSearch">
+  <div class="placeholder">No content available…</div>
+</ng-template>
