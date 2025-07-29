@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserDataInterface} from '../../../shared/interfaces/user-data.interface';
 import {catchError, map, Observable, of} from 'rxjs';
 import {environment} from '../../../../environments/environment';
@@ -7,6 +7,7 @@ import {MovieTypeInterface} from '../../../shared/interfaces/movie-type.interfac
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {RoomDataInterface} from '../../../shared/interfaces/room-data.interface';
 import {PersonInterface} from '../../../shared/interfaces/person.interface';
+import {FilterMovie} from '../../../shared/interfaces/filter-movie.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,6 @@ export class RoomService {
   updateRoom(body: {name: string, stream_url: string, type: MovieTypeInterface[], release_year: string}, id: string) {
     return this.httpClient.patch(`${this.roomApi}/id/${id}`, body);
   }
-
 
   // getDefaultThumbnail(name: string) {
   //   console.log('default thumbnail')
@@ -141,4 +141,26 @@ export class RoomService {
   //   // });
   //   return this.httpClient.post(this.videoRoomApi + '/' + id, formData);
   // }
+
+  filterMovie(query: FilterMovie) {
+    let params = new HttpParams();
+
+    for (const key in query) {
+      const typedKey = key as keyof FilterMovie;
+      const value = query[typedKey];
+      if (value !== undefined && value !== null) {
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            params = params.append(key, v.toString());
+          });
+        } else {
+          // set query params to our HttpParams
+          params = params.set(key, value.toString());
+        }
+      }
+    }
+
+    return this.httpClient.get(`${this.roomApi}/filter`, { params });
+  }
+
 }
