@@ -74,7 +74,7 @@ export class RoomEditComponent implements OnInit {
     const typeValue = this.roomForm.get('type')?.value;
     if (this.roomForm.invalid || !typeValue || typeValue.length === 0) {
       if (!typeValue || typeValue.length === 0) {
-        this.errorMessage = ['Please select at least one movie type.'];
+        this.errorMessage = ['Please select at least one movie genre.'];
       }
       return;
     }
