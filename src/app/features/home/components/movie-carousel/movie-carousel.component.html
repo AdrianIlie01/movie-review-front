@@ -1,0 +1,47 @@
+<div class="carousel" *ngIf="currentMovie">
+  <div
+    class="frame"
+    (pointerdown)="onDragStart($event)"
+    (pointermove)="onDragMove($event)"
+    (pointerup)="onDragEnd($event)"
+    (pointerleave)="onDragCancel($event)"
+  >
+    <!-- prev img -->
+    <img
+      class="thumb previous-thumb"
+      *ngIf="previousMovie"
+      [src]="getThumbnailUrl(previousMovie)"
+      [ngClass]="{
+    'slide-out-left': animationDirection === 'left',
+    'slide-out-right': animationDirection === 'right'
+  }"
+      (error)="onImageError($event, previousMovie)"
+      draggable="false"
+    />
+
+    <!-- current img -->
+    <img
+      class="thumb current-thumb"
+      *ngIf="currentMovie"
+      [src]="getThumbnailUrl(currentMovie)"
+      [ngClass]="{
+    'slide-in-left': animationDirection === 'left',
+    'slide-in-right': animationDirection === 'right'
+  }"
+      (error)="onImageError($event, currentMovie)"
+      (click)="goToMovie(currentMovie.id)"
+      draggable="false"
+    />
+
+
+    <button class="nav prev" aria-label="Previous" (click)="previous()">‹</button>
+    <button class="nav next" aria-label="Next" (click)="next()">›</button>
+  </div>
+
+  <div class="movie-title">{{ currentMovie.name }}</div>
+</div>
+
+
+<ng-template [ngIf]="!loading && !currentMovie">
+  <div class="placeholder">No movies available…</div>
+</ng-template>

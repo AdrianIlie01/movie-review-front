@@ -1,0 +1,139 @@
+.carousel {
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.frame {
+  touch-action: pan-y;
+  position: relative;
+  width: min(75vw, 720px);
+  height: 50vh;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+}
+
+.current-thumb {
+  z-index: 2;
+}
+.previous-thumb {
+  z-index: 1;
+}
+
+.carousel:hover, img:hover {
+  cursor: pointer!important;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #444;
+  color: white;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 3;
+}
+
+.nav:hover {
+  background: gray;
+}
+
+.nav.prev {
+  left: 0.5rem;
+}
+
+.nav.next {
+  right: 0.5rem;
+}
+
+/* Titlu film */
+.movie-title {
+  margin-top: 0.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-align: center;
+  max-width: clamp(280px, 60vw, 420px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+
+/* Placeholder fallback */
+.placeholder {
+  padding: 2rem;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideOutToLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes slideOutToRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+.slide-in-left {
+  animation: slideInFromRight 0.4s ease forwards;
+}
+.slide-out-left {
+  animation: slideOutToLeft 0.4s ease forwards;
+}
+.slide-in-right {
+  animation: slideInFromLeft 0.4s ease forwards;
+}
+.slide-out-right {
+  animation: slideOutToRight 0.4s ease forwards;
+}
+
+
+@media (max-width: 1024px) {
+  .movie-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 510px) {
+  .movie-title {
+    font-size: 0.9rem;
+  }
+}
+
