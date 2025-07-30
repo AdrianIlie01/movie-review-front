@@ -11,7 +11,6 @@ import {AuthService} from '../../../../core/services/auth.service';
 import {UserService} from '../../../user/services/user.service';
 import {RatingService} from '../../../../shared/services/rating.service';
 import {MoviePersonService} from '../../../movie-person/services/movie-person.service';
-import {PersonInterface} from '../../../../shared/interfaces/person.interface';
 import {PersonService} from '../../../person/services/person.service';
 
 type CrewPerson = {
@@ -51,13 +50,11 @@ export class RoomPageComponent implements OnInit {
   protected currentUserId: string = '';
   protected currentUserName: string = '';
   protected currentUserRoles: string[] = [];
-  protected stars: number[] = Array(10).fill(0).map((_, i) => i + 1);
   protected averageRating: number = 0;
   protected ratingCount: number = 0;
   protected userRating: number | null = null;
-  protected  hoveredStarIndex: number | null = null;
   protected currentUserLoaded = false;
-  protected  isAdmin!: boolean;
+  protected isAdmin!: boolean;
   protected isModerator!: boolean
   protected showFullCastCrew = false;
   protected isCastCrewOverflow = false;
@@ -265,12 +262,12 @@ export class RoomPageComponent implements OnInit {
 
     this.firebaseService.addComment(this.roomId, { text: this.newReviewText }).subscribe({
       next: (res: any) => {
-        this.comments.unshift({
-          text: this.newReviewText,
-          userId: this.currentUserId,
-          userName: this.currentUserName,
-          id: res['id']
-        });
+        // this.comments.unshift({
+        //   text: this.newReviewText,
+        //   userId: this.currentUserId,
+        //   userName: this.currentUserName,
+        //   id: res['id']
+        // });
         this.newReviewText = '';
         this.startCountdown();
         this.scrollToBottom();
@@ -317,10 +314,6 @@ export class RoomPageComponent implements OnInit {
   }
 
   rateMovie(value: number) {
-    this.userRating = value;
-    this.hoveredStarIndex = null;
-    this.stars = Array(10).fill(0).map((_, i) => i + 1);
-
     this.ratingService.addRating(this.roomId, { rating: value.toString() }).subscribe({
       next: (res: any) => {
         this.averageRating = res.averageRating ?? this.averageRating;
@@ -328,19 +321,8 @@ export class RoomPageComponent implements OnInit {
 
         this.userRating = null;
       },
-      error: (err) => {
-        console.error('Error submitting rating:', err);
-      }
+      error: err => console.error(err)
     });
-  }
-
-
-  getStarClass(i: number): string {
-    const base = this.hoveredStarIndex ?? this.averageRating;
-
-    if (i + 1 <= Math.floor(base)) return 'filled';
-    if (i < base && base < i + 1) return 'half-filled';
-    return '';
   }
 
   addUserDataToComment(comment: any): any {
@@ -377,4 +359,14 @@ export class RoomPageComponent implements OnInit {
     this.router.navigateByUrl(`cast/${id}`)
   }
 
+  getCommentTime(comment: { timestamp: { seconds: number, nanoseconds: number } }): string {
+    const ts = comment.timestamp;
+    const date = new Date(ts.seconds * 1000 + ts.nanoseconds / 1e6);
+    return date.toLocaleDateString('ro-RO', {
+      day: '2-digit',
+      month: '2-digit',
+      // month: 'short',
+      year: 'numeric'
+    });
+  }
 }

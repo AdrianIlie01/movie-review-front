@@ -15,28 +15,12 @@
 
   <!-- Rating Section -->
   <section *ngIf="currentUserLoaded" class="rating-section" aria-label="Film rating">
-    <h2 class="rating-header">Movie Rating</h2>
-    <div class="rating-display">
-      <div class="stars-container" aria-label="Rating stars">
-        <ng-container *ngFor="let star of stars; let i = index">
-          <span
-            class="star"
-            [ngClass]="getStarClass(i)"
-            (click)="rateMovie(i + 1)"
-            (mouseenter)="hoveredStarIndex = i + 1"
-            (mouseleave)="hoveredStarIndex = null"
-            role="button"
-            tabindex="0"
-            [attr.aria-label]="'Rate ' + (i + 1) + ' stars'"
-          >
-            ★
-          </span>
-        </ng-container>
-
-
-      </div>
-      <div class="rating-value" aria-live="polite">{{ averageRating.toFixed(1) }}/10 ({{ ratingCount }} votes)</div>
-    </div>
+    <app-rating
+      [averageRating]="averageRating"
+      [ratingCount]="ratingCount"
+      [sectionTitle]="'Movie Rating'"
+      (onRate)="rateMovie($event)">
+    </app-rating>
   </section>
 
 
@@ -102,6 +86,7 @@
           </div>
         </div>
         <div class="comment-text">{{comment.text}}</div>
+          <div class="comment-time">{{ getCommentTime(comment) }}</div>
 
         </div>
 

@@ -72,66 +72,6 @@
   user-select: none;
 }
 
-.rating-header {
-  font-weight: 700;
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.rating-display {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text-color);
-}
-.stars-container {
-  display: flex;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.star {
-  font-size: 2rem;
-  color: #ccc;
-  cursor: pointer;
-  transition: color 0.2s;
-  position: relative;
-  display: inline-block;
-}
-
-.star.filled {
-  color: gold;
-}
-
-.star.half-filled {
-  color: #ccc;
-}
-
-.star.half-filled::before {
-  content: '★';
-  color: gold;
-  position: absolute;
-  width: 50%;
-  overflow: hidden;
-  left: 0;
-}
-
-
-.star:hover {
-  color: #ffb300;
-  outline: none;
-}
-
-.rating-value {
-  font-size: 1.2rem;
-  color: #555;
-  min-width: 140px;
-}
-
 /* Comments section */
 .comments-section {
   width: 90%;
@@ -210,6 +150,13 @@
   margin-right: 1.2rem;
 }
 
+.comment-time {
+  font-size: 0.9rem;
+  text-align: right;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+}
+
 .comment-header {
   /*display: flex;*/
   /*justify-content: space-between;*/
@@ -256,7 +203,7 @@
   min-width: 100px;
   z-index: 10;
   flex-direction: column;
-  padding: 4px 0;
+  /*padding: 4px 0;*/
   border-radius: 7px;
 }
 
@@ -360,20 +307,13 @@
   .comment-text, .add-review-button {
     font-size: 0.9rem;
   }
+
+  .comment-time {
+    font-size: 0.8rem;
+  }
+
   .comments-header {
     font-size: 1.4rem;
-  }
-
-  .rating-header {
-    font-size: 1.4rem;
-  }
-
-  .star {
-    font-size: 2rem;
-  }
-
-  .rating-value {
-    min-width: 110px;
   }
 }
 
