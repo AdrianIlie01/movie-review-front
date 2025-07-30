@@ -3,16 +3,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   overflow: hidden;
 }
 
 .frame {
   touch-action: pan-y;
   position: relative;
-  width: min(75vw, 720px);
-  height: 50vh;
-  aspect-ratio: 3 / 4;
+  max-width: 1200px;
+  max-height: 1000px;
+  width: 75vw;
+  height: 65vh;
   overflow: hidden;
   border-radius: 1rem;
 }
@@ -59,18 +60,25 @@ img:hover {
 
 .nav.prev {
   left: 0.5rem;
+  padding-bottom: 2px;
+  padding-right: 1px;
+  border: 1px solid white;
 }
 
 .nav.next {
   right: 0.5rem;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  border: 1px solid white;
 }
 
 /* Titlu film/persoană */
 .movie-title {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   color: var(--text-color);
   font-weight: 600;
   font-size: 1.4rem;
+  font-style: italic;
   text-align: center;
   max-width: clamp(280px, 60vw, 420px);
   white-space: nowrap;
@@ -129,8 +137,45 @@ img:hover {
   }
 }
 
+@media screen and (max-width: 1000px), screen and (max-height: 700px) {
+  .frame {
+    height: 55vh;
+  }
+}
+
+@media (max-width: 900px) {
+  .frame {
+    height: 45vh;
+  }
+}
+
+@media (max-width: 500px), screen and (max-height: 700px) {
+  .frame {
+    height: 75vh;
+  }
+}
+
+@media (max-width: 700px) {
+  .frame {
+    height: 35vh;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .frame {
+    height: 25vh;
+  }
+}
+
 @media (max-width: 510px) {
   .movie-title {
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .prev, .next {
+    display: none;
   }
 }
