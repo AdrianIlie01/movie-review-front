@@ -180,7 +180,7 @@ h3, .rating {
 
 @media (max-width: 480px) {
   .movie-card {
-    width: 120px;
+    width: 140px;
   }
 
   .movie-info h3 {
