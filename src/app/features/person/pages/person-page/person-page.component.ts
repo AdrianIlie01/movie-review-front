@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PersonService} from '../../services/person.service';
 import {MoviePersonService} from '../../../movie-person/services/movie-person.service';
 import {RoomService} from '../../../room/services/room.service';
+import {RatingService} from '../../../../shared/services/rating.service';
 
 @Component({
   selector: 'app-person-page',
@@ -18,19 +19,40 @@ export class PersonPageComponent implements OnInit {
   protected error = false;
   protected defaultImage: boolean = false;
   protected moviesStarred: Record<string, { id: string; name: string }[]> = {};
+  protected userRating: number | null = null;
+  protected averageRating: number = 0;
+  protected ratingCount: number = 0;
+  protected personId!: string;
+  // protected currentUserLoaded = false;
 
   constructor(
     private route: ActivatedRoute,
     private personService: PersonService,
     private movieService: RoomService,
     private castService: MoviePersonService,
+    private ratingService: RatingService,
+    // private authService: AuthService,
+    // private userService: UserService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.personId = id;
       this.fetchPerson(id);
+
+      this.ratingService.calculatePersonOrMovieAverageRating(this.personId).subscribe({
+        next: (res: any) => {
+          if (res && res.averageRating && res.ratingsCount) {
+            this.averageRating = res.averageRating ?? 0;
+            this.ratingCount = res.ratingsCount ?? 0;
+          } else {
+            this.averageRating = 0;
+            this.ratingCount = 0;
+          }
+        }
+      })
     }
   }
 
@@ -38,8 +60,6 @@ export class PersonPageComponent implements OnInit {
     this.loading = true;
     this.personService.getPerson(id).subscribe({
       next: (data) => {
-        console.log('data')
-        console.log(data)
         this.person = data;
         this.loading = false;
         if (data.images == null) {
@@ -64,9 +84,9 @@ export class PersonPageComponent implements OnInit {
             groupedMovies[role].push(movieData);
           });
 
+          console.log('Grouped Movies:', groupedMovies);
           this.moviesStarred = groupedMovies;
 
-          console.log('Grouped movies:', this.moviesStarred);
         });
 
       },
@@ -76,6 +96,14 @@ export class PersonPageComponent implements OnInit {
         this.error = true;
       }
     });
+
+    // this.authService.isAuthenticated()
+    //   .pipe(
+    //     switchMap(isAuth => isAuth ? this.userService.getUserInfo() : of(null)))
+    //   .subscribe((user: any)=> {
+    //     this.currentUserLoaded = true;
+    //     })
+
   }
 
   getRoleList(roles: string[]): string {
@@ -115,10 +143,41 @@ export class PersonPageComponent implements OnInit {
   }
 
   redirectMovie(movie: any){
-    console.log('movie yo')
-    console.log(movie.id)
 
     this.router.navigate(['/movie', movie.id]);
+  }
+
+  loadRating() {
+    this.ratingService.findOnePersonOrMovieRating(this.personId).subscribe({
+      next: (res: any) => {
+        if(res && res.rating && res.ratingsCount) {
+          this.averageRating = res.rating ?? 0;
+          this.ratingCount = res.ratingsCount ?? 0;
+        } else {
+          this.averageRating = 0;
+          this.ratingCount = 0;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading rating:', err);
+      }
+    });
+  }
+  ratePerson(value: number) {
+    console.log('rate')
+    console.log(this.person)
+    if (!this.person) return;
+
+    this.ratingService.addRating(this.person.id, { rating: value.toString() }).subscribe({
+      next: (res: any) => {
+        console.log('rated')
+        this.averageRating = res.averageRating ?? this.averageRating;
+        this.ratingCount = res.ratingsCount ?? this.ratingCount;
+
+        this.userRating = null;
+      },
+      error: err => console.error(err)
+    });
   }
 
 }

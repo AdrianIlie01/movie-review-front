@@ -52,8 +52,12 @@
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: var(--text-color);
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .movie-list-inline {
@@ -63,7 +67,8 @@ h2 {
 }
 
 .title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
   margin-top: 1.2rem;
   text-align: center;
 }
@@ -241,13 +246,19 @@ h2 {
     margin-bottom: 1rem;
   }
   h2 {
-    margin-top: -2rem!important;
+    margin-top: -1rem!important;
   }
 }
 
 
 
 @media(min-width: 300px) and (max-width: 400px) {
+  .title {
+    font-size: 0.9rem;
+  }
+  .role-title, .description, .born {
+    font-size: 0.8rem;
+  }
   .carousel-image {
     max-width: 10rem!important;
     height: 100%;
@@ -312,7 +323,7 @@ h2 {
 
 @media (min-width: 401px) and (max-width: 501px) {
   h2 {
-    margin-top: -2rem;
+    margin-top: -1rem;
   }
 }
 

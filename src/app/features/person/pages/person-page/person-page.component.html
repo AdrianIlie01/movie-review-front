@@ -33,7 +33,19 @@
 
     <div class="underline"></div>
 
-<!--    <p class="role" *ngIf="person.roles?.length">-->
+<!--    <section *ngIf="currentUserLoaded" class="rating-section" aria-label="Film rating">-->
+    <section class="rating-section" aria-label="Film rating">
+      <app-rating
+        [averageRating]="averageRating"
+        [ratingCount]="ratingCount"
+        [sectionTitle]="'Rating'"
+        [smallHeader]="true"
+        (onRate)="ratePerson($event)">
+      </app-rating>
+    </section>
+
+
+    <!--    <p class="role" *ngIf="person.roles?.length">-->
 <!--      Roles: {{ getRoleList(person.roles) }}-->
 <!--    </p>-->
 
