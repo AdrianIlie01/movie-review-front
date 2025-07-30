@@ -4,8 +4,8 @@ import {RoomService} from '../../../room/services/room.service';
 import {PersonService} from '../../../person/services/person.service';
 import {map} from 'rxjs/operators';
 import {RoomDataInterface} from '../../../../shared/interfaces/room-data.interface';
-import {MovieTypes} from '../../../../shared/enums/movie-types';
-import {PersonRoles} from '../../../../shared/enums/person-roles';
+import {FilterMovie} from '../../../../shared/interfaces/filter-movie.interface';
+import {FilterCast} from '../../../../shared/interfaces/filter-cast.interface';
 
 @Component({
   selector: 'app-home-page',
@@ -22,16 +22,10 @@ export class HomePageComponent implements OnInit {
     sortOrder: 'ASC' | 'DESC';
   };
   movies: RoomDataInterface[] = [];
-  trendingMovies: any[] = [];
   topRatedMovies: any[] = [];
   topActors: any[] = [];
 
-  readonly pageSize = 10;
-  private offset = 0;
   loading = false;
-
-
-
   searchClicked = false;
   resetClicked = false;
   constructor(
@@ -41,43 +35,47 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    this.roomService.filterMovie({limit: 0, page: 0, type: [MovieTypes.Horror]}).subscribe({
-      next: (m) => {
-        console.log('Filtered movies:', m);
-      }
-    })
-
-    this.personService.filterCast({limit: 5, page: 1, roles: [PersonRoles.Cinematographer]}).subscribe({
-      next: (c) => {
-        console.log('Filtered cast:', c);
-      }
-    });
-
-    this.loadTrendingMovies();
     this.loadTopRatedMovies();
     this.loadTopActors();
   }
 
-  private loadTrendingMovies(): void {
-    this.roomService.getAllPaginated(12, 0).subscribe(movies => (this.trendingMovies = movies));
-  }
-
   private loadTopRatedMovies(): void {
+    const query: FilterMovie = {
+      ratingMin: 0,
+      sortField: 'rating',
+      sortOrder: 'DESC',
+      limit: 10,
+      page: 1
+    };
+
     this.roomService
-      .getAllPaginated(50, 0)
-      .pipe(map(arr => arr.sort((a: any, b: any) => (b.averageRating ?? 0) - (a.averageRating ?? 0)).slice(0, 12)))
-      .subscribe(sorted => (this.topRatedMovies = sorted));
+      .filterMovie(query)
+      .subscribe({
+        next: (movies: any) => {
+          console.log('movies', movies);
+          this.topRatedMovies = movies;
+        }
+      });
+
   }
 
   private loadTopActors(): void {
+    const query: FilterCast = {
+      ratingMin: 0,
+      sortField: 'rating',
+      sortOrder: 'DESC',
+      limit: 10,
+      page: 1
+    };
+
     this.personService
-      .getAllPaginated(50, 0)
-      .pipe(map(arr => arr.sort((a: any, b: any) => (b.averageRating ?? 0) - (a.averageRating ?? 0)).slice(0, 12)))
-      .subscribe(sorted => (this.topActors = sorted));
+      .filterCast(query)
+      .subscribe((actors: any) => {
+        console.log('actors', actors);
+        this.topActors = actors;
+      });
   }
 
-  // ======================= helpers ========================
   getThumbnailUrl(video: any) {
     const theme = localStorage.getItem('theme') || 'light';
 
@@ -90,11 +88,12 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  getMoviePoster(movie: any): string {
-    return this.roomService.getThumbnailUrl(movie.thumbnail);
-  }
-  getActorImage(actor: any): string {
-    return this.personService.getImage(actor.profilePicture);
+  getPersonImage(person: any) {
+    if (person.images && person.images.length > 0) {
+      return this.personService.getImage(person.images[0]);
+    } else {
+      return this.personService.getDefaultImage('default_person.jpg');
+    }
   }
 
   getRatingColor(r: number): string {
@@ -113,7 +112,6 @@ export class HomePageComponent implements OnInit {
   onResetHandler() {
     this.resetClicked = true;
     this.searchClicked = false;
-    console.log('Reset apăsat');
   }
   handleSearch(queryParams: {
     name: string;
@@ -127,7 +125,10 @@ export class HomePageComponent implements OnInit {
       queryParams.name === '' &&
       queryParams.category === 'movie' &&
       Array.isArray(queryParams.filterValue?.type) &&
-      queryParams.filterValue.type.length === 0 &&
+      Array.isArray(queryParams.filterValue?.type) &&
+      queryParams.filterValue?.type.length === 0 &&
+      Array.isArray(queryParams.filterValue?.releaseYear) &&
+      queryParams.filterValue?.releaseYear.length === 0 &&
       queryParams.sortField === 'name' &&
       queryParams.sortOrder === 'ASC';
 

@@ -23,6 +23,16 @@ h1 {
   width: 80%;
 }
 
+.top-movies-section {
+  width: 100%;
+}
+
+.top-cast-section {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   h1 {
     font-size: 2rem;
