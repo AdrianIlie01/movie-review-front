@@ -68,6 +68,12 @@ export class TopCastCarouselComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onImageError(event: Event, video: any) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.personService.getDefaultImage('default_person.jpg');
+
+  }
+
   goToActor(id: string | number): void {
     this.router.navigate(['/cast', id]);
   }

@@ -20,6 +20,8 @@
         alt="{{ actor.name }}"
         (click)="goToActor(actor.id)"
         class="actor-img"
+        (error)="onImageError($event, actor)"
+
       />
       <div class="actor-info">
         <h3>{{ actor.name }}</h3>
