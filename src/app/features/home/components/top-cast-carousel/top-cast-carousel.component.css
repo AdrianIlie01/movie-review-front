@@ -1,0 +1,176 @@
+.carousel-wrapper {
+  position: relative;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 4rem;
+}
+
+.section-title {
+  position: relative;
+  padding-left: 10px;
+  font-size: 1.7rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #ffcc00;
+  border-radius: 2px;
+}
+
+h2 {
+  color: var(--text-color);
+  font-size: 1.7rem;
+  text-align: left;
+  margin-bottom: 0.8rem;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-y;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+.actor-card {
+  width: 140px;
+  margin-top: 0.2rem;
+  text-align: center;
+  color: white;
+}
+
+.actor-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #f5c518;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.actor-img:hover {
+  transform: scale(1.05);
+}
+
+.actor-info {
+  margin-top: 0.5rem;
+}
+
+.actor-info h3 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rating {
+  font-size: 0.8rem;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: var(--text-color);
+  background: var(--bg-color-inverted);
+  border: 1px solid var(--bg-color-inverted);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+  user-select: none;
+}
+
+.carousel-nav.hidden {
+  display: none;
+}
+
+.carousel-nav.left {
+  padding-bottom: 0.2rem;
+  left: 1rem;
+}
+
+.carousel-nav.right {
+  padding-bottom: 0.2rem;
+  padding-left: 0.2rem;
+  right: 1rem;
+}
+
+h3, .rating {
+  color: var(--text-color);
+  cursor: default;
+}
+
+
+@media (max-width: 768px) {
+  .actor-info h3 {
+    font-size: 0.8rem!important;
+  }
+
+  .actor-img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .carousel-nav {
+    font-size: 1.5rem;
+  }
+
+  .section-title, h2 {
+    font-size: 1.5rem;
+  }
+
+  .rating {
+    font-size: 0.7rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .carousel-nav.left,
+  .carousel-nav.right {
+    display: none;
+  }
+
+  .section-title, h2 {
+    font-size: 1.3rem;
+  }
+
+  .actor-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .actor-info h3 {
+    font-size: 0.7rem;
+  }
+
+  .rating {
+    font-size: 0.6rem;
+  }
+}
