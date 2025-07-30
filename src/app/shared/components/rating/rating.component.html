@@ -1,0 +1,34 @@
+<section class="rating-section" *ngIf="stars.length > 0">
+  <h2
+    class="rating-header"
+    [ngClass]="{
+    'rating-header': true,
+    'rating-header-small': smallHeader === true
+  }"
+  >{{ sectionTitle }}</h2>
+  <div class="rating-display">
+    <div class="stars-container" aria-label="Rating stars">
+      <ng-container *ngFor="let star of stars; let i = index">
+        <span
+          class="star"
+          [ngClass]="[getStarClass(i), smallHeader ? 'small-star' : '']"
+
+          (click)="rate(i + 1)"
+          (mouseenter)="hoveredStarIndex = i + 1"
+          (mouseleave)="hoveredStarIndex = null"
+          tabindex="0"
+          role="button"
+        >
+          ★
+        </span>
+      </ng-container>
+    </div>
+    <div
+      class="rating-value"
+      [ngClass]="{
+    'rating-value': true,
+    'rating-value-small': smallHeader === true
+  }"
+    >{{ averageRating.toFixed(1) }}/{{ starsCount }} ({{ ratingCount }} votes)</div>
+  </div>
+</section>
