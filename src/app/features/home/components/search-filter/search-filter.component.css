@@ -57,7 +57,7 @@
   color: var(--text-color);
   border-radius: 25px;
 
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   flex: 3;
 }
@@ -108,7 +108,7 @@
 .icon-filter {
   color: var(--text-color);
   font-size: 1rem;
-  margin-top: -1.5rem;
+  margin-top: -0.5rem;
 }
 
 .icon-filter:hover {
