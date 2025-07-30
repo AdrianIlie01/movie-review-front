@@ -41,9 +41,6 @@ export class NavigationMenuComponent implements OnInit {
 
     const isLoggedIn = await firstValueFrom(this.authService.isAuthenticated());
 
-    console.log('isLoggedIn');
-    console.log(isLoggedIn);
-
     if (isLoggedIn) {
       this.checkRole();
       this.userService.getUserInfo().subscribe((res: any) => {
@@ -105,7 +102,6 @@ export class NavigationMenuComponent implements OnInit {
   openCloseSubMenu() {
     const listElement = document.getElementById('profile') as HTMLInputElement;
     if (listElement !== null) {
-      console.log('click on profile')
     }
   }
 
