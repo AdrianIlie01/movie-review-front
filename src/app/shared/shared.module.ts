@@ -7,6 +7,7 @@ import {NavigationMenuComponent} from './components/navigation-menu/navigation-m
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { RatingComponent } from './components/rating/rating.component';
 
 
 
@@ -18,16 +19,18 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     NavigationMenuComponent,
     FormSelectComponent,
     SafeUrlPipe,
+    RatingComponent,
   ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
     ],
-  exports: [
-    ActionButtonComponent,
-    NavigationMenuComponent,
-    FormSelectComponent,
-    SafeUrlPipe,
-  ]
+    exports: [
+        ActionButtonComponent,
+        NavigationMenuComponent,
+        FormSelectComponent,
+        SafeUrlPipe,
+        RatingComponent,
+    ]
 })
 export class SharedModule { }
