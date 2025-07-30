@@ -1,0 +1,37 @@
+<div class="carousel-wrapper">
+  <h2 class="section-title">Top 10 Movies</h2>
+
+  <div class="carousel-nav left"
+       (click)="scroll('left')"
+       [class.hidden]="atStart">‹</div>
+
+  <div class="carousel-nav right"
+       (click)="scroll('right')"
+       [class.hidden]="atEnd">›</div>
+
+  <div #carousel class="carousel-container"
+       (pointerdown)="onPointerDown($event)"
+       (pointermove)="onPointerMove($event)"
+       (pointerup)="onPointerUp($event)"
+       (pointercancel)="onPointerCancel()"
+       (touchstart)="onPointerDown($event)"
+       (touchmove)="onPointerMove($event)"
+       (touchend)="onPointerUp($event)"
+       (touchcancel)="onPointerCancel()"
+
+  >
+    <div *ngFor="let movie of topRatedMovies" class="movie-card">
+      <img
+        [src]="getThumbnailUrl(movie)"
+        alt="{{ movie.name }}"
+        (click)="goToMovie(movie.id)"
+        (error)="onImageError($event, movie)"
+      />
+      <div class="movie-info">
+        <h3>{{ movie.name }}</h3>
+        <p class="rating">⭐ {{ movie.rating.toFixed(1) }}</p>
+        <button (click)="goToMovie(movie.id)">See Trailer</button>
+      </div>
+    </div>
+  </div>
+</div>
