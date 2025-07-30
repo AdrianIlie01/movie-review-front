@@ -78,6 +78,9 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--question-text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .designation {
   margin: 0.3rem 0 1rem;
