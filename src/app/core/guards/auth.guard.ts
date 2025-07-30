@@ -18,9 +18,6 @@ export class AuthGuard implements CanActivate {
    return this.authService.getUserInfo().pipe(
      map((isAuth: any) => {
 
-       console.log('isAuth');
-       console.log(isAuth);
-
        if (isAuth.authenticate) {
          return true;
        }
@@ -28,7 +25,6 @@ export class AuthGuard implements CanActivate {
            this.router.navigateByUrl('auth/login/verify-otp');
            return false;
          } else {
-           console.log('nu e auth - auth guard')
            this.router.navigateByUrl('auth/login');
            return false;
          }
