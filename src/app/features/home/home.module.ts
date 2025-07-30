@@ -12,6 +12,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { CastAndMovieCarouselComponent } from './components/cast-and-movie-carousel/cast-and-movie-carousel.component';
+import { TopMoviesCarouselComponent } from './components/top-movies-carousel/top-movies-carousel.component';
+import { TopCastCarouselComponent } from './components/top-cast-carousel/top-cast-carousel.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { CastAndMovieCarouselComponent } from './components/cast-and-movie-carou
     HomeHeaderComponent,
     MovieCarouselComponent,
     SearchFilterComponent,
-    CastAndMovieCarouselComponent
+    CastAndMovieCarouselComponent,
+    TopMoviesCarouselComponent,
+    TopCastCarouselComponent
   ],
   imports: [
     CommonModule,
