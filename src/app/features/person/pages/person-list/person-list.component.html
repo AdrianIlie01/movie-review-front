@@ -1,34 +1,56 @@
-<div *ngIf="loading && people.length === 0" class="loader"></div>
+<div *ngIf="loadingFirstPersons" class="person-list-container">
+
+  <div *ngFor="let _ of dataLimit" class="person-card"
+  >
+    <div *ngIf="loadingFirstPersons" class="movie-skeleton-container"
+         [ngClass]="{ 'hide': !loadingFirstPersons }"
+    >
+      <div class="small-skeleton-image"></div>
+      <div class="user-name-skeleton"></div>
+      <div class="user-line-skeleton"></div>
+
+      <div class="skeleton-info-line" *ngFor="let i of [1, 2, 3, 4, 5]"></div>
+
+      <div class="skeleton-buttons">
+        <div class="skeleton-button"></div>
+        <div class="skeleton-button"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div *ngIf="showPeople; else noPeople">
   <div class="person-list-container" #castContainer>
     <div *ngFor="let person of people" class="person-card">
-      <div class="person-card-header">
-        <img class="image-container"
+
+      <div *ngIf="!loadingFirstPersons" class="person-card-header">
+        <img  class="image-container"
              [src]="getPersonImage(person)"
              (error)="onImageError($event, person)"
              alt="{{ person.name }}" />
-        <h2 title="{{ person.name }}">{{ person.name }}</h2>
-        <div class="underline"></div>
+        <h2   title="{{ person.name }}">{{ person.name }}</h2>
+        <div  class="underline"></div>
       </div>
 
-      <p class="role" *ngIf="person.roles?.length">
+      <p  class="role" *ngIf="person.roles?.length && !loadingFirstPersons">
         <span class="label">Roles:</span> {{ getRoleList(person.roles) }}
       </p>
 
-      <p class="description" *ngIf="person.description">
+      <p  class="description" *ngIf="person.description && !loadingFirstPersons">
         <span class="label">About:</span> {{ person.description }}
       </p>
 
-      <p class="born" *ngIf="person.born">
+      <p  class="born" *ngIf="person.born && !loadingFirstPersons">
         <span class="label">Born:</span> {{ person.born | date:'dd MMM yyyy' }}
       </p>
 
-      <p class="movies" *ngIf="person.movieRoles?.length">
+      <p class="movies" *ngIf="person.movieRoles?.length && !loadingFirstPersons">
         <span class="label">Movies:</span> {{ getPersonMovies(person) }}
       </p>
 
 
-      <div class="buttons-container">
+      <div *ngIf="!loadingFirstPersons" class="buttons-container">
         <app-action-button class="btn-container"
                            [buttonName]="ButtonName.Edit"
                            [buttonFunction]="editPerson.bind(this, person.id)"
@@ -44,10 +66,10 @@
   </div>
 </div>
 
-<div *ngIf="loading && people.length > 0" class="loader"></div>
+<div *ngIf="loading && loadingFirstPersons && people.length > 0" class="loader"></div>
 
 <ng-template #noPeople>
-  <div *ngIf="!loading" class="no-persons">
+  <div *ngIf="!loadingFirstPersons && people.length === 0" class="no-persons">
     No people available.
   </div>
 </ng-template>

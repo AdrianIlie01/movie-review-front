@@ -29,16 +29,14 @@
   align-items: center;
   /*border: 2px solid var(--bg-color-transparent-dark);*/
   border-radius: 25px;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 
-  padding: 0.5rem;
-
+  padding-top: 0.5rem;
+  padding-left: 1rem;
 }
 .role-group {
   border: 2px solid var(--bg-color-transparent-dark);
   border-radius: 25px;
-  padding: 1rem;
-
 }
 
 .role-title {
@@ -56,6 +54,7 @@
 
 .movie-title {
   word-break: break-word;
+  padding-left: 1rem;
 }
 
 .person-list {
@@ -63,6 +62,7 @@
   flex-wrap: wrap;
   gap: 1.25rem;
   justify-content: flex-start;
+  padding: 1rem;
 }
 
 .person-card {
@@ -112,13 +112,6 @@
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.no-persons-message {
-  font-style: italic;
-  color: #777;
-  padding: 1rem 0;
-  font-size: 1rem;
 }
 
 .btn {

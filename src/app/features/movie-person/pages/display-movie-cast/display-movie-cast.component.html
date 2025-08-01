@@ -1,5 +1,27 @@
-<div class="cast-container">
+<div *ngIf="loading" class="cast-container">
+  <div class="container-header grouped-role-header-skeleton role-header-skeleton">
+    <div class="user-name-skeleton skeleton-credits-username "></div>
+    <div class="user-name-skeleton skeleton-button-header "></div>
+  </div>
 
+  <div *ngFor="let i of [1, 2, 3 ]" class="role-group ">
+
+    <div class="role-header role-group-skeleton-container">
+      <div class="user-name-skeleton skeleton-roles-user "></div>
+      <div class="user-name-skeleton skeleton-button-header "></div>
+    </div>
+
+    <div class="person-list">
+      <div  *ngFor="let i2 of [1, 2, 3, 4]" class="person-card">
+        <div class="placeholder-avatar user-avatar-skeleton"></div>
+        <div class="user-name-skeleton center-name-skeleton-card"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!loading" class="cast-container">
   <div class="container-header">
 
     <div>
@@ -31,7 +53,7 @@
 <!--    </app-action-button>-->
 
     <ng-container *ngIf="groupedCast[role] as personsForRole">
-      <div class="person-list" *ngIf="personsForRole.length > 0; else noPersons">
+      <div class="person-list" *ngIf="personsForRole.length > 0">
         <div (click)="personInfo(item)" *ngFor="let item of personsForRole" class="person-card" >
             <div class="placeholder-avatar">{{ item.person?.name?.charAt(0) }}</div>
           <div class="person-name">{{ item.person?.name }}</div>
@@ -40,12 +62,8 @@
       </div>
     </ng-container>
 
-    <ng-template #noPersons>
-      <div class="no-persons-message">No persons assigned yet.</div>
-    </ng-template>
-
   </div>
-
-
-
+  <div *ngIf="!loading && cast.length == 0" class="no-persons-message">
+    No cast assigned yet.
+  </div>
 </div>

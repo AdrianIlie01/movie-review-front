@@ -1,34 +1,52 @@
-<div class="container" *ngIf="user">
-<div class="profile-card">
-    <div class="glass-card fade-slide-in" [attr.data-theme]="">
 
-      <div class="profile-img">
-        <img src="/avatar.svg" alt="avatar" />
-      </div>
+<div class="container" *ngIf="loading">
 
-      <div class="profile-info">
-        <h3 class="name">{{ user.username }}</h3>
-        <p class="designation">{{ user.role }}</p>
+  <div class="profile-card">
+    <div class="glass-card fade-slide-in">
 
-        <div class="info-row">
-          <label><i class=""></i> Email:</label>
-          <span>{{ user.email }}</span>
-        </div>
-        <div class="info-row">
-          <label><i class=""></i> Two Factor Authentication:</label>
-          <span>{{ user.is_2_fa_active ? 'Enabled' : 'Disabled' }}</span>
-        </div>
-        <div class="info-row" *ngIf="userInfo">
-          <label><i class=""></i> Phone:</label>
-          <span>{{ userInfo.phone }}</span>
-        </div>
-        <div class="info-row" *ngIf="userInfo">
-          <label><i class=""></i> Region:</label>
-          <span>{{ userInfo.person_region }}</span>
-        </div>
-      </div>
-
+      <div class="user-avatar-skeleton profile-img"></div>
+      <div class="profile-info-row">
+      <div class="skeleton centered-user-name-skeleton info-row"></div>
+      <div class="skeleton centered-user-name-skeleton info-row skeleton-role-width"></div>
+      <div class="user-info-skeleton info-row max-width" *ngFor="let i of [1, 2, 3, 4]"></div>
     </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container" *ngIf="user">
+
+  <div class="profile-card">
+    <div class="glass-card fade-slide-in">
+
+
+    <div *ngIf="!loading" class="profile-img">
+      <img src="/avatar.svg" alt="avatar" />
+    </div>
+
+    <div *ngIf="!loading">
+      <h3 class="name">{{ user.username }}</h3>
+      <p class="designation">{{ user.role }}</p>
+
+      <div *ngIf="hasInfo" class="info-row">
+        <label><i class=""></i> Email:</label>
+        <span>{{ user.email }}</span>
+      </div>
+      <div *ngIf="hasInfo"  class="info-row">
+        <label><i class=""></i> Two Factor Authentication:</label>
+        <span>{{ user.is_2_fa_active ? 'Enabled' : 'Disabled' }}</span>
+      </div>
+      <div class="info-row" *ngIf="hasInfo">
+        <label><i class=""></i> Phone:</label>
+        <span>{{ userInfo.phone }}</span>
+      </div>
+      <div  class="info-row" *ngIf="hasInfo">
+        <label><i class=""></i> Region:</label>
+        <span>{{ userInfo.person_region }}</span>
+      </div>
+    </div>
+  </div>
   </div>
 
 </div>

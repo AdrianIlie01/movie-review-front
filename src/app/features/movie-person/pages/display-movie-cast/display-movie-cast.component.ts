@@ -29,7 +29,7 @@ export class DisplayMovieCastComponent implements OnInit {
   protected groupedCastKeys: PersonRoles[] = [];
   protected readonly ButtonName = ButtonName;
   protected movieName!: string;
-
+  protected loading: boolean = true;
   ngOnInit() {
     console.log('init')
     this.route.params.subscribe(params => {
@@ -39,13 +39,17 @@ export class DisplayMovieCastComponent implements OnInit {
           this.movieName = d.name || 'Movie';
         })
 
-      this.getCast(this.movieId).subscribe((data: any) => {
-        this.cast = data;
-        this.groupCastByRole();
+      this.getCast(this.movieId).subscribe({
+        next: (data: any) => {
+          this.cast = data;
+          this.groupCastByRole();
+          this.loading = false;
+        },
+        error: err => {
+          this.loading = false;
+        }
       });
     });
-
-
   }
 
   getCast(movieId: string) {

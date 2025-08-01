@@ -1,5 +1,27 @@
-<div class="cast-container">
+<div *ngIf="loading" class="cast-container">
+  <div class="container-header grouped-role-header-skeleton role-header-skeleton">
+    <div class="user-name-skeleton skeleton-credits-username "></div>
+    <div class="user-name-skeleton skeleton-button-header "></div>
+  </div>
 
+  <div *ngFor="let i of [1, 2, 3 ]" class="role-group ">
+
+      <div class="role-header role-group-skeleton-container">
+        <div class="user-name-skeleton skeleton-roles-user "></div>
+        <div class="user-name-skeleton skeleton-button-header "></div>
+      </div>
+
+    <div class="person-list">
+      <div  *ngFor="let i2 of [1, 2, 3, 4]" class="person-card">
+        <div class="placeholder-avatar user-avatar-skeleton"></div>
+        <div class="user-name-skeleton center-name-skeleton-card"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!loading" class="cast-container">
   <div class="container-header">
 
     <div>
@@ -26,7 +48,7 @@
 
 
     <ng-container *ngIf="groupedMovies[role] as moviesForRole">
-      <div class="person-list" *ngIf="moviesForRole.length > 0; else noMovies">
+      <div class="person-list" *ngIf="moviesForRole.length > 0">
         <div (click)="redirectMovie(item)"  *ngFor="let item of moviesForRole" class="person-card">
           <div class="placeholder-avatar">{{ item.person?.name?.charAt(0) }}</div>
           <div class="person-name">{{ item.room?.name }}</div>
@@ -34,12 +56,10 @@
       </div>
     </ng-container>
 
-    <ng-template #noMovies>
-      <div class="no-persons-message">No movies assigned yet.</div>
-    </ng-template>
-
   </div>
-
-
-
+  <div *ngIf="!loading && movies.length == 0" class="no-persons-message">
+    No movies assigned yet.
+  </div>
 </div>
+
+

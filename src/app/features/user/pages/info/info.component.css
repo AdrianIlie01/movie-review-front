@@ -1,5 +1,11 @@
 .container {
-  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  overflow-y: auto;
+
+  margin: 1rem auto;
 }
 
 .profile-card {
@@ -115,6 +121,11 @@
   animation: pulse 2s infinite;
   color: #00fff2;
 }
+
+.no-info {
+  align-items: center;
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -145,8 +156,59 @@
   }
 }
 
+@media (max-width: 768px) {
+  .centered-user-name-skeleton {
+    width: 90%;
+    margin: 1rem auto 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @media (max-width: 767px) {
   .profile-card {
     width: 95%;
   }
+}
+
+.profile-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  /*align-items: center;*/
+  position: relative;
+  width: 100%;
+  /*max-width: 300px;*/
+  margin: auto;
+  gap: 1.5rem;
+}
+
+.profile-info-row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.centered-user-name-skeleton {
+  width: 50%;
+  height: 15px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-color-inverted);
+  margin-bottom: 1rem;
+}
+
+.skeleton-role-width {
+  width: 25%;
+}
+
+.max-width {
+  width: 100%;
+  height: 30px;
 }

@@ -1,19 +1,36 @@
-<div class="room-page-container">
-  <div *ngIf="loading">Loading movie data...</div>
+<div class="room-page-container" xmlns="http://www.w3.org/1999/html">
 
   <div *ngIf="room" class="movie-header-container">
     <div class="movie-header">
+
+
       <h1 class="movie-title">{{ room.name }} <span class="release-year">({{ room.release_year }})</span></h1>
     </div>
   </div>
 
 
   <!-- Trailer Video -->
+
+
+  <div *ngIf="loading" class="skeleton title-skeleton"></div>
+  <div *ngIf="loading" class="image-skeleton-loader video-skeleton"></div>
+
+
   <section class="video-wrapper" aria-label="Trailer video" *ngIf="sanitizedUrl">
     <iframe [src]="sanitizedUrl" allowfullscreen title="Film trailer"></iframe>
   </section>
 
   <!-- Rating Section -->
+  <div *ngIf="loading" class="review-input-container">
+
+    <div class="skeleton review-title-skeleton"></div>
+
+    <div class="star-skeleton-container">
+      <div class="star-skeleton" *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]">★</div>
+    </div>
+  </div>
+
+
   <section *ngIf="currentUserLoaded" class="rating-section" aria-label="Film rating">
     <app-rating
       [averageRating]="averageRating"
@@ -22,6 +39,11 @@
       (onRate)="rateMovie($event)">
     </app-rating>
   </section>
+
+
+  <div *ngIf="loading" class="cast-skeleton-container">
+    <div class="image-skeleton-loader cast-skeleton"></div>
+  </div>
 
 
   <section  class="cast-crew-section" *ngIf="castAndCrewGroupedByRole.length > 0" aria-label="Cast and Crew">
@@ -58,8 +80,19 @@
     </div>
   </section>
 
-
   <!-- Reviews Section -->
+  <section
+    class="comments-section"
+  >
+  <div *ngIf="loading" class="image-skeleton-loader"></div>
+  <div *ngIf="loading" class="review-input-area">
+
+    <div class="skeleton review-input-skeleton review-input-area"></div>
+    <div class="skeleton review-button-skeleton "></div>
+  </div>
+
+  </section>
+
   <section
     class="comments-section"
     *ngIf="currentUserLoaded" aria-label="Reviews">

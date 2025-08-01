@@ -44,3 +44,5 @@
 <ng-template [ngIf]="!loading && !currentItem && newSearch">
   <div class="placeholder">No content available…</div>
 </ng-template>
+
+<div *ngIf="loading" class="image-skeleton-loader frame"></div>

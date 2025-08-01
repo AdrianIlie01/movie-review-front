@@ -16,34 +16,47 @@ export class InfoComponent implements OnInit{
   ) {
   }
 
-  protected user!: UserInterface;
+  protected user: UserInterface = {
+    id: '',
+    email: '',
+    email_verified_at: '',
+    username:  '',
+    role: '',
+    status: '',
+    is_2_fa_active: false,
+    create_date: '',
+    update_date: ''
+  };
   protected userInfo!: any;
   protected hasInfo: boolean = false;
+  protected loading: boolean = true;
 
   ngOnInit() {
     this.userService.getUserInfo().subscribe((res: any) => {
 
-      console.log('res');
-      console.log(res);
-      console.log(res.id);
+      this.userService.getInfoOfUser(res.id).subscribe({
+        next: (info: any) => {
+          this.loading = false;
 
-      this.userService.getInfoOfUser(res.id).subscribe((info: any) => {
-        console.log('user info')
+          if (info.user == null) {
+            this.user.username = res.username;
+            this.user.role = res.roles;
+            return;
+          }
 
-        if (info.user == null) {
-          return;
+          this.user = info.user;
+
+          if (info.userInfo == null) {
+            return;
+          }
+          this.hasInfo = true;
+          this.userInfo = info.userInfo;
+        },
+        error: (err) => {
+          this.user.username = res.username;
+          this.user.role = res.roles;
+          this.loading = false;
         }
-
-        this.user = info.user;
-
-        if (info.userInfo == null) {
-          console.log('no info for user');
-          return;
-        }
-        this.hasInfo = true;
-        this.userInfo = info.userInfo;
-        console.log('info');
-        console.log(info);
       })
     })
   }

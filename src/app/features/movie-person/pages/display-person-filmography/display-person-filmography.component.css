@@ -13,6 +13,7 @@
 
 .person-title {
   word-break: break-word;
+  padding-left: 1rem;
 }
 
 .container-header {
@@ -22,26 +23,23 @@
   flex-wrap: wrap;
   gap: 2rem;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 .role-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /*padding-bottom: 1rem;*/
   align-items: center;
-  /*border: 2px solid var(--bg-color-transparent-dark);*/
   border-radius: 25px;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 
-  padding: 0.5rem;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
 
 }
 .role-group {
   border: 2px solid var(--bg-color-transparent-dark);
   border-radius: 25px;
-  padding: 1rem;
-
 }
 
 .role-title {
@@ -57,11 +55,13 @@
 
 }
 
+
 .person-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem;
   justify-content: flex-start;
+  padding: 1rem;
 }
 
 .person-card {
@@ -111,13 +111,6 @@
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.no-persons-message {
-  font-style: italic;
-  color: #777;
-  padding: 1rem 0;
-  font-size: 1rem;
 }
 
 .btn {
@@ -204,7 +197,6 @@
     align-items: flex-start;
     border: none;
   }
-
   .role-title {
     margin: 0;
   }

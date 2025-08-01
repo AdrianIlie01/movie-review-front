@@ -28,7 +28,7 @@ export class DisplayPersonFilmographyComponent implements OnInit {
   protected groupedMovieKeys: PersonRoles[] = [];
   protected readonly ButtonName = ButtonName;
   protected personName!: string;
-
+  protected loading: boolean = true;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.personId = params['personId'];
@@ -37,10 +37,15 @@ export class DisplayPersonFilmographyComponent implements OnInit {
         this.personName = d.name
       })
 
-      this.castService.getMoviesForPerson(this.personId).subscribe((data: any) => {
-        this.movies = data;
-
-        this.groupMoviesByRole();
+      this.castService.getMoviesForPerson(this.personId).subscribe({
+        next: (data: any) => {
+          this.movies = data;
+          this.groupMoviesByRole();
+          this.loading = false;
+        },
+        error: err => {
+          this.loading = false;
+        }
       });
     });
   }

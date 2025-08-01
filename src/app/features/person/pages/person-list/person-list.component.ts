@@ -12,6 +12,7 @@ import {PersonService} from '../../services/person.service';
 import {environment} from '../../../../../environments/environment';
 import {MoviePersonService} from '../../../movie-person/services/movie-person.service';
 import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
+import {LIMIT_LOADING_DATA} from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-person-list',
@@ -25,12 +26,14 @@ export class PersonListComponent implements OnInit {
 
   protected people: PersonInterface[] = [];
   protected loading = false;
+  protected loadingFirstPersons = true;
   protected readonly ButtonName = ButtonName;
   protected errorDataBase: boolean = false;
   protected noMore = false;
   protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
+  protected dataLimit = LIMIT_LOADING_DATA;
 
   constructor(
     protected router: Router,
@@ -85,6 +88,7 @@ export class PersonListComponent implements OnInit {
         }
         this.loading = false;
         this.errorDataBase = false;
+        this.loadingFirstPersons = false;
 
         if (checkAfterLoad && !this.initialAutoloadDone) {
           this.checkIfInitialLoadNeeded();
@@ -93,6 +97,7 @@ export class PersonListComponent implements OnInit {
       error: () => {
         this.loading = false;
         this.errorDataBase = true;
+        this.loadingFirstPersons = false;
       }
     });
   }
