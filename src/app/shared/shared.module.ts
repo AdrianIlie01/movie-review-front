@@ -8,6 +8,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { RatingComponent } from './components/rating/rating.component';
+import { RedirectLoaderComponent } from './components/redirect-loader/redirect-loader.component';
+import { RatingColorPipe } from './pipes/rating-color.pipe';
 
 
 
@@ -20,6 +22,8 @@ import { RatingComponent } from './components/rating/rating.component';
     FormSelectComponent,
     SafeUrlPipe,
     RatingComponent,
+    RedirectLoaderComponent,
+    RatingColorPipe,
   ],
     imports: [
         CommonModule,
@@ -31,6 +35,8 @@ import { RatingComponent } from './components/rating/rating.component';
         FormSelectComponent,
         SafeUrlPipe,
         RatingComponent,
+        RedirectLoaderComponent,
+        RatingColorPipe
     ]
 })
 export class SharedModule { }
