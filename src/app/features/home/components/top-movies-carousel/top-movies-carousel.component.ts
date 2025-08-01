@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {FilterMovie} from '../../../../shared/interfaces/filter-movie.interface';
 import {RatingService} from '../../../../shared/services/rating.service';
 import {map, Observable} from 'rxjs';
+import {TOP_CAST_MOVIE_COUNT} from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-top-movies-carousel',
@@ -21,6 +22,11 @@ export class TopMoviesCarouselComponent implements OnInit, AfterViewInit  {
   protected atStart = true;
   protected atEnd = false;
   protected averageRating: number = 0;
+  protected loading = true;
+  protected placeholderArray = TOP_CAST_MOVIE_COUNT;
+  protected loaderVisible = false;
+
+
   ngAfterViewInit() {
     // Used setTimeout to delay checkScroll() until after Angular's change detection cycle to avoid error
     setTimeout(() => this.checkScroll(), 0);
@@ -64,6 +70,7 @@ export class TopMoviesCarouselComponent implements OnInit, AfterViewInit  {
         });
 
         this.topRatedMovies = withRatings;
+        this.loading = false;
         this.cdr.detectChanges();
         this.checkScroll();
       }
@@ -86,7 +93,16 @@ export class TopMoviesCarouselComponent implements OnInit, AfterViewInit  {
         : this.roomService.getDefaultThumbnail('thumbnail_white.png');
   }
   goToMovie(id: string | number): void {
+    this.showLoader();
     this.router.navigate(['/movie', id]);
+  }
+
+  showLoader() {
+    this.loaderVisible = true;
+  }
+
+  hideLoader() {
+    this.loaderVisible = false;
   }
 
   scroll(direction: 'left' | 'right') {

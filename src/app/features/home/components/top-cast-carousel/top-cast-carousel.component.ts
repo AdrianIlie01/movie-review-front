@@ -3,6 +3,7 @@ import {PersonService} from '../../../person/services/person.service';
 import {RatingService} from '../../../../shared/services/rating.service';
 import {Router} from '@angular/router';
 import {FilterCast} from '../../../../shared/interfaces/filter-cast.interface';
+import {TOP_CAST_MOVIE_COUNT} from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-top-cast-carousel',
@@ -18,6 +19,8 @@ export class TopCastCarouselComponent implements OnInit, AfterViewInit {
   protected isDragging = false;
   protected atStart = true;
   protected atEnd = false;
+  protected placeholderArray = TOP_CAST_MOVIE_COUNT;
+  protected loading = true;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -55,6 +58,7 @@ export class TopCastCarouselComponent implements OnInit, AfterViewInit {
       });
 
       this.topActors = withRatings;
+      this.loading = false;
       this.cdr.detectChanges();
       this.checkScroll();
     });

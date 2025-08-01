@@ -64,6 +64,14 @@ h2 {
   transition: transform 0.3s;
 }
 
+.movie-card-skeleton {
+  flex: 0 0 auto;
+  width: 200px;
+  margin-top: 0.2rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .movie-card:hover {
   transform: scale(1.02);
 }
@@ -210,3 +218,10 @@ h3, .rating {
     padding-right: 2rem;
   }
 }
+
+/*allow on phone natural scroll*/
+/*@media (max-width: 768px) {*/
+/*  .carousel-container {*/
+/*    touch-action: pan-x;*/
+/*  }*/
+/*}*/

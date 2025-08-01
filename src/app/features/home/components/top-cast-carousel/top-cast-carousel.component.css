@@ -174,3 +174,10 @@ h3, .rating {
     font-size: 0.6rem;
   }
 }
+
+/*allow on phone natural scroll*/
+/*@media (max-width: 768px) {*/
+/*  .carousel-container {*/
+/*    touch-action: pan-x;*/
+/*  }*/
+/*}*/
