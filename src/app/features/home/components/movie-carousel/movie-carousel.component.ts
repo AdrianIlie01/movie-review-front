@@ -22,8 +22,9 @@ export class MovieCarouselComponent {
   readonly pageSize = 10;
   previousMovie: RoomDataInterface | null = null;
 
-  loading = false;
+  protected loading = false;
   private noMorePages = false;
+  protected firstImageLoaded = false;
 
   animationDirection: 'left' | 'right' | '' = '';
 
@@ -55,6 +56,12 @@ export class MovieCarouselComponent {
       theme === 'dark'
         ? this.roomService.getDefaultThumbnail('thumbnail_black.png')
         : this.roomService.getDefaultThumbnail('thumbnail_white.png');
+  }
+
+  onImageLoad(): void {
+    if (!this.firstImageLoaded) {
+      this.firstImageLoaded = true;
+    }
   }
 
   previous(): void {

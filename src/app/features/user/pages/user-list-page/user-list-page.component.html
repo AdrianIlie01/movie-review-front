@@ -1,36 +1,55 @@
-<div *ngIf="loading && users.length === 0" class="loader"></div>
+
+<div *ngIf="loadingFirstUsers" class="person-list-container">
+
+  <div *ngFor="let _ of dataLimit" class="person-card"
+  >
+
+    <div *ngIf="loadingFirstUsers" class="user-card-skeleton"
+    >
+      <div class="user-avatar-skeleton"></div>
+      <div class="user-name-skeleton"></div>
+      <div class="user-line-skeleton"></div>
+
+      <div class="user-info-skeleton" *ngFor="let i of [1, 2, 3, 4, 5]"></div>
+
+      <div class="user-button-skeleton"></div>
+    </div>
+  </div>
+</div>
 
 <div #container *ngIf="users?.length" class="person-list-container">
-  <div *ngFor="let user of users" class="person-card">
 
-    <div class="avatar">
+
+<div *ngFor="let user of users" class="person-card">
+
+    <div *ngIf="!loadingFirstUsers" class="avatar">
       {{ user.username.charAt(0) }}
     </div>
 
-    <h2 id="name" title="{{ user.username }}">{{ user.username }}</h2>
+    <h2 *ngIf="!loadingFirstUsers" id="name" title="{{ user.username }}">{{ user.username }}</h2>
 
-    <div class="underline"></div>
+    <div *ngIf="!loadingFirstUsers" class="underline"></div>
 
-    <p class="role">
+    <p *ngIf="!loadingFirstUsers" class="role">
       <span class="label"><i class="fa fa-user-tag"></i> Role:</span> {{ user.role }}
     </p>
-    <p class="email">
+    <p *ngIf="!loadingFirstUsers" class="email">
       <span class="label">Email:</span> {{ user.email }}
     </p>
-    <p class="status">
+    <p *ngIf="!loadingFirstUsers" class="status">
       <span class="label">Status:</span> {{ user.status }}
     </p>
-    <p class="fa" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
-  <span class="label">
+    <p *ngIf="!loadingFirstUsers" class="fa" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
+  <span *ngIf="!loadingFirstUsers" class="label">
     <i class="fa" [ngClass]="user.is_2_fa_active ? 'fa-lock' : 'fa-unlock'"></i>
     2FA
   </span> {{ user.is_2_fa_active ? 'enabled' : 'disabled' }}
     </p>
-    <p class="date">
+    <p *ngIf="!loadingFirstUsers" class="date">
       <span class="label">Joined:</span> {{ user.create_date | date:'dd MMM yyyy' }}
     </p>
 
-    <div class="actions">
+    <div *ngIf="!loadingFirstUsers" class="actions">
       <ng-container *ngIf="user.id !== currentUserId; else currentUserInfo">
         <ng-container *ngIf="loadingUserId !== user.id">
           <select class="role-select" [(ngModel)]="user.role" (change)="onRoleChange(user)">
@@ -45,7 +64,7 @@
           (click)="toggleBanUser(user)"
           [disabled]="loadingUserId === user.id"
         >
-          <div *ngIf="loadingUserId === user.id" class="loader"></div>
+          <div *ngIf="loadingUserId === user.id" class="ban-loader"></div>
           &nbsp;{{ user.status === 'banned' ? 'Unban' : 'Ban' }}
         </button>
       </ng-container>
@@ -59,8 +78,8 @@
   </div>
 </div>
 
-<div *ngIf="loading && users.length > 0" class="loader"></div>
+<div *ngIf="loading && !loadingFirstUsers && users.length > 0" class="loader"></div>
 
-<div *ngIf="!loading && users.length === 0" class="no-users">
-  No users found.
+<div *ngIf="!loadingFirstUsers && users.length === 0" class="no-data">
+  No user found
 </div>

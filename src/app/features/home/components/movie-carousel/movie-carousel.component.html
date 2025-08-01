@@ -30,6 +30,7 @@
   }"
       (error)="onImageError($event, currentMovie)"
       (click)="goToMovie(currentMovie.id)"
+      (load)="onImageLoad()"
       draggable="false"
     />
 
@@ -45,3 +46,5 @@
 <ng-template [ngIf]="!loading && !currentMovie">
   <div class="placeholder">No movies available…</div>
 </ng-template>
+
+<div *ngIf="loading && !firstImageLoaded" class="image-skeleton-loader frame"></div>

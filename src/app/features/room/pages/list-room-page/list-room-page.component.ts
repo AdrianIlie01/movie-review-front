@@ -4,6 +4,7 @@ import {ButtonName} from '../../../../shared/enums/button-name';
 import {Router} from '@angular/router';
 import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
 import {environment} from '../../../../../environments/environment';
+import {LIMIT_LOADING_DATA} from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-list-room-page',
@@ -17,11 +18,13 @@ export class ListRoomPageComponent implements OnInit {
 
   protected videos: any[] = [];
   protected loading = false;
+  protected loadingFirstMovies = true;
   protected ButtonName = ButtonName;
   protected noMore = false;
   protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
+  protected dataLimit = LIMIT_LOADING_DATA;
   constructor(
     protected router: Router,
     protected roomService: RoomService,
@@ -85,6 +88,7 @@ export class ListRoomPageComponent implements OnInit {
         }
 
         this.loading = false;
+        this.loadingFirstMovies = false;
 
         if (checkAfterLoad && !this.initialAutoloadDone) {
           this.checkIfInitialLoadNeeded();
@@ -93,6 +97,7 @@ export class ListRoomPageComponent implements OnInit {
       error: (err) => {
         console.error('Error loading videos:', err);
         this.loading = false;
+        this.loadingFirstMovies = false;
       }
     });
   }

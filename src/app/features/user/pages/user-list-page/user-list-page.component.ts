@@ -4,6 +4,7 @@ import {UserInterface} from '../../../../shared/interfaces/user.interface';
 import {AuthService} from '../../../../core/services/auth.service';
 import {CardsVisibilityService} from '../../../../shared/services/cards-visibility.service';
 import {environment} from '../../../../../environments/environment';
+import {LIMIT_LOADING_DATA, TOP_CAST_MOVIE_COUNT} from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-user-list-page',
@@ -26,13 +27,13 @@ export class UserListPageComponent implements OnInit {
   protected currentUserId!: string;
   protected loadingUserId: string | null = null;
   protected loading = false;
+  protected loadingFirstUsers = true;
   protected currentUserData!: UserInterface;
   protected noMore = false;
   protected limit = environment.limit;
   protected offset = 0;
   protected initialAutoloadDone = false;
-
-
+  protected dataLimit = LIMIT_LOADING_DATA;
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe((loggedIn) => {
       if (loggedIn) {
@@ -73,6 +74,7 @@ export class UserListPageComponent implements OnInit {
           this.offset += this.limit;
         }
         this.loading = false;
+        this.loadingFirstUsers = false;
 
         if (checkAfterLoad && !this.initialAutoloadDone) {
           this.checkIfInitialLoadNeeded();
@@ -80,6 +82,7 @@ export class UserListPageComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
+        this.loadingFirstUsers = false;
         console.error('Error fetching users:', err);
       }
     });
@@ -165,7 +168,5 @@ export class UserListPageComponent implements OnInit {
   }
 
 
-
-
-
+  protected readonly TOP_CAST_MOVIE_COUNT = TOP_CAST_MOVIE_COUNT;
 }
