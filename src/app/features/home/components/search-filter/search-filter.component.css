@@ -21,6 +21,11 @@
 
 .select-from {
   width: 100%;
+  min-width: 60%;
+
+  /*Use min-width or flex: 2 with flex-wrap in filter-item
+   to keep the selected items inside their container.*/
+  /*flex: 2;*/
 }
 
 .search-name {
@@ -338,6 +343,7 @@ input[type=number] {
   align-items: center;
   margin-bottom: 1rem;
   /*gap: 1rem; */
+  /*flex-wrap: wrap;*/
 }
 
 .filter-item .label {

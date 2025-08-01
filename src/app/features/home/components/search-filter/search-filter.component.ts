@@ -72,8 +72,8 @@ export class SearchFilterComponent implements OnInit {
   ];
 
   sortOrderOptions: Option[] = [
-    { key: 'ASC', label: 'ASC', type: 'text', options: [] },
-    { key: 'DESC', label: 'DESC', type: 'text', options: [] }
+    { key: 'ASC', label: '▲ ASC', type: 'text', options: [] },
+    { key: 'DESC', label: '▼ DESC', type: 'text', options: [] }
   ];
 
   @Output() search = new EventEmitter<{
