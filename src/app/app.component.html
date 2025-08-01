@@ -1,2 +1,8 @@
 <app-navigation-menu></app-navigation-menu>
 <router-outlet></router-outlet>
+
+<app-redirect-loader
+  *ngIf="showLoader"
+  [navigationFailed]="navigationFailed"
+  (close)="clearLoader()"
+></app-redirect-loader>
