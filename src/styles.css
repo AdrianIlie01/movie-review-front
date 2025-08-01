@@ -93,4 +93,309 @@ p {
   color: var(--login-hover-text);
 }
 
+.carousel-hidden-arrow {
+  overflow: hidden;
+}
+.hide {
+  display: none;
+}
+.no-data {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-style: italic;
+  color: #666;
+  font-size: 1.1rem;
+}
+.no-persons-message {
+  font-style: italic;
+  color: #666;
+  padding: 1rem 0;
+  font-size: 1rem;
+  margin: 0 auto;
+}
+/*image skeleton, carousel-skeleton loader*/
+.image-skeleton-loader, .carousel-skeleton-loader {
+  position: relative;
+  height: 320px;
+}
+.image-skeleton-loader:after,
+.carousel-skeleton-loader::after,
+.skeleton::after,
+.user-avatar-skeleton::after,
+.user-name-skeleton::after,
+.user-line-skeleton::after,
+.user-info-skeleton::after,
+.user-button-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    var(--bg-color-inverted) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: skeleton-animation 1.5s infinite;
+  background-size: 200% 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes skeleton-animation {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+.top-cast-img-skeleton::after {
+  border-radius: 50%;
+}
+.top-movie-img-skeleton {
+  height: 17rem;
+}
+@media (max-height: 700px) {
+  .top-movie-img-skeleton {
+    height: 14.5rem;
+  }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+.cast-skeleton-container {
+  margin: 0 auto;
+  width: 90%;
+}
+.cast-skeleton {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 22%;
+  overflow: hidden;
+}
+.video-skeleton {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+}
+.title-skeleton {
+  width: 90%;
+  height: 2rem;
+  margin: 0 auto;
+}
+.review-title-skeleton {
+  width: 10rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+/* Rating */
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.star-skeleton-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+}
+.star-skeleton {
+  font-size: 2.3rem;
+  color: #ccc;
+  position: relative;
+}
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
+/* Input review + buton */
+.review-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.review-input-skeleton {
+  width: 75%;
+  height: 2.5rem;
+  border-radius: 24px;
+}
+.review-button-skeleton {
+  margin-top: 0.7rem;
+  width: 25%;
+  height: 2.5rem;
+  border-radius: 24px;
+}
+.user-info-row-skeleton {
+  width: 100%;
+  margin: 0 auto;
+}
+.user-card-skeleton {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+.user-avatar-skeleton {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.user-name-skeleton {
+  width: 60%;
+  height: 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.user-line-skeleton {
+  width: 90%;
+  height: 3px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.user-info-skeleton {
+  width: 80%;
+  height: 15px;
+  margin: 8px 0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.user-button-skeleton {
+  width: 100%;
+  height: 35px;
+  margin-top: 20px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.user-card-skeleton {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+.movie-skeleton-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: auto;
+
+  border-radius: 14px;
+  width: 100%;
+  max-width: 400px;
+}
+.small-skeleton-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  background: var(--bg-color-inverted);
+  background-size: 400% 100%;
+  margin-bottom: 16px;
+}
+.movie-list-skeleton-title {
+  width: 60%;
+  height: 20px;
+  margin: 0 auto 12px;
+  border-radius: 6px;
+  background: var(--bg-color-inverted);
+  background-size: 400% 100%;
+}
+.skeleton-info-line {
+  width: 80%;
+  height: 14px;
+  margin: 8px auto;
+  border-radius: 4px;
+  background: var(--bg-color-inverted);
+  background-size: 400% 100%;
+}
+.skeleton-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+  width: 100%;
+}
+.skeleton-button {
+  flex: 1;
+  height: 40px;
+  border-radius: 50px;
+  background: var(--bg-color-inverted);
+  background-size: 400% 100%;
+}
+@keyframes shimmer {
+  0% { background-position: -400% 0; }
+  100% { background-position: 400% 0; }
+}
+
+@media (max-width:620px) {
+  .grouped-role-header-skeleton {
+    flex-direction: column;
+    align-items: flex-start!important;
+  }
+}
+.skeleton-credits-username {
+  width: 40%;
+  height: 25px;
+  border-radius: 50px;
+  /*background: white;*/
+  background: var(--bg-color);
+}
+.skeleton-roles-user {
+  width: 25%;
+  height: 25px;
+  border-radius: 50px;
+  /*background: white;*/
+  background: var(--bg-color);
+}
+.skeleton-button-header {
+  width: 15%;
+  height: 25px;
+  border-radius: 50px;
+  background: var(--bg-color);
+}
+.skeleton-inverted-bg-color {
+  background: var(--bg-color);
+}
+.role-header-skeleton {
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.role-group-skeleton-container {
+  /*padding: 2rem;*/
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.center-name-skeleton-card {
+  margin: 0 auto;
+  border-radius: 50px;
+  background-color: var(--form-background);
+}
