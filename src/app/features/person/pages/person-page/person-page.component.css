@@ -30,7 +30,7 @@
 
 .info {
   width: 100%;
-  margin-left: 2rem;
+  margin: 0 auto;
 }
 
 .image-container {
@@ -316,6 +316,7 @@ h2 {
 @media (min-width: 401px) and (max-width: 501px) {
   h2 {
     margin-top: -1rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -358,5 +359,34 @@ h2 {
     right: -1rem;
     font-size: 2rem;
     padding: 0.5rem 1rem;
+  }
+}
+
+
+.text-skeleton-custom-width {
+  width: 50%;
+}
+.skeleton-custom-color {
+  max-width: 15%;
+  padding: 0.6rem;
+  background: var(--bg-color-inverted);
+}
+@media (max-width: 800px) {
+  .skeleton-custom-color {
+    max-width: 20%!important;
+  }
+}
+.skeleton-custom-padding {
+  padding: 0.8rem;
+}
+.skeleton-review-title-width {
+  width: 20%
+}
+@media (max-width: 400px) {
+  .skeleton-custom-star-size {
+    font-size: 1rem;
+  }
+  .skeleton-custom-padding {
+    padding: 0.6rem;
   }
 }

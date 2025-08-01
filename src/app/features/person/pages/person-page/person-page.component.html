@@ -1,6 +1,35 @@
-<div *ngIf="loading">Loading person data...</div>
+<div class="person-list-container" *ngIf="!loading">
 
-<div *ngIf="error">Error loading person data.</div>
+  <div class="person-card">
+    <div class="image-carousel-wrapper">
+      <div class="user-avatar-skeleton image-container"></div>
+    </div>
+    <div class="skeleton review-title-skeleton text-skeleton-custom-width"></div>
+    <div class="user-line-skeleton"></div>
+    <div class="review-input-container">
+      <div class="skeleton review-title-skeleton skeleton-review-title-width"></div>
+      <div class="star-skeleton-container">
+        <div class="star-skeleton skeleton-custom-star-size" *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]">★</div>
+      </div>
+    </div>
+
+  <div class="info">
+    <div class="user-info-skeleton description"></div>
+    <div class="user-info-skeleton description text-skeleton-custom-width"></div>
+  </div>
+
+    <div class="skeleton review-title-skeleton title"></div>
+    <div *ngIf="moviesStarred">
+        <div *ngFor="let _ of [1, 2, 3]" class="role-group">
+          <h3 class="skeleton review-title-skeleton skeleton-custom-color "></h3>
+          <div class="movie-list-inline">
+              <span *ngFor="let movie of [1, 2, 3, 4]" class="skeleton movie-pill review-title-skeleton skeleton-custom-padding"></span>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
 
 <div *ngIf="person && !loading && !error" class="person-list-container">
   <div class="person-card">
