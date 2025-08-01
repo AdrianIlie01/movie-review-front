@@ -10,6 +10,7 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { RatingComponent } from './components/rating/rating.component';
 import { RedirectLoaderComponent } from './components/redirect-loader/redirect-loader.component';
 import { RatingColorPipe } from './pipes/rating-color.pipe';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -24,19 +25,21 @@ import { RatingColorPipe } from './pipes/rating-color.pipe';
     RatingComponent,
     RedirectLoaderComponent,
     RatingColorPipe,
+    FooterComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-    ],
-    exports: [
-        ActionButtonComponent,
-        NavigationMenuComponent,
-        FormSelectComponent,
-        SafeUrlPipe,
-        RatingComponent,
-        RedirectLoaderComponent,
-        RatingColorPipe
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+  ],
+  exports: [
+    ActionButtonComponent,
+    NavigationMenuComponent,
+    FormSelectComponent,
+    SafeUrlPipe,
+    RatingComponent,
+    RedirectLoaderComponent,
+    RatingColorPipe,
+    FooterComponent
+  ]
 })
 export class SharedModule { }
