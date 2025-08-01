@@ -9,11 +9,19 @@
   --review-btn--bckg: #2739b7;
 }
 
-
 html, body {
   background-color: var(--bg-color);
 }
 
+/* Apply smooth transitions globally */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease-in-out,
+  color 0.3s ease-in-out,
+  border-color 0.3s ease-in-out,
+  box-shadow 0.3s ease-in-out;
+}
 
 * {
   margin: 0;
