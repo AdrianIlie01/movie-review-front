@@ -1,8 +1,16 @@
-<app-navigation-menu></app-navigation-menu>
-<router-outlet></router-outlet>
+<div class="app-layout">
+  <app-navigation-menu></app-navigation-menu>
 
-<app-redirect-loader
-  *ngIf="showLoader"
-  [navigationFailed]="navigationFailed"
-  (close)="clearLoader()"
-></app-redirect-loader>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-redirect-loader
+    *ngIf="showLoader"
+    [navigationFailed]="navigationFailed"
+    (close)="clearLoader()"
+  ></app-redirect-loader>
+
+</div>
+
+<app-footer></app-footer>
