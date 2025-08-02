@@ -12,7 +12,7 @@
   position: relative;
   max-width: 1200px;
   max-height: 1000px;
-  width: 75vw;
+  width: 90vw;
   height: 65vh;
   overflow: hidden;
   border-radius: 1rem;
@@ -82,9 +82,8 @@ img:hover {
   text-align: center;
   max-width: clamp(280px, 60vw, 420px);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  user-select: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Placeholder fallback */
@@ -145,7 +144,7 @@ img:hover {
 
 @media (max-width: 900px) {
   .frame {
-    height: 45vh;
+    height: 55vh;
   }
 }
 
@@ -157,14 +156,14 @@ img:hover {
 
 @media (max-width: 700px) {
   .frame {
-    height: 35vh;
+    height: 45vh;
   }
 }
 
 
 @media (max-width: 500px) {
   .frame {
-    height: 25vh;
+    height: 35vh;
   }
 }
 
