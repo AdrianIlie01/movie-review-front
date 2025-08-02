@@ -9,13 +9,13 @@
 
 .section-title {
   position: relative;
-  padding-left: 10px;
+  padding-left: 18px;
 }
 
 .section-title::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 0.4rem;
   top: 0;
   height: 100%;
   width: 4px;
@@ -36,12 +36,13 @@ h2 {
 }
 
 .carousel-container {
+  /*border: 1px solid red;*/
   background-color: var(--bg-color);
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 1rem;
-  /*padding: 0 2rem;*/
+  gap: 1.5rem;
+  padding: 0.4rem 0.5rem 0.8rem;
 
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -56,11 +57,11 @@ h2 {
   flex: 0 0 auto;
   width: 200px;
   margin-top: 0.2rem;
-  background: linear-gradient(to right, #1f1f1f, #2c2c2c);
-  border-radius: 10px;
+  background: var(--bg-color-inverted);
+  border-radius: 15px;
   text-align: center;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 8px var(--text-color);
   transition: transform 0.3s;
 }
 
@@ -70,6 +71,7 @@ h2 {
   margin-top: 0.2rem;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 8px var(--text-color);
 }
 
 .movie-card:hover {
@@ -85,7 +87,7 @@ h2 {
 
 .movie-info {
   padding: 0.5rem;
-  color: white;
+  color: var(--text-color);
 }
 
 .movie-info h3 {
@@ -102,10 +104,11 @@ h2 {
 
 .movie-info button {
   background: #f5c518;
-  color: white;
+  color: black;
   border: none;
   padding: 0.5rem 1rem;
   margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
   border-radius: 25px;
   cursor: pointer;
 }
@@ -113,6 +116,7 @@ h2 {
 .movie-info button:hover {
   background-color: #ffcc00;
   transform: scale(1.02);
+  color: white;
 }
 
 .carousel-nav {
@@ -214,8 +218,8 @@ h3, .rating {
   }
 
   .carousel-wrapper {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
