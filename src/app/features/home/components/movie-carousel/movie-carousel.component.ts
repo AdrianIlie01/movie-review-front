@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {finalize} from 'rxjs/operators';
 import {RoomService} from '../../../room/services/room.service';
 import {RoomDataInterface} from '../../../../shared/interfaces/room-data.interface';
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   templateUrl: './movie-carousel.component.html',
   styleUrl: './movie-carousel.component.css'
 })
-export class MovieCarouselComponent {
+export class MovieCarouselComponent implements OnInit, OnDestroy{
   constructor(
     protected roomService: RoomService,
     private router: Router,
@@ -30,11 +30,17 @@ export class MovieCarouselComponent {
 
   private dragStartX = 0;
   private dragging = false;
+  private autoSlideIntervalId: any = null;
+  readonly slideIntervalMs = 5000;
 
   ngOnInit(): void {
     this.loadPage(0);
+    setTimeout(() => {
+      this.startAutoSlide();
+    }, 5000);  }
+  ngOnDestroy(): void {
+    clearInterval(this.autoSlideIntervalId);
   }
-
   get currentPage(): RoomDataInterface[] {
     return this.cachedMovies[this.currentPageIndex] || [];
   }
@@ -65,6 +71,7 @@ export class MovieCarouselComponent {
   }
 
   previous(): void {
+    this.pauseAutoSlideWithRestart();
     this.previousMovie = this.currentMovie;
     this.animationDirection = 'right';
     if (this.currentIndex > 0) {
@@ -80,6 +87,7 @@ export class MovieCarouselComponent {
   }
 
   next(): void {
+    this.pauseAutoSlideWithRestart();
     this.previousMovie = this.currentMovie;
     this.animationDirection = 'left';
     if (this.currentIndex < this.currentPage.length - 1) {
@@ -97,7 +105,13 @@ export class MovieCarouselComponent {
       this.resetAnimationDirection();
     }
   }
-
+  private startAutoSlide(): void {
+    this.autoSlideIntervalId = setInterval(() => {
+      if (!this.loading && this.firstImageLoaded) {
+        this.next();
+      }
+    }, this.slideIntervalMs);
+  }
   private resetAnimationDirection() {
     setTimeout(() => {
       this.animationDirection = '';
@@ -139,7 +153,16 @@ export class MovieCarouselComponent {
   goToMovie(id: string | number) {
     this.router.navigateByUrl(`/movie/${id}`);
   }
+  pauseAutoSlideWithRestart(): void {
+    clearInterval(this.autoSlideIntervalId);
+    this.autoSlideIntervalId = null;
+
+    setTimeout(() => {
+      this.startAutoSlide();
+    }, 10000);
+  }
   onDragStart(event: PointerEvent): void {
+    this.pauseAutoSlideWithRestart();
     (event.target as HTMLElement).setPointerCapture(event.pointerId); // move on touch
     this.dragStartX = event.clientX;
     this.dragging = true;
@@ -147,6 +170,7 @@ export class MovieCarouselComponent {
 
   onDragMove(event: PointerEvent): void {
     if (!this.dragging) return;
+    this.pauseAutoSlideWithRestart();
   }
 
   onDragEnd(event: PointerEvent): void {
