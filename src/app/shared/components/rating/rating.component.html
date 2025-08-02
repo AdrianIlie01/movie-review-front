@@ -29,6 +29,15 @@
     'rating-value': true,
     'rating-value-small': smallHeader === true
   }"
-    >{{ averageRating.toFixed(1) }}/{{ starsCount }} ({{ ratingCount }} votes)</div>
+    >
+      <span
+        [ngStyle]="{color: averageRating | ratingColor}"
+      >
+         {{ averageRating.toFixed(1) }}
+      </span>/{{ starsCount }} ({{ ratingCount }} votes)</div>
   </div>
 </section>
+
+
+<!--todo-->
+<!--disaply the rating lower si to high-->
