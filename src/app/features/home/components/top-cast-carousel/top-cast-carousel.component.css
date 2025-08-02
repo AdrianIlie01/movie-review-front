@@ -8,7 +8,7 @@
 
 .section-title {
   position: relative;
-  padding-left: 10px;
+  padding-left: 18px;
   font-size: 1.7rem;
   color: var(--text-color);
   margin-bottom: 1rem;
@@ -17,7 +17,7 @@
 .section-title::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 0.4rem;
   top: 0;
   height: 100%;
   width: 4px;
@@ -37,6 +37,7 @@ h2 {
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 1.5rem;
+  padding: 0.4rem 0.5rem 0.8rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
   touch-action: pan-y;
@@ -148,8 +149,8 @@ h3, .rating {
 
 @media (max-width: 480px) {
   .carousel-wrapper {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .carousel-nav.left,
