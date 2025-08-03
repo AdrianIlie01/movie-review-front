@@ -32,6 +32,7 @@ export class MovieCarouselComponent implements OnInit, OnDestroy{
   private dragging = false;
   private autoSlideIntervalId: any = null;
   readonly slideIntervalMs = 5000;
+  private autoSlideRestartTimeoutId: any = null;
 
   ngOnInit(): void {
     this.loadPage(0);
@@ -40,6 +41,12 @@ export class MovieCarouselComponent implements OnInit, OnDestroy{
     }, 5000);  }
   ngOnDestroy(): void {
     clearInterval(this.autoSlideIntervalId);
+    this.autoSlideIntervalId = null;
+
+    if (this.autoSlideRestartTimeoutId) {
+      clearTimeout(this.autoSlideRestartTimeoutId);
+      this.autoSlideRestartTimeoutId = null;
+    }
   }
   get currentPage(): RoomDataInterface[] {
     return this.cachedMovies[this.currentPageIndex] || [];
@@ -157,8 +164,13 @@ export class MovieCarouselComponent implements OnInit, OnDestroy{
     clearInterval(this.autoSlideIntervalId);
     this.autoSlideIntervalId = null;
 
-    setTimeout(() => {
+    if (this.autoSlideRestartTimeoutId) {
+      clearTimeout(this.autoSlideRestartTimeoutId);
+    }
+
+    this.autoSlideRestartTimeoutId = setTimeout(() => {
       this.startAutoSlide();
+      this.autoSlideRestartTimeoutId = null;
     }, 10000);
   }
   onDragStart(event: PointerEvent): void {
