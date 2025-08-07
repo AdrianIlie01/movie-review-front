@@ -15,6 +15,7 @@ import {FilterCast} from '../../../shared/interfaces/filter-cast.interface';
 export class PersonService {
 
   private personApi: string = `${environment.apiUrl}/person`;
+  private cloudApi: string = `${environment.imageCloudApi}`;
 
   constructor(
     private httpClient: HttpClient,
@@ -98,7 +99,8 @@ export class PersonService {
   }
   getDefaultImage(filename: string) {
     // return this.httpClient.get(`${this.personApi}/default-person-image/${filename}`);
-    return `${this.personApi}/default-person-image/${filename}`;
+    // return `${this.personApi}/default-person-image/${filename}`;
+    return `${this.cloudApi}/${filename}`;
   }
 
   getImagesNamePerson(id: string) {
@@ -107,7 +109,8 @@ export class PersonService {
 
   getImage(filename: string) {
     // return this.httpClient.get(`${this.personApi}/images/file/${filename}`);
-    return `${this.personApi}/images/file/${filename}`;
+    // return `${this.personApi}/images/file/${filename}`;
+    return `${this.cloudApi}/${filename}`;
 
   }
 
@@ -130,5 +133,20 @@ export class PersonService {
     }
 
     return this.httpClient.get(`${this.personApi}/filter`, { params });
+  }
+
+  getPersonImage(data: any): string {
+    const person = data.person;
+    if (person.images && person.images.length > 0) {
+      return this.getImage(person.images[0]);
+    } else {
+      return this.getDefaultImage('default_person.jpg');
+    }
+  }
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.getDefaultImage('default_person.jpg');
+
   }
 }

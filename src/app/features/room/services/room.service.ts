@@ -15,6 +15,7 @@ import {FilterMovie} from '../../../shared/interfaces/filter-movie.interface';
 export class RoomService {
 
   private roomApi: string = `${environment.apiUrl}/room`;
+  private cloudApi: string = `${environment.imageCloudApi}`;
   private videoRoomApi: string = `${environment.apiUrl}/video`;
 
   constructor(
@@ -38,11 +39,11 @@ export class RoomService {
 
 // room.service.ts
   getDefaultThumbnail(filename: string): string {
-    return `${this.roomApi}/default-theme-thumbnail/${filename}`;
+    return `${this.cloudApi}/${filename}`;
   }
 
   getThumbnailUrl(filename: string): string {
-    return `${this.roomApi}/thumbnail/${filename}`;
+    return `${this.cloudApi}/${filename}`;
   }
 
   updateRoom(body: {name: string, stream_url: string, type: MovieTypeInterface[], release_year: string}, id: string) {
@@ -118,7 +119,6 @@ export class RoomService {
 
       return this.checkNameEditAvailability(newUsername, id).pipe(
         map((response: any) => {
-          console.log('async validator response:', response);
           return response.message === 'name taken' ? { nameTaken: true } : null;
         }),
         catchError(() => of(null))
@@ -163,4 +163,19 @@ export class RoomService {
     return this.httpClient.get(`${this.roomApi}/filter`, { params });
   }
 
+  getThumbnailImage(video: any): string {
+    const theme = localStorage.getItem('theme') || 'light';
+    if (video.thumbnail !== 'thumbnail') return this.getThumbnailUrl(video.thumbnail);
+    return theme === 'dark'
+      ? this.getDefaultThumbnail('thumbnail_black.png')
+      : this.getDefaultThumbnail('thumbnail_white.png');
+  }
+
+  onImageError(event: Event) {
+    const theme = localStorage.getItem('theme') || 'light';
+    (event.target as HTMLImageElement).src =
+      theme === 'dark'
+        ? this.getDefaultThumbnail('thumbnail_black.png')
+        : this.getDefaultThumbnail('thumbnail_white.png');
+  }
 }
