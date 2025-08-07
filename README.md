@@ -1,59 +1,48 @@
-# AngularRefresh
+# 🎬 Movie Review – Full-Stack Web Platform for Movie Reviews
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
+**Movie Review** is a feature-rich web platform that enables users to discover, review, and interact with movies and cast members. It includes secure authentication, a dynamic UI, interactive carousels, detailed movie pages, and a powerful admin dashboard.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Features
 
-```bash
-ng serve
-```
+### 🔐 Authentication & User Features
+- Secure registration and login
+- Two-Factor Authentication (2FA) via email
+- Password reset functionality
+- User profile with editable personal info
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🏠 Dynamic Homepage
+- Top-rated movies carousel
+- Notable cinema figures carousel
+- Interactive movie/cast discovery carousel with:
+  - Search
+  - Filters by genre, release year, rating
 
-## Code scaffolding
+### 🎥 Movie Pages
+- Embedded YouTube trailers
+- Color-coded user rating system
+- Comment & review section
+- Full cast details
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 🎭 Cast Pages
+- Personal biography
+- Average user ratings
+- Complete filmography with roles
 
-```bash
-ng generate component component-name
-```
+### 🛠️ Admin Dashboard
+- User moderation:
+  - Ban/unban
+  - Assign roles (user, moderator, admin)
+- Movie management:
+  - Edit movie details
+  - Assign actors and roles
+- Cast member management:
+  - Edit details
+  - Assign to movies and roles
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🌐 Live Demo
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🔗 [Live Application](https://movie-review-front.onrender.com/home)  
