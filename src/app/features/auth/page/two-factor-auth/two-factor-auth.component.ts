@@ -44,7 +44,6 @@ export class TwoFactorAuthComponent implements  OnInit {
             }
           },
           error: e => {
-            console.log(e)
           }
         })
 
@@ -77,8 +76,6 @@ export class TwoFactorAuthComponent implements  OnInit {
         this.router.navigateByUrl('home').then();
       },
       error: (error) => {
-        console.log('error')
-        console.log(error)
         if (error.error?.message.length > 0) {
           error.error.message.forEach((e: string) => {
             this.errorMessage?.push(e)

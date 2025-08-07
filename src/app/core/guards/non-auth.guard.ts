@@ -18,11 +18,9 @@ export class NonAuthGuard implements CanActivate {
     return this.authService.isAuthenticated().pipe(
       map(isAuth => {
         if (isAuth) {
-          console.log('non auth guard - is auth')
           this.router.navigateByUrl('home').then();
           return false;
         } else {
-          console.log('nu e auth - non-auth guard')
           return true;
         }
       })

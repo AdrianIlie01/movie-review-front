@@ -31,8 +31,6 @@ export class UserService {
 
   editUser(body: any, id: string) {
     const url = this.apiUrl + '/' + id;
-    console.log('body')
-    console.log(body)
     return this.httpClient.patch(url, body);
   }
 
@@ -58,7 +56,6 @@ export class UserService {
   }
 
   getInfoOfUser(id: string) {
-    console.log(`${this.userInfoUrl}/user/${id}`);
     return this.httpClient.get(`${this.userInfoUrl}/user/${id}`);
   }
 

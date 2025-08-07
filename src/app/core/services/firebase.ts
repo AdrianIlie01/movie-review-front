@@ -31,7 +31,6 @@ export class FirebaseService {
 
       return snapshot.docs.map(doc => doc.data());
     } catch (error) {
-      console.error("Eroare la getComments:", error);
       throw error;
     }
   }
@@ -63,7 +62,6 @@ export class FirebaseService {
 
       return snapshot.docs.map(doc => doc.data());
     } catch (error) {
-      console.error("Eroare la getComments:", error);
       throw error;
     }
   }
@@ -79,7 +77,6 @@ export class FirebaseService {
 
       return snapshot.docs.map(doc => doc.data());
     } catch (error) {
-      console.error("Eroare la getComments:", error);
       throw error;
     }
   }
@@ -89,7 +86,6 @@ export class FirebaseService {
   }
 
   updateCommentsStatusByUserInRoom(userId: string, movieId: string, body: {status: string}) {
-    console.log(movieId)
     return this.httpClient.post(`${this.commentsApi}/update-comment-status/${userId}/${movieId}`, body);
   }
 

@@ -34,8 +34,6 @@ export class DeleteAccountComponent implements OnInit {
     this.userService.getUserInfo().subscribe({
       next: (data: any) => {
         this.userInfo = data;
-        console.log('data');
-        console.log(data);
       }
     })
 
@@ -59,7 +57,6 @@ export class DeleteAccountComponent implements OnInit {
         this.router.navigateByUrl('home').then();
       },
       error: (error) => {
-        console.log(error)
         if (error.error?.message.length > 0) {
           error.error.message.forEach((e: string) => {
             this.errorMessage?.push(e)
