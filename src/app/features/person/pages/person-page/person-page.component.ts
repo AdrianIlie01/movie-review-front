@@ -24,7 +24,12 @@ export class PersonPageComponent implements OnInit {
   protected ratingCount: number = 0;
   protected personId!: string;
   // protected currentUserLoaded = false;
+  animationDirection: 'left' | 'right' | '' = '';
+  currentImageIndex = 0;
+  previousImageIndex: number | null = null;
 
+  private dragStartX = 0;
+  private dragging = false;
   constructor(
     private route: ActivatedRoute,
     private personService: PersonService,
@@ -84,7 +89,6 @@ export class PersonPageComponent implements OnInit {
             groupedMovies[role].push(movieData);
           });
 
-          console.log('Grouped Movies:', groupedMovies);
           this.moviesStarred = groupedMovies;
 
         });
@@ -114,8 +118,6 @@ export class PersonPageComponent implements OnInit {
     return this.personService.getDefaultImage('default_person.jpg');
   }
 
-  currentImageIndex = 0;
-
   getPersonImageByIndex(index: number): string {
     if (this.person?.images && this.person.images.length === 1) {
       return this.personService.getImage(this.person.images[0]);
@@ -131,15 +133,56 @@ export class PersonPageComponent implements OnInit {
     return this.personService.getDefaultImage('default_person.jpg');
   }
 
+  onDragStart(event: PointerEvent): void {
+    (event.target as HTMLElement).setPointerCapture(event.pointerId);
+    this.dragStartX = event.clientX;
+    this.dragging = true;
+  }
+
+  onDragMove(event: PointerEvent): void {
+    if (!this.dragging) return;
+  }
+
+  onDragEnd(event: PointerEvent): void {
+    if (!this.dragging) return;
+    const deltaX = event.clientX - this.dragStartX;
+    this.dragging = false;
+
+    const threshold = 50;
+    if (deltaX > threshold) this.prevImage();
+    else if (deltaX < -threshold) this.nextImage();
+  }
+
+  onDragCancel(): void {
+    this.dragging = false;
+  }
+
   nextImage(): void {
     if (!this.person?.images) return;
+
+    this.previousImageIndex = this.currentImageIndex;
+    this.animationDirection = 'left';
     this.currentImageIndex = (this.currentImageIndex + 1) % this.person.images.length;
+
+    this.resetAnimationDirection();
   }
 
   prevImage(): void {
     if (!this.person?.images) return;
+
+    this.previousImageIndex = this.currentImageIndex;
+    this.animationDirection = 'right';
     this.currentImageIndex =
       (this.currentImageIndex - 1 + this.person.images.length) % this.person.images.length;
+
+    this.resetAnimationDirection();
+  }
+
+  private resetAnimationDirection() {
+    setTimeout(() => {
+      this.animationDirection = '';
+      this.previousImageIndex = null;
+    }, 400); // aniamtion time
   }
 
   redirectMovie(movie: any){
@@ -164,13 +207,10 @@ export class PersonPageComponent implements OnInit {
     });
   }
   ratePerson(value: number) {
-    console.log('rate')
-    console.log(this.person)
     if (!this.person) return;
 
     this.ratingService.addRating(this.person.id, { rating: value.toString() }).subscribe({
       next: (res: any) => {
-        console.log('rated')
         this.averageRating = res.averageRating ?? this.averageRating;
         this.ratingCount = res.ratingsCount ?? this.ratingCount;
 

@@ -1,6 +1,6 @@
 <div class="person-list-container" *ngIf="loading">
 
-  <div class="person-card">
+  <div class="credits-person-card">
     <div class="image-carousel-wrapper">
       <div class="user-avatar-skeleton image-container"></div>
     </div>
@@ -32,15 +32,39 @@
 
 
 <div *ngIf="person && !loading && !error" class="person-list-container">
-  <div class="person-card">
+  <div class="credits-person-card">
 
     <div *ngIf="person?.images as images" class="image-carousel-wrapper">
 
-      <div *ngIf="images.length >= 1" class="image-carousel">
+      <div *ngIf="images.length >= 1" class="image-carousel"
+          (pointerdown)="onDragStart($event)"
+          (pointermove)="onDragMove($event)"
+          (pointerup)="onDragEnd($event)"
+          (pointerleave)="onDragCancel()"
+        >
 
-        <img class="carousel-image"
-             [src]="getPersonImageByIndex(currentImageIndex)"
-             alt="{{ person.name }}" />
+        <img
+          *ngIf="previousImageIndex !== null"
+          class="carousel-image slide-out"
+          [src]="getPersonImageByIndex(previousImageIndex)"
+          [alt]="person.name"
+          [ngClass]="{
+        'slide-out-left': animationDirection === 'left',
+        'slide-out-right': animationDirection === 'right'
+      }"
+          draggable="false"
+        />
+
+        <img
+          class="carousel-image"
+          [src]="getPersonImageByIndex(currentImageIndex)"
+          [alt]="person.name"
+          [ngClass]="{
+        'slide-in-left': animationDirection === 'left',
+        'slide-in-right': animationDirection === 'right'
+      }"
+          draggable="false"
+        />
 
         <div *ngIf="images.length > 1" class="nav-button-wrapper">
           <button class="nav-button left" (click)="prevImage()">❮</button>
