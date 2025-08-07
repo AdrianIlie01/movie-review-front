@@ -47,12 +47,12 @@ export class TopCastCarouselComponent implements OnInit, AfterViewInit {
     };
 
     this.personService.filterCast(query).subscribe((actors: any) => {
-      const withRatings = actors.map((actor: any) => ({ ...actor, rating: 0 }));
+      const withRatings = actors.map((actor: any) => ({ ...actor, rating: null }));
 
       withRatings.forEach((actor: any) => {
         this.ratingService.calculatePersonOrMovieAverageRating(actor.id).subscribe({
           next: (res: any) => {
-            actor.rating = res?.averageRating ?? 0;
+            actor.rating = res?.averageRating ?? null;
           }
         });
       });

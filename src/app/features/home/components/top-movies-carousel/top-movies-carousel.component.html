@@ -36,6 +36,7 @@
         <div class="movie-info">
           <h3>{{ movie.name }}</h3>
           <p class="rating"
+             *ngIf="movie.rating !== null && movie.rating > 0"
              [style.color]="movie.rating | ratingColor">
           ⭐ {{ movie.rating.toFixed(1) }}</p>
           <button (click)="goToMovie(movie.id)">See Trailer</button>

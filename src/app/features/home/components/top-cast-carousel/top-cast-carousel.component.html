@@ -14,27 +14,30 @@
        (touchend)="onPointerUp($event)"
        (touchcancel)="onPointerCancel()">
 
-    <div *ngFor="let _ of placeholderArray" class="actor-card"
+    <div *ngFor="let _ of placeholderArray" class="credits-img-container"
          [ngClass]="{ 'hide': !loading }"
     >
-      <div *ngIf="loading" class="image-skeleton-loader actor-img top-cast-img-skeleton"></div>
+      <div *ngIf="loading" class="image-skeleton-loader credits-actor-img top-cast-img-skeleton"></div>
     </div>
 
-    <div *ngFor="let actor of topActors" class="actor-card">
+    <div *ngFor="let actor of topActors" class="credits-img-container">
       <img
         [src]="getPersonImage(actor)"
         alt="{{ actor.name }}"
         (click)="goToActor(actor.id)"
-        class="actor-img"
+        class="credits-actor-img"
         (error)="onImageError($event, actor)"
 
       />
       <div class="actor-info">
         <h3>{{ actor.name }}</h3>
         <p
+          *ngIf="actor.rating !== null && actor.rating > 0"
           class="rating"
-          [style.color]="actor.rating | ratingColor">
-        ⭐ {{ actor.rating.toFixed(1) }}</p>
+           [style.color]="actor.rating | ratingColor"
+        >
+          ⭐ {{ actor.rating.toFixed(1) }}
+        </p>
       </div>
     </div>
 

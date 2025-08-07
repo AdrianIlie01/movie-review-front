@@ -58,13 +58,13 @@ export class TopMoviesCarouselComponent implements OnInit, AfterViewInit  {
       next: (movies: any) => {
         const withRatings = movies.map((movie: any) => ({
           ...movie,
-          rating: 0
+          rating: null
         }));
 
         withRatings.forEach((movie: any) => {
           this.ratingService.calculatePersonOrMovieAverageRating(movie.id).subscribe({
             next: (res: any) => {
-              movie.rating = res?.averageRating ?? 0;
+              movie.rating = res?.averageRating ?? null;
             }
           });
         });
