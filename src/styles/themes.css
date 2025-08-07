@@ -31,6 +31,7 @@
   --header-box-shadow-color: #ddd;
 
   --checkbox-accent-color: purple;
+  --skeleton-bg-color: #fff;
 }
 
 [data-theme="dark"] {
@@ -66,4 +67,5 @@
   --header-box-shadow-color: rgba(0, 0, 0, 0.1);
 
   --checkbox-accent-color: purple;
+  --skeleton-bg-color: rgba(255, 255, 255, 0.1);
 }
