@@ -7,6 +7,8 @@
   --review-btn--bckg-focus: #3f51b5;
   --review-btn--bckg-disabled: #162169;
   --review-btn--bckg: #2739b7;
+  --credits-border-color: rgba(248, 214, 27, 0.2);
+  --header-credits-background: #c0bc16b3;
 }
 
 html, body {
@@ -57,15 +59,6 @@ p {
   flex-direction: column;
   gap: 1rem;
 }
-
-/*.add-movies, .add-roles, .add-persons {*/
-/*  margin: 0 auto;*/
-/*  max-width: 60%;*/
-/*  text-align: center;*/
-/*  word-break: break-word;*/
-/*  overflow-wrap: break-word;*/
-/*}*/
-
 .cast-wrapper {
   min-height: 100vh;
 
@@ -74,43 +67,24 @@ p {
   flex-direction: column;
   gap: 1rem;
 }
-
-.form-footer {
-  text-align: center;
-}
-
-#forgot-pass, #sign-up {
-  font-weight: bold;
-  color: var(--question-text);
-  cursor: pointer;
-  margin: 0.3rem 0;
-}
-
-#forgot-pass:hover {
-  cursor: pointer;
-  color: var(--login-hover-text);
-}
-
-#sign-up, #forgot-pass {
-  font-weight: bold;
-  color: var(--question-text);
-}
-
-#sign-up:hover {
-  cursor: pointer;
-  color: var(--login-hover-text);
-}
-
 .carousel-hidden-arrow {
   overflow: hidden;
 }
 .hide {
   display: none;
 }
-.no-data {
-  position: fixed;
+.no-data-message-centered {
+  position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  font-style: italic;
+  color: #666;
+  font-size: 1.1rem;
+}
+.no-data {
+  margin-top: 5rem;
+  text-align: center;
   font-style: italic;
   color: #666;
   font-size: 1.1rem;
@@ -193,7 +167,7 @@ p {
 .title-skeleton {
   width: 90%;
   height: 2rem;
-  margin: 0 auto;
+  margin: 2rem auto -1rem;
 }
 .review-title-skeleton {
   width: 10rem;
@@ -373,20 +347,20 @@ p {
   height: 25px;
   border-radius: 50px;
   /*background: white;*/
-  background: var(--bg-color);
+  background: var(--skeleton-bg-color);
 }
 .skeleton-roles-user {
   width: 25%;
   height: 25px;
   border-radius: 50px;
   /*background: white;*/
-  background: var(--bg-color);
+  background: var(--skeleton-bg-color);
 }
 .skeleton-button-header {
   width: 15%;
   height: 25px;
   border-radius: 50px;
-  background: var(--bg-color);
+  background: var(--skeleton-bg-color);
 }
 .skeleton-inverted-bg-color {
   background: var(--bg-color);
@@ -406,4 +380,197 @@ p {
   margin: 0 auto;
   border-radius: 50px;
   background-color: var(--form-background);
+}
+.mt-0_5 {
+  margin-top: 0.5rem;
+}
+.mb-0_5 {
+  margin-bottom: 0.5rem!important;
+}
+
+/*carousel animations*/
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%) scale(0.5);
+    /*transform: translateX(-100%);*/
+    opacity: 0.6;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%) scale(0.5);
+    /*transform: translateX(100%);*/
+    opacity: 0.6;
+  }
+}
+
+.slide-in-left {
+  animation: slideInFromRight 0.6s ease forwards;
+}
+.slide-out-left {
+  animation: slideOutToLeft 1s ease forwards;
+}
+.slide-in-right {
+  animation: slideInFromLeft 0.6s ease forwards;
+}
+.slide-out-right {
+  animation: slideOutToRight 1s ease forwards;
+}
+
+/*cast carousel home page animation*/
+@keyframes slideInFromRightPerson {
+  from { transform: translate(-50%, -50%) translateX(160%); }
+  to   { transform: translate(-50%, -50%) translateX(0); }
+}
+
+@keyframes slideInFromLeftPerson {
+  from { transform: translate(-50%, -50%) translateX(-160%); }
+  to   { transform: translate(-50%, -50%) translateX(0); }
+}
+
+@keyframes slideOutToLeftPerson {
+  from {
+    transform: translate(-50%, -50%) translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) translateX(-160%) scale(0.85);
+    opacity: 0.6;
+  }
+}
+
+@keyframes slideOutToRightPerson {
+  from {
+    transform: translate(-50%, -50%) translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) translateX(160%) scale(0.85);
+    opacity: 0.6;
+  }
+}
+
+.slide-in-left-person {
+  animation: slideInFromRightPerson 0.6s ease forwards;
+}
+
+.slide-out-left-person {
+  animation: slideOutToLeftPerson 1s ease forwards;
+}
+
+.slide-in-right-person {
+  animation: slideInFromLeftPerson 0.6s ease forwards;
+}
+
+.slide-out-right-person {
+  animation: slideOutToRightPerson 1s ease forwards;
+}
+
+.credits-person-card {
+  background: var(--form-background);
+  border-radius: 14px;
+  padding: 0.5rem 0 0.5rem;
+  width: 140px;
+  text-align: center;
+  box-shadow:
+    0 8px 15px rgba(245, 197, 24, 0.1),
+    0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.credits-person-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 1px 22px rgba(245, 197, 24, 0.8),
+    0 6px 11px rgba(0, 0, 0, 0.1);
+}
+
+.credits-img-container {
+  margin: 0 auto 0.5rem;
+}
+.credits-actor-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #f5c518;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .credits-actor-img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .credits-img-container {
+    margin: 0 auto;
+  }
+
+  .credits-person-card {
+    width: 120px;
+  }
+}
+
+.header-credits-dark {
+  background: linear-gradient(
+    135deg,
+    #c19e05 0%,
+    #a78405 25%,
+    #a16f0b 50%,
+    #9d6506 75%,
+    #604506 100%
+  );
+
+  padding: 0.5rem;
+  border-radius: 50px;
+}
+.header-credits-light {
+  background: linear-gradient(
+    135deg,
+    #ffd20c 0%,
+  #cfa406 25%,
+  #be830c 50%,
+  #9d6506 75%,
+  #9d720e 100%
+);
+  padding: 0.5rem;
+  border-radius: 50px;
+}
+.search-list-container {
+  position: relative;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  background: transparent;
+}
+.highlight-name {
+  font-style: italic;
+  color: gold;
 }
