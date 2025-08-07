@@ -3,6 +3,7 @@ import {AuthService} from '../../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,6 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
   submitted = false;
   constructor(
     private authService: AuthService,
+    private formValidatorsService: FormValidatorsService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -36,18 +38,13 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.identifierForm.invalid) {
       return;
     }
-
+    this.formValidatorsService.trimAllStringControls(this.identifierForm);
     this.authService.sendUserIdentifier(this.identifierForm.value).subscribe({
       next: (response: any) => {
-        console.log('response')
-        console.log(response)
         this.errorMessage = null;
         this.router.navigateByUrl('auth/reset-forgotten-password').then();
       },
       error: (error: any) => {
-        console.log('error')
-        console.log(error)
-
         if (error.error?.message == 'user not found') {
           this.errorMessage = ['Invalid identifier: user does not exist!'];
         }

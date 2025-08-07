@@ -5,6 +5,7 @@ import {PersonRoles} from '../../../../shared/enums/person-roles';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {PersonService} from '../../services/person.service';
 import {PersonInterface} from '../../../../shared/interfaces/person.interface';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 @Component({
   selector: 'app-edit-person',
   standalone: false,
@@ -26,7 +27,8 @@ export class EditPersonComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    protected personService: PersonService
+    protected personService: PersonService,
+    protected formValidators: FormValidatorsService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +56,6 @@ export class EditPersonComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.error('Person not found', err);
           this.router.navigateByUrl('/cast/list').then();
         }
       });
@@ -81,13 +82,11 @@ export class EditPersonComponent implements OnInit {
       }
     }
 
+    this.formValidators.trimAllStringControls(this.personForm);
+
     this.personService.updatePerson(this.personForm.value, this.personId).subscribe({
       next: (data) => {
         this.router.navigateByUrl('/cast/list').then();
-        console.log('Person updated successfully');
-        console.log(this.personForm.value);
-        console.log('res')
-        console.log(data)
       },
       error: (err) => {
         if (err.error?.message == 'born must be a valid ISO 8601 date string') {

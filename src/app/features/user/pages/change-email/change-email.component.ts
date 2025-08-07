@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../../core/services/auth.service';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-change-email',
@@ -17,6 +18,7 @@ export class ChangeEmailComponent implements OnInit{
   constructor(
     private authService: AuthService,
     protected userService: UserService,
+    protected formValidators: FormValidatorsService,
     private router: Router,
     private fb: FormBuilder,
   ) {
@@ -51,7 +53,7 @@ export class ChangeEmailComponent implements OnInit{
     }
 
     this.errorMessage = null;
-
+    this.formValidators.trimAllStringControls(this.emailForm);
     this.userService.changeEmail(this.emailForm.value, this.userId).subscribe({
       next: (response) => {
         this.router.navigateByUrl('home').then()
@@ -63,11 +65,7 @@ export class ChangeEmailComponent implements OnInit{
             this.errorMessage?.push(err);
           });
         } else {
-          console.log('else')
-          console.log('error', error);
           this.errorMessage = [error.error?.message || 'Changing email failed.'];
-
-          console.log(this.errorMessage);
         }
         },
     });

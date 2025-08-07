@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {MovieTypes} from '../../../../shared/enums/movie-types';
 import {Router} from '@angular/router';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-add-room-page',
@@ -26,12 +27,13 @@ export class AddRoomPageComponent implements OnInit {
     protected router: Router,
     protected roomService: RoomService,
     protected authService: AuthService,
+    protected formValidators: FormValidatorsService,
     private fb: FormBuilder,
 
   ) {
     this.movieForm = this.fb.group({
       name: ['', {
-        validators: [Validators.required],
+        validators: [this.formValidators.requiredTrimmed],
         asyncValidators:
           [
             this.roomService.validateRoomName()
@@ -56,19 +58,14 @@ export class AddRoomPageComponent implements OnInit {
     this.getUserInfo();
   }
 
-
-
   getUserInfo() {
     this.authService.getUserInfo()
       .subscribe({
         next: (data) => {
-          console.log('data');
-          console.log(data);
-
           this.userInfo = data;
         },
         error: (e) => {
-          console.error('Eroare:', e);
+          console.error('Error:', e);
         }
       });
   }
@@ -93,21 +90,18 @@ export class AddRoomPageComponent implements OnInit {
       this.errorMessage = [];
     }
 
+    this.formValidators.trimAllStringControls(this.movieForm);
+
     this.roomService.addMovie(this.movieForm.value).subscribe({
       next: (res) => {
-        console.log('succesfullly added movie');``
-        console.log(this.movieForm.value);
         this.router.navigateByUrl('home').then();
       },
       error: (error) => {
-        console.log(error);
-
       if (Array.isArray(error.error?.message) && error.error?.message.length > 0) {
         error.error.message.forEach((e: string) => {
           this.errorMessage?.push(e)
         })
       } else {
-        console.log(error.error.message)
         this.errorMessage = [error.error.message];
       }
     }

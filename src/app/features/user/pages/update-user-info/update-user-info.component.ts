@@ -3,6 +3,7 @@ import {UserService} from '../../services/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-update-user-info',
@@ -22,6 +23,7 @@ export class UpdateUserInfoComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    protected formValidators: FormValidatorsService,
     private fb: FormBuilder,
     protected router: Router,
   ) {
@@ -37,16 +39,12 @@ export class UpdateUserInfoComponent implements OnInit {
     })
   }
   ngOnInit() {
-    console.log(this.infoForm); // Verifică dacă formularul este inițializat corect
-
     this.userService.getUserInfo().subscribe({
       next: (data: any) => {
         this.userInfo = data;
 
         this.userService.getInfoOfUser(data.id).subscribe({
           next: (data: any) => {
-            console.log(data);
-
             // this.infoForm.patchValue({ phone: data.phone });
             if (data.userInfo && data.userInfo.phone) {
               this.hasInfo = true;
@@ -56,7 +54,6 @@ export class UpdateUserInfoComponent implements OnInit {
 
           },
           error: e => {
-            console.log(e)
           }
         })
 
@@ -76,13 +73,13 @@ export class UpdateUserInfoComponent implements OnInit {
 
 
     if (this.hasInfo) {
+      this.formValidators.trimAllStringControls(this.infoForm);
       this.userService.editUserInfo(this.infoForm.value, this.userInfo.id).subscribe(
         {
           next: d => {
             this.router.navigateByUrl('home').then();
           },
           error: (error) => {
-            console.log(error)
             if (error.error?.message.length > 0) {
               error.error.message.forEach((e: string) => {
                 this.errorMessage?.push(e)
@@ -102,7 +99,6 @@ export class UpdateUserInfoComponent implements OnInit {
         this.router.navigateByUrl('home').then();
       },
       error: (error) => {
-        console.log(error)
         if (error.error?.message.length > 0) {
           error.error.message.forEach((e: string) => {
             this.errorMessage?.push(e)

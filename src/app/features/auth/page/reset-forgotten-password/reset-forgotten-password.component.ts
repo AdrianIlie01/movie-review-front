@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-reset-forgotten-password',
@@ -18,6 +19,7 @@ export class ResetForgottenPasswordComponent implements OnInit {
   submitted = false;
   constructor(
     private authService: AuthService,
+    private formValidator: FormValidatorsService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -37,14 +39,13 @@ export class ResetForgottenPasswordComponent implements OnInit {
     if (this.resetPassForm.invalid) {
       return;
     }
-
+    this.formValidator.trimSelectedStringControls(this.resetPassForm, ['otp']);
     this.authService.resetForgottenPassword(this.resetPassForm.value).subscribe({
       next: (response: any) => {
         this.errorMessage = null;
         this.router.navigateByUrl('home').then();
       },
       error: (error: any) => {
-        console.log('Error:', error);
           if (error.error?.message) {
           this.errorMessage = [];
 

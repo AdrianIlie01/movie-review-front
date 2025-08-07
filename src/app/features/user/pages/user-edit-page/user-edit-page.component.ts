@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../../core/services/auth.service';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -23,6 +24,7 @@ export class UserEditPageComponent implements OnInit{
   constructor(
     protected userService: UserService,
     protected authService: AuthService,
+    protected formValidators: FormValidatorsService,
     protected router: Router,
     protected fb: FormBuilder,
   ) {
@@ -66,8 +68,7 @@ export class UserEditPageComponent implements OnInit{
     if (this.editForm.get('username')?.value === this.userInfo.username) {
      return this.router.navigateByUrl('home').then();
     }
-
-
+    this.formValidators.trimAllStringControls(this.editForm);
     this.userService.editUser(this.editForm.value, userId).subscribe({
       next: (data) => {
         this.errorMessage = null;
@@ -94,8 +95,6 @@ export class UserEditPageComponent implements OnInit{
       .subscribe({
         next: (data) => {
           this.userInfo = data;
-          console.log('data')
-          console.log(data)
         },
         error: (e) => {
           console.error('Error:', e);
