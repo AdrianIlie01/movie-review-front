@@ -6,7 +6,6 @@ import { HomeHeaderComponent } from './components/home-header/home-header.compon
 import {SharedModule} from '../../shared/shared.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MovieCarouselComponent } from './components/movie-carousel/movie-carousel.component';
-import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
@@ -20,7 +19,6 @@ import { TopCastCarouselComponent } from './components/top-cast-carousel/top-cas
         HomePageComponent,
         HomeHeaderComponent,
         MovieCarouselComponent,
-        SearchFilterComponent,
         CastAndMovieCarouselComponent,
         TopMoviesCarouselComponent,
         TopCastCarouselComponent
@@ -33,9 +31,6 @@ import { TopCastCarouselComponent } from './components/top-cast-carousel/top-cas
         ReactiveFormsModule,
         FontAwesomeModule
     ],
-    exports: [
-        SearchFilterComponent
-    ]
 })
 export class HomeModule {
   constructor(library: FaIconLibrary) {
