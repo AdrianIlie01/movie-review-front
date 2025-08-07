@@ -5,6 +5,7 @@ import {RoomDataInterface} from '../../../../shared/interfaces/room-data.interfa
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ButtonName} from '../../../../shared/enums/button-name';
 import {MovieTypes} from '../../../../shared/enums/movie-types';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-room-edit',
@@ -25,6 +26,7 @@ export class RoomEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     protected roomService: RoomService,
+    protected formValidators: FormValidatorsService,
     private fb: FormBuilder,
   ) {
   }
@@ -46,12 +48,8 @@ export class RoomEditComponent implements OnInit {
     });
 
     if (this.roomId) {
-      console.log(this.roomId);
       this.roomService.getRoom(this.roomId).subscribe({
         next: (data: RoomDataInterface) => {
-          console.log('data')
-          console.log(data)
-
           this.roomForm.patchValue({
             name: data.name,
             type: data.type ?? [],
@@ -60,7 +58,6 @@ export class RoomEditComponent implements OnInit {
           });
         },
         error: (e) => {
-          console.error('Room not found', e);
           this.router.navigateByUrl('/movie/list').then();
         }
       });
@@ -78,11 +75,10 @@ export class RoomEditComponent implements OnInit {
       }
       return;
     }
-
+    this.formValidators.trimAllStringControls(this.roomForm);
     this.roomService.updateRoom(this.roomForm.value, this.roomId).subscribe({
       next: () => {
         // this.router.navigateByUrl('/room/list'),
-        console.log('updated')
         this.router.navigateByUrl('movie/list')
       },
       error: (error) => {
