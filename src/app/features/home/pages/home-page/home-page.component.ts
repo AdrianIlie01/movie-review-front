@@ -52,7 +52,6 @@ export class HomePageComponent implements OnInit {
       .filterMovie(query)
       .subscribe({
         next: (movies: any) => {
-          console.log('movies', movies);
           this.topRatedMovies = movies;
         }
       });
@@ -71,44 +70,9 @@ export class HomePageComponent implements OnInit {
     this.personService
       .filterCast(query)
       .subscribe((actors: any) => {
-        console.log('actors', actors);
         this.topActors = actors;
       });
   }
-
-  getThumbnailUrl(video: any) {
-    const theme = localStorage.getItem('theme') || 'light';
-
-    if (video.thumbnail !== 'thumbnail') {
-      return this.roomService.getThumbnailUrl(video.thumbnail);
-    } else if (theme === 'dark') {
-      return this.roomService.getDefaultThumbnail('thumbnail_black.png');
-    } else {
-      return this.roomService.getDefaultThumbnail('thumbnail_white.png');
-    }
-  }
-
-  getPersonImage(person: any) {
-    if (person.images && person.images.length > 0) {
-      return this.personService.getImage(person.images[0]);
-    } else {
-      return this.personService.getDefaultImage('default_person.jpg');
-    }
-  }
-
-  getRatingColor(r: number): string {
-    if (r >= 8) return '#21d07a';
-    if (r >= 6) return '#d2d531';
-    return '#db2360';
-  }
-
-  goToMovie(id: string): void {
-    this.router.navigate(['/movie', id]);
-  }
-  goToActor(id: string): void {
-    this.router.navigate(['/cast', id]);
-  }
-
   onResetHandler() {
     this.resetClicked = true;
     this.searchClicked = false;
@@ -125,10 +89,9 @@ export class HomePageComponent implements OnInit {
       queryParams.name === '' &&
       queryParams.category === 'movie' &&
       Array.isArray(queryParams.filterValue?.type) &&
-      Array.isArray(queryParams.filterValue?.type) &&
       queryParams.filterValue?.type.length === 0 &&
-      Array.isArray(queryParams.filterValue?.releaseYear) &&
-      queryParams.filterValue?.releaseYear.length === 0 &&
+      (queryParams.filterValue?.releaseYear === '' || queryParams.filterValue?.releaseYear == null) &&
+      (queryParams.filterValue?.ratingMin === '' || queryParams.filterValue?.ratingMin == null) &&
       queryParams.sortField === 'name' &&
       queryParams.sortOrder === 'ASC';
 
