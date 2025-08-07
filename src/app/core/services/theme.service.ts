@@ -22,8 +22,9 @@ export class ThemeService {
     localStorage.setItem(this.storageKey, theme);
   }
 
-  toggleTheme(): void {
+  toggleTheme(): string {
     const nextTheme = this.currentTheme === 'light' ? 'dark' : 'light';
     this.setTheme(nextTheme);
+    return nextTheme;
   }
 }
