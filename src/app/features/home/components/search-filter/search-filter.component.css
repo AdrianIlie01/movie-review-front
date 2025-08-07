@@ -2,7 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  background: var(--bg-color);
+  /*background: var(--bg-color);*/
+  background: transparent;
   border-radius: 8px;
 }
 
@@ -22,6 +23,8 @@
 .select-from {
   width: 100%;
   min-width: 60%;
+
+  margin-bottom: 0.4rem;
 
   /*Use min-width or flex: 2 with flex-wrap in filter-item
    to keep the selected items inside their container.*/
@@ -172,6 +175,10 @@
 .label, .sort-label {
   display: block;
   margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Arial", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.5px;
 }
 .select-filter,
 .input-filter-value,
@@ -201,7 +208,8 @@
 
 .sort-row {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   width: 100%;
   flex: 1;
 }
@@ -225,15 +233,6 @@
   cursor: pointer;
 }
 
-
-.sort-row > .select-wrapper:first-child {
-  flex: 2;
-}
-
-.sort-row > .select-wrapper:last-child {
-  flex: 1;
-}
-
 .select-sort-field {
   width: 100%;
   padding: 0.5rem 2rem 0.5rem 1rem;
@@ -247,10 +246,6 @@
 
 .select-sort-field:hover {
   cursor: pointer;
-}
-
-.select-wrapper.open .select-sort-field {
-  border-radius: 25px 25px 0 0;
 }
 
 .arrow {
@@ -322,7 +317,7 @@
 
 .error-message {
   color: red;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
@@ -342,8 +337,6 @@ input[type=number] {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  /*gap: 1rem; */
-  /*flex-wrap: wrap;*/
 }
 
 .filter-item .label {
@@ -360,6 +353,9 @@ input[type=number] {
  .search-input, .label, .filter-item, select, .sort-label, button {
    font-size: 0.8rem;
  }
+  .error-message {
+    font-size: 0.7rem;
+  }
 }
 
 @media (max-width: 505px) {
@@ -373,5 +369,27 @@ input[type=number] {
   }
 }
 
+.sort-row > .select-wrapper:first-child {
+  flex: 2;
+}
 
+.sort-row > .select-wrapper:last-child {
+  flex: 1;
+}
 
+.sort-by {
+  min-width: 140px;
+  flex: 2;
+}
+
+.sort-order {
+  flex: 1;
+  min-width: 110px;
+}
+
+.fix-margin {
+  margin-top: -0.4rem;
+}
+.category-container {
+  width: 100%;
+}

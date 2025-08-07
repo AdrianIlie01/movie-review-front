@@ -1,4 +1,12 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MovieTypes } from '../../../../shared/enums/movie-types';
 import { PersonRoles } from '../../../../shared/enums/person-roles';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -26,9 +34,6 @@ export class SearchFilterComponent implements OnInit {
 
   form!: FormGroup;
   filterPanelOpen = false;
-  isOpen = false;
-  isOpenOrder = false;
-  isOpenCategory = false;
 
   category: 'movie' | 'cast' = 'movie';
   name = '';
@@ -48,33 +53,46 @@ export class SearchFilterComponent implements OnInit {
   }));
 
   filtersMovie: Option[] = [
-    { key: 'type', label: 'Movie Genres', type: 'select', options: this.movieTypeOptions },
+    { key: 'type', label: 'Genres', type: 'select', options: this.movieTypeOptions },
     { key: 'releaseYear', label: 'Release Year', type: 'number', options: [] },
-    { key: 'ratingMin', label: 'Min Rating', type: 'number', options: [] }
+    { key: 'ratingMin', label: 'Rating From', type: 'number', options: [] }
   ];
 
   filtersCast: Option[] = [
     { key: 'roles', label: 'Roles', type: 'select', options: this.personRoleOptions },
     { key: 'born', label: 'Year of Birth', type: 'number', options: [] },
-    { key: 'ratingMin', label: 'Min Rating', type: 'number', options: [] }
+    { key: 'ratingMin', label: 'Rating From', type: 'number', options: [] }
   ];
 
   sortMovie: SortOption[] = [
     { value: 'name', label: 'Name' },
-    { value: 'releaseYear', label: 'Release Year' },
-    { value: 'ratingMin', label: 'Min Rating' }
+    { value: 'type', label: 'Genre' },
+    { value: 'release_year', label: 'Release Year' },
+    { value: 'rating', label: 'Rating' }
   ];
 
   sortCast: SortOption[] = [
     { value: 'name', label: 'Name' },
     { value: 'born', label: 'Born' },
-    { value: 'ratingMin', label: 'Min Rating' }
+    { value: 'rating', label: 'Rating' },
+    { value: 'roles', label: 'Role' }
   ];
 
   sortOrderOptions: Option[] = [
     { key: 'ASC', label: '▲ ASC', type: 'text', options: [] },
     { key: 'DESC', label: '▼ DESC', type: 'text', options: [] }
   ];
+
+  sortOptions = [
+    { value: 'ASC', label: '▲ ASC'},
+    { value: 'DESC', label: '▼ DESC'}
+  ];
+
+  categoryOptions = [
+    { value: 'movie', label: 'Movie' },
+    { value: 'cast', label: 'Cast' }
+  ];
+
 
   @Output() search = new EventEmitter<{
     name: string;
@@ -85,6 +103,8 @@ export class SearchFilterComponent implements OnInit {
   }>();
 
   @Output() reset = new EventEmitter<void>();
+  @Input() hideCategorySelect = false;
+  @Input() categoryDisplayed: "movie" | "cast" = 'movie';
 
   constructor(
     private homeService: HomeService,
@@ -92,59 +112,8 @@ export class SearchFilterComponent implements OnInit {
     private el: ElementRef,
   ) {}
 
-  // Close dropdowns when clicking outside component
-  @HostListener('document:click', ['$event.target'])
-  onClickOutsideCategory(targetElement: any) {
-    if (!this.el.nativeElement.contains(targetElement)) {
-      this.isOpenCategory = false;
-    }
-  }
-
-  @HostListener('document:click', ['$event.target'])
-  onClickOutside(targetElement: any) {
-    if (!this.el.nativeElement.contains(targetElement)) {
-      this.isOpen = false;
-    }
-  }
-
-  @HostListener('document:click', ['$event.target'])
-  onClickOutsideSort(targetElement: any) {
-    if (!this.el.nativeElement.contains(targetElement)) {
-      this.isOpenOrder = false;
-    }
-  }
-
-  toggleOpen(event: Event): void {
-    event.stopPropagation();
-    this.isOpen = !this.isOpen;
-  }
-
-  closeDropdown(): void {
-    this.isOpen = false;
-  }
-
-  toggleOpenOrder(event: Event): void {
-    event.stopPropagation();
-    this.isOpenOrder = !this.isOpenOrder;
-  }
-
-  closeDropdownOrder(): void {
-    setTimeout(() => {
-      this.isOpenOrder = false;
-    }, 100);
-  }
-
-  toggleOpenCategory(event: Event): void {
-    event.stopPropagation();
-    this.isOpenCategory = !this.isOpenCategory;
-  }
-
-  closeDropdownCategory(): void {
-    this.isOpenCategory = false;
-  }
-
   ngOnInit(): void {
-    const controlsConfig: any = {
+    let controlsConfig: any = {
       name: [''],
       category: ['movie'],
       sortField: ['name'],
@@ -152,6 +121,15 @@ export class SearchFilterComponent implements OnInit {
       filterValueType: [[]],
       filterValueRoles: [[]],
     };
+
+    if (this.categoryDisplayed == 'cast') {
+      controlsConfig.category = ['cast'];
+      this.category = 'cast';
+      this.movie = false;
+      this.person = true;
+
+      controlsConfig.sortField = [this.sortCast[0].value];
+    }
 
     this.filtersMovie.forEach(f => {
       if (f.key !== 'type') {
@@ -181,6 +159,9 @@ export class SearchFilterComponent implements OnInit {
   }
 
   get activeFilters(): Option[] {
+    if (this.categoryDisplayed == 'cast') {
+      return this.category === 'cast' ? this.filtersCast : this.filtersMovie;
+    }
     return this.category === 'movie' ? this.filtersMovie : this.filtersCast;
   }
 
@@ -192,12 +173,10 @@ export class SearchFilterComponent implements OnInit {
     this.filterPanelOpen = !this.filterPanelOpen;
   }
 
-  onCategoryChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedValue = selectElement.value;
+  onCategoryChange(selectedValue: string) {
     this.category = selectedValue as 'movie' | 'cast';
 
-    this.movie = this.category === 'movie';
+    this.movie = selectedValue === 'movie';
     this.person = !this.movie;
 
     this.form.patchValue({
@@ -261,15 +240,22 @@ export class SearchFilterComponent implements OnInit {
   }
 
   resetFilters() {
+    const defaultCategory = this.categoryDisplayed || 'movie';
     this.form.reset({
       name: '',
-      category: 'movie',
+      category: defaultCategory,
       sortField: 'name',
       sortOrder: 'ASC',
       filterValueType: [],
       filterValueRoles: []
     });
-    this.category = 'movie';
+    this.category = defaultCategory;
+    this.movie = defaultCategory === 'movie';
+    this.person = defaultCategory === 'cast';
+
+    this.filterPanelOpen = false;
     this.reset.emit();
   }
 }
+
+

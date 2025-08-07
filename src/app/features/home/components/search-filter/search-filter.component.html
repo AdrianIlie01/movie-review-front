@@ -27,26 +27,22 @@
 
   <div class="filter-content" *ngIf="filterPanelOpen">
 
-    <div class="select-wrapper" [class.open]="isOpenCategory">
-      <label class="label">Category :</label>
+    <div class="select-wrapper" *ngIf="!hideCategorySelect">
+      <label class="label">Category:</label>
 
-      <select
-        *ngIf="filterPanelOpen"
-        formControlName="category"
-        (change)="onCategoryChange($event)"
-        class="select-category"
-        (click)="toggleOpenCategory($event)"
-        (blur)="closeDropdownCategory()"
-      >
-        <option value="movie">Movie</option>
-        <option value="cast">Cast</option>
-      </select>
-      <span *ngIf="filterPanelOpen" class="arrow" [class.rotated]="isOpenCategory"></span>
+      <app-form-select
+        class="category-container"
+        [formGroup]="form"
+        controlName="category"
+        [options]="categoryOptions"
+        [multiple]="false"
+        (valueChange)="onCategoryChange($event)"
+      ></app-form-select>
     </div>
 
     <div *ngFor="let filter of activeFilters" class="filter-item">
 
-      <label class="label">{{ filter.label }} :</label>
+      <label class="label">{{ filter.label }}:</label>
 
       <ng-container
         *ngIf="filter.type === 'select'"
@@ -75,17 +71,17 @@
     </div>
 
 
-      <div *ngIf="form.get('filterValue_ratingMin')?.invalid && form.get('filterValue_ratingMin')?.touched" class="error-message">
-        Rating must be between 0 and 10.
-      </div>
+    <div *ngIf="form.get('filterValue_ratingMin')?.invalid && form.get('filterValue_ratingMin')?.touched" class="error-message">
+      Rating must be between 0 and 10.
+    </div>
 
-      <div *ngIf="movie && form.get('filterValue_releaseYear')?.invalid && form.get('filterValue_releaseYear')?.touched" class="error-message">
-       Release Year must be a positive number without decimals between {{minYear}} and {{currentYear}}.
-      </div>
+    <div *ngIf="movie && form.get('filterValue_releaseYear')?.invalid && form.get('filterValue_releaseYear')?.touched" class="error-message">
+      Release Year must be a positive number without decimals between {{minYear}} and {{currentYear}}.
+    </div>
 
-      <div *ngIf="person && form.get('filterValue_born')?.invalid && form.get('filterValue_born')?.touched" class="error-message">
-        Year of Birth must be a positive number without decimals between {{minYear}} and {{currentYear}}.
-      </div>
+    <div *ngIf="person && form.get('filterValue_born')?.invalid && form.get('filterValue_born')?.touched" class="error-message">
+      Year of Birth must be a positive number without decimals between {{minYear}} and {{currentYear}}.
+    </div>
 
 
 
@@ -93,32 +89,24 @@
     <div class="sort-container" >
       <label class="sort-label">Sort by:</label>
       <div class="sort-row">
-        <div class="select-wrapper" [class.open]="isOpen">
-          <select
-            formControlName="sortField"
-            class="select-sort-field"
-            (click)="toggleOpen($event)"
-            (blur)="closeDropdown()"
-          >
-            <option *ngFor="let o of activeSortOptions" [value]="o.value">
-              {{ o.label }}
-            </option>
-          </select>
-          <span class="arrow" [class.rotated]="isOpen"></span>
+        <div class="select-wrapper">
+          <app-form-select
+            class="sort-by fix-margin"
+            [formGroup]="form"
+            controlName="sortField"
+            [options]="activeSortOptions"
+            [multiple]="false"
+          ></app-form-select>
         </div>
 
-        <div class="select-wrapper" [class.open]="isOpenOrder">
-          <select
-            formControlName="sortOrder"
-            class="select-sort-field"
-            (click)="toggleOpenOrder($event)"
-            (blur)="closeDropdownOrder()"
-          >
-            <option *ngFor="let o of sortOrderOptions" [value]="o.key">
-              {{ o.label }}
-            </option>
-          </select>
-          <span class="arrow" [class.rotated]="isOpenOrder"></span>
+        <div class="select-wrapper">
+          <app-form-select
+            class="sort-order fix-margin"
+            [formGroup]="form"
+            controlName="sortOrder"
+            [options]="sortOptions"
+            [multiple]="false"
+          ></app-form-select>
         </div>
       </div>
     </div>
