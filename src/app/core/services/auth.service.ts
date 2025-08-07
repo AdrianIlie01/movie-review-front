@@ -33,13 +33,28 @@ export class AuthService {
     private router: Router
   ) { }
 
+  // Observable-based communication for auth status changes (login/logout).
+  // Components can subscribe to `authStatusChanged$` to reactively update UI
+  // when user logs in or out, without needing to reinitialize the component.
+
+  private authStatusChangedSubject = new BehaviorSubject<'login' | 'logout' | null>(null);
+  authStatusChanged$ = this.authStatusChangedSubject.asObservable();
+
+  emitLogin() {
+    this.authStatusChangedSubject.next('login');
+  }
+
+  emitLogout() {
+    this.authStatusChangedSubject.next('logout');
+  }
+
   validateUsername(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
         return new Observable<ValidationErrors | null>(observer => observer.next(null));
       }
 
-      return this.checkUsernameAvailability(control.value).pipe(
+      return this.checkUsernameAvailability((control.value).trim()).pipe(
         map((response: any) => {
           if (response.message === 'username taken') {
             return { usernameTaken: true };
@@ -94,14 +109,23 @@ export class AuthService {
     return this.httpClient.post(this.registerApi, body, this.httpOptions );
   }
 
+   // On successful response, emits a 'login' event via authStatusChanged$ observable
+   // to notify all subscribed components (e.g. navigation menu) of the login status change.
+
   login(body: UserLoginInterface) {
-    return this.httpClient.post(this.loginApi, body, this.httpOptions);
+    return this.httpClient.post(this.loginApi, body, this.httpOptions)
+      .pipe(
+        tap(() => this.emitLogin())
+      );
   }
 
-
-
+  // On successful response, emits a 'logout' event via authStatusChanged$ observable
+  // to notify all subscribed components (e.g. navigation menu) of the login status change.
   logout() {
-    return this.httpClient.post(this.authApi + '/logout/session', {});
+    return this.httpClient.post(this.authApi + '/logout/session', {})
+      .pipe(
+        tap(() => this.emitLogout())
+       );
   }
 
   refreshToken() {
@@ -128,9 +152,13 @@ export class AuthService {
     return this.httpClient.post(`${this.authApi}/generate-otp/${id}`, {});
   }
 
-  // Apel pentru verificarea OTP
+  // On successful login on otp, emits a 'login' event via authStatusChanged$ observable
+  // to notify all subscribed components (e.g. navigation menu) of the login status change.
   verifyOtp(id: string, otp: string): Observable<any> {
-    return this.httpClient.post(`${this.authApi}/otp-verify/${id}`, { otp });
+    return this.httpClient.post(`${this.authApi}/otp-verify/${id}`, { otp })
+      .pipe(
+        tap(() => this.emitLogin())
+      );
   }
 
   getUserInfo() {
