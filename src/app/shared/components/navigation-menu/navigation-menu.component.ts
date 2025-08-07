@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {BehaviorSubject, firstValueFrom} from "rxjs";
+import {BehaviorSubject, firstValueFrom, Subscription} from "rxjs";
 import {UserService} from '../../../features/user/services/user.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {ThemeService} from '../../../core/services/theme.service';
@@ -11,7 +11,7 @@ import {ThemeService} from '../../../core/services/theme.service';
   templateUrl: './navigation-menu.component.html',
   styleUrls: ['./navigation-menu.component.css'],
 })
-export class NavigationMenuComponent implements OnInit {
+export class NavigationMenuComponent implements OnInit, OnDestroy  {
   constructor(
     public themeService: ThemeService,
     private userService: UserService,
@@ -35,10 +35,36 @@ export class NavigationMenuComponent implements OnInit {
   protected profileSubmenuOpen = false;
   protected movieSubmenuOpen = false;
   protected personSubmenuOpen = false;
+  protected theme: string = 'light';
+  protected loadingMenu!:boolean;
+  private authStatusSubscription!: Subscription;
+
   async ngOnInit() {
 
-    this.checkLoggedInStatus();
+    // Subscribe to authStatusChanged$ = authentication status changes (login/logout).
 
+    // Saving the subscription in a variable (authStatusSubscription) allows us to unsubscribe later,
+    // which prevents memory leaks if the component is destroyed.
+
+    // This ensures that the NavigationMenuComponent updates its state
+    // (e.g. user info, roles, and login/logout action text)
+    // when authentication events occur elsewhere in the app, without requiring a page refresh.
+
+    this.authStatusSubscription = this.authService.authStatusChanged$.subscribe(status => {
+      if (status === 'login') {
+        this.checkLoggedInStatus();
+        this.checkRole();
+        this.action = 'Log out';
+      }
+
+      if (status === 'logout') {
+        this.isLogged = false;
+        this.action = 'Log in';
+      }
+    });
+
+
+    // only on refresh or on app starting
     const isLoggedIn = await firstValueFrom(this.authService.isAuthenticated());
 
     if (isLoggedIn) {
@@ -48,18 +74,16 @@ export class NavigationMenuComponent implements OnInit {
       });
     }
 
-    this.router.events.subscribe( async event => {
-      if (event instanceof NavigationEnd) {
-        this.checkLoggedInStatus();
-
-        const isLoggedIn = await firstValueFrom(this.authService.isAuthenticated());
-        if (isLoggedIn) {
-          this.checkRole();
-        }
-      }
-    });
+    this.theme = this.themeService.getTheme();
+    this.checkLoggedInStatus();
   }
 
+  ngOnDestroy() {
+    // Clean up subscription to prevent memory leaks
+    if (this.authStatusSubscription) {
+      this.authStatusSubscription.unsubscribe();
+    }
+  }
 
   toggleProfileSubmenu(event: Event) {
     event.preventDefault();
@@ -99,22 +123,22 @@ export class NavigationMenuComponent implements OnInit {
     }
   }
 
-  openCloseSubMenu() {
-    const listElement = document.getElementById('profile') as HTMLInputElement;
-    if (listElement !== null) {
-    }
-  }
-
   async checkLoggedInStatus() {
-    this.authService.isAuthenticated().subscribe((res: any) => {
 
+    if (this.isLogged) {
+      this.loadingMenu = false;
+    } else {
+      this.loadingMenu = true;
+    }
+
+    this.authService.isAuthenticated().subscribe((res: any) => {
       this.isLogged = res;
 
       if (res) {
         this.action = 'Log out';
 
-        this.userService.getUserInfo().subscribe(
-          (res: any) => {
+        this.userService.getUserInfo().subscribe({
+          next: (res: any) => {
             if (res.roles == 'admin') {
               this.isAdmin = true;
             } else {
@@ -126,9 +150,12 @@ export class NavigationMenuComponent implements OnInit {
             } else {
               this._2fa = 'Enable 2FA';
             }
-
-          }
-        );
+            this.loadingMenu = false;
+          },
+          error : () => {
+            this.loadingMenu = false;
+        }
+        });
       }
 
       if (!res) {
@@ -136,26 +163,25 @@ export class NavigationMenuComponent implements OnInit {
         this.action = 'Log in';
         this._2fa_enabled = false;
         this._2fa = '';
+        this.loadingMenu = false;
       }
-
     });
 
   }
   async logInOut() {
     const isLoggedIn = this.authService.isAuthenticated();
+    this.loadingMenu = false;
 
-    if (isLoggedIn) {
-      this.authService.logout();
-        await this.router.navigateByUrl('auth/login');
-    }
     if (this.isLogged) {
       // logout user
+      this.loadingMenu = true;
       this.authService.logout().subscribe({
         next: async (data) => {
           await this.router.navigateByUrl('home');
-          await window.location.reload();
+          this.loadingMenu = false;
         }
       });
+
     }
     if(!this.isLogged) {
       await this.router.navigateByUrl('auth/login');
@@ -167,10 +193,10 @@ export class NavigationMenuComponent implements OnInit {
   }
 
   async redirectHome() {
+    // helps also to check if user is banned while online
     await this.checkLoggedInStatus()
     await this.router.navigateByUrl('home');
   }
-
   async userInfo(){
     await this.checkLoggedInStatus()
     this.checkRole();
@@ -273,7 +299,7 @@ export class NavigationMenuComponent implements OnInit {
   }
 
   toggleTheme() {
-    this.themeService.toggleTheme();
+    this.theme = this.themeService.toggleTheme();
   }
 
 

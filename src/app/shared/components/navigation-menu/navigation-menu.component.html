@@ -7,52 +7,134 @@
 
 
 <header class="header">
-
 </header>
 
 <nav id="nav-menu" class="nav">
     <div class="nav-scroll-wrapper">
        <ul>
-          <li (click)="redirectHome(); hideNavMenu();"><a>Home</a></li>
+          <li (click)="redirectHome(); hideNavMenu();">
 
-          <li *ngIf="isLogged && isAdmin" (click)="userList(); hideNavMenu();"><a>User List</a></li>
+            <a><i class="fa-solid fa-house icon-menu"></i> Home</a>
+
+          </li>
+
+          <li *ngIf="isLogged && isAdmin" (click)="userList(); hideNavMenu();"><a><i class="fa-solid fa-users icon-menu"></i> User List</a></li>
 
          <!-- Movie -->
          <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="movieSubmenuOpen" (click)="toggleMovieSubmenu($event)">
-           <a class="submenu-trigger">Movies</a>
-           <ul class="submenu">
-             <li (click)="roomList(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Movie List</a></li>
-             <li (click)="createRoom(); hideNavMenu(); toggleMovieSubmenu($event);"><a>Add Movie</a></li>
+           <a class="submenu-trigger"
+              [ngClass]="{
+                'slide-in-up': !movieSubmenuOpen,
+              }"
+           ><i class="fa-solid fa-clapperboard icon-menu"></i>Movies</a>
+           <ul class="submenu"
+               [ngClass]="{
+                'slide-in-down': movieSubmenuOpen,
+              }"
+           >
+             <li (click)="roomList(); hideNavMenu(); toggleMovieSubmenu($event);"><a><i class="fa-solid fa-list icon-menu"></i> Movie List</a></li>
+             <li (click)="createRoom(); hideNavMenu(); toggleMovieSubmenu($event);"><a><i class="fa-solid fa-plus icon-menu"></i> Add Movie</a></li>
            </ul>
          </li>
 
          <!-- Person -->
          <li class="has-submenu" *ngIf="isLogged && isAdmin" [class.open]="personSubmenuOpen" (click)="togglePersonSubmenu($event)">
-           <a class="submenu-trigger">Cast</a>
-           <ul class="submenu">
-             <li (click)="personList(); hideNavMenu(); togglePersonSubmenu($event);"><a>Cast List</a></li>
-             <li (click)="createPerson(); hideNavMenu(); togglePersonSubmenu($event);"><a>Add Cast Member</a></li>
+           <a class="submenu-trigger"
+              [ngClass]="{
+                'slide-in-up': !personSubmenuOpen,
+              }"
+           ><i class="fa-solid fa-masks-theater icon-menu"></i>Cast</a>
+           <ul class="submenu"
+               [ngClass]="{
+                'slide-in-down': personSubmenuOpen,
+              }"
+           >
+             <li (click)="personList(); hideNavMenu(); togglePersonSubmenu($event);"><a><i class="fa-solid fa-list icon-menu"></i>Cast List</a></li>
+             <li (click)="createPerson(); hideNavMenu(); togglePersonSubmenu($event);"><a><i class="fa-solid fa-plus icon-menu"></i>Add Cast Member</a></li>
            </ul>
          </li>
 
 
 <!--         Profile-->
          <li class="has-submenu" *ngIf="isLogged" [class.open]="profileSubmenuOpen" (click)="toggleProfileSubmenu($event)">
-           <a class="submenu-trigger">Profile</a>
-           <ul class="submenu">
-             <li (click)="userInfo(); hideNavMenu(); toggleProfileSubmenu($event);"><a>User Info</a></li>
-             <li (click)="changeUsername(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Username</a></li>
-             <li (click)="updateContactInfo(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change User Info</a></li>
-             <li (click)="changePassword(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Password</a></li>
-             <li (click)="changeEmail(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Change Email</a></li>
-             <li *ngIf="isLogged" (click)="twoFA(); hideNavMenu(); toggleProfileSubmenu($event);"><a>{{_2fa}}</a></li>
-             <li (click)="deleteAccount(); hideNavMenu(); toggleProfileSubmenu($event);"><a>Delete Account</a></li>
+           <a class="submenu-trigger"
+              [ngClass]="{
+                'slide-in-up': !profileSubmenuOpen,
+              }"
+           > <i class="fa-solid fa-user icon-menu"></i>Profile</a>
+           <ul class="submenu"
+               [ngClass]="{
+                'slide-in-down': profileSubmenuOpen,
+              }"
+           >
+             <li (click)="userInfo(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-id-card icon-menu"></i> User Info</a>
+             </li>
+
+             <li (click)="changeUsername(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-pen icon-menu"></i> Change Username</a>
+             </li>
+
+             <li (click)="updateContactInfo(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-pen-to-square icon-menu"></i> Change User Info</a>
+             </li>
+
+             <li (click)="changePassword(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-key icon-menu"></i> Change Password</a>
+             </li>
+
+             <li (click)="changeEmail(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-envelope icon-menu"></i> Change Email</a>
+             </li>
+
+             <li *ngIf="isLogged && _2fa" (click)="twoFA(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-shield-halved icon-menu"></i> {{_2fa}}</a>
+             </li>
+
+             <li (click)="deleteAccount(); hideNavMenu(); toggleProfileSubmenu($event);">
+               <a><i class="fa-solid fa-user-slash icon-menu"></i> Delete Account</a>
+             </li>
+
            </ul>
          </li>
 
 
-         <li (click)="toggleTheme(); hideNavMenu();"><a>Change Theme</a></li>
-          <li (click)="logInOut(); hideNavMenu();"><a>{{action}}</a></li>
+         <li (click)="toggleTheme(); hideNavMenu();">
+           <a class="icon-container">
+
+             <i
+               class="fa fa-solid icon-menu"
+               [ngClass]="{
+                'fa-moon': theme === 'light',
+                'fa-sun': theme === 'dark'
+              }"
+             ></i>
+
+<!--               class="icon-menu"-->
+<!--               [ngClass]="{-->
+<!--                'fa fa-solid fa-moon': theme == 'light',-->
+<!--                'fa-solid fa-sun': theme == 'dark'-->
+<!--              }"-->
+             Change Theme
+           </a>
+         </li>
+
+         <li (click)="logInOut(); hideNavMenu();">
+           <a class="icon-container">
+             <i
+               class="fa-solid icon-menu"
+               [ngClass]="{
+                'fa-right-to-bracket': action === 'Log in',
+                'fa-right-from-bracket': action === 'Log out'
+              }"
+             ></i>
+             {{ action }}
+           </a>
+         </li>
       </ul>
+
+      <div *ngIf="loadingMenu" class="loader"></div>
+
     </div>
+
 </nav>
