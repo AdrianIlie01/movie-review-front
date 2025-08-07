@@ -4,6 +4,7 @@ import {AuthService} from '../../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 @Component({
   selector: 'app-otp-2-fa',
   standalone: false,
@@ -18,10 +19,12 @@ export class Otp2FaComponent implements OnInit, OnDestroy {
   userId!: string;
   submitted = false;
   errorMessage: string[] | null = null;
+  loading!:boolean;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private formValidator: FormValidatorsService,
     private router: Router
   ) {
 
@@ -59,13 +62,12 @@ export class Otp2FaComponent implements OnInit, OnDestroy {
 
     const id = this.userId
     const otp = this.otpForm.get('otp')?.value;
-
+    this.formValidator.trimAllStringControls(this.otpForm);
+    this.loading = true;
     this.authService.verifyOtp(id, otp).subscribe({
       next: (response) => {
-        // Dacă OTP-ul este corect, poți redirecționa utilizatorul
-        console.log('OTP verificat cu succes!', response);
-
         this.router.navigateByUrl('home');
+        this.loading = false;
       },
       error: (error) => {
         if (error.error?.message == 'wrong otp') {
@@ -73,6 +75,7 @@ export class Otp2FaComponent implements OnInit, OnDestroy {
         } else {
           this.errorMessage = ['OTP verification failed.'];
         }
+        this.loading = false;
       }
     });
   }

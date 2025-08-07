@@ -14,5 +14,7 @@
       [errors]="{ required: 'OTP is required!' }"
     ></app-form-input>
   </app-form>
+  <app-redirect-loader *ngIf="loading">
+  </app-redirect-loader>
 </div>
 
