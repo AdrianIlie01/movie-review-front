@@ -16,23 +16,26 @@ import { TopMoviesCarouselComponent } from './components/top-movies-carousel/top
 import { TopCastCarouselComponent } from './components/top-cast-carousel/top-cast-carousel.component';
 
 @NgModule({
-  declarations: [
-    HomePageComponent,
-    HomeHeaderComponent,
-    MovieCarouselComponent,
-    SearchFilterComponent,
-    CastAndMovieCarouselComponent,
-    TopMoviesCarouselComponent,
-    TopCastCarouselComponent
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FontAwesomeModule
-  ],
+    declarations: [
+        HomePageComponent,
+        HomeHeaderComponent,
+        MovieCarouselComponent,
+        SearchFilterComponent,
+        CastAndMovieCarouselComponent,
+        TopMoviesCarouselComponent,
+        TopCastCarouselComponent
+    ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FontAwesomeModule
+    ],
+    exports: [
+        SearchFilterComponent
+    ]
 })
 export class HomeModule {
   constructor(library: FaIconLibrary) {
