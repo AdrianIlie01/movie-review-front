@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 24px;
   padding: 24px;
-  margin: 5rem auto;
+  margin: 3rem auto;
   justify-content: center;
 }
 
@@ -113,6 +113,10 @@
 .btn-container {
   width: 8rem;
   margin-top: auto;
+}
+
+img:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

@@ -1,3 +1,13 @@
+
+<div class="search-list-container">
+    <app-search-filter
+      [hideCategorySelect] = true
+      (search)="loadFilteredMovies($event)"
+      (reset)="resetToUnfiltered()"
+    ></app-search-filter>
+</div>
+
+
 <div *ngIf="loadingFirstMovies" class="movies-list-container">
 
   <div *ngFor="let _ of dataLimit" class="movie-card"
@@ -17,43 +27,47 @@
   </div>
 </div>
 
-<div  #moviesContainer *ngIf="!loading || videos.length > 0" class="movies-list-container">
-
+<div
+  #moviesContainer
+  *ngIf="!loadingFirstMovies && videos.length > 0"
+  class="movies-list-container"
+>
   <div *ngFor="let video of videos" class="movie-card">
+    <img
+      class="thumbnail"
+      [src]="getThumbnailUrl(video)"
+      (error)="onImageError($event, video)"
+      alt="{{ video.name }}"
+      (click)="onImgClick($event, video)"
+    />
 
-    <img *ngIf="!loadingFirstMovies"
-         class="thumbnail"
-         [src]="getThumbnailUrl(video)"
-         (error)="onImageError($event, video)"
-         alt="{{ video.name }}" />
+    <h3 class="name" [title]="video.name">{{ video.name }}</h3>
 
-    <h3 *ngIf="!loadingFirstMovies" class="name" [title]="video.name">{{ video.name }}</h3>
-
-    <p *ngIf="video.type && !loadingFirstMovies" class="type">
+    <p *ngIf="video.type" class="type">
       <span class="label">Genres:</span> {{ video.type?.join(', ') }}
     </p>
 
-    <p *ngIf="video.release_year && !loadingFirstMovies" class="release-year">
+    <p *ngIf="video.release_year" class="release-year">
       <span class="label">Year:</span> {{ video.release_year }}
     </p>
 
-    <div *ngIf="!loadingFirstMovies" class="buttons-container">
-      <app-action-button class="btn-container"
-                         [buttonName]="ButtonName.Edit"
-                         [buttonFunction]="editVideo.bind(this, video.id)">
-      </app-action-button>
+    <div class="buttons-container">
+      <app-action-button
+        class="btn-container"
+        [buttonName]="ButtonName.Edit"
+        [buttonFunction]="editVideo.bind(this, video.id)"
+      ></app-action-button>
 
-      <app-action-button class="btn-container"
-                         [buttonName]="ButtonName.Cast"
-                         [buttonFunction]="managePersonsPerRolePerMovie.bind(this, video.id)">
-      </app-action-button>
+      <app-action-button
+        class="btn-container"
+        [buttonName]="ButtonName.Cast"
+        [buttonFunction]="managePersonsPerRolePerMovie.bind(this, video.id)"
+      ></app-action-button>
     </div>
-
   </div>
 </div>
 
 <div *ngIf="loading && !loadingFirstMovies && videos.length > 0" class="loader"></div>
-
 
 <div *ngIf="!loadingFirstMovies && videos.length === 0" class="no-data">
   No movies available.

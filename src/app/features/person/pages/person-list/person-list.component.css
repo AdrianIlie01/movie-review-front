@@ -3,11 +3,11 @@
   flex-wrap: wrap;
   gap: 24px;
   padding: 24px;
-  margin: 5rem auto;
+  margin: 3rem auto;
   justify-content: center;
 }
 
-.person-card {
+.credits-person-card {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   opacity: 0;
@@ -34,7 +34,7 @@
   100% { transform: translateY(0); opacity: 1; }
 }
 
-.person-card:hover {
+.credits-person-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 16px 40px rgba(0,0,0,0.25);
 }
@@ -95,6 +95,10 @@ h2 {
 }
 
 .movies {
+  /*margin-bottom: 0.5rem;*/
+}
+
+.info-container {
   margin-bottom: 0.5rem;
 }
 
@@ -117,20 +121,10 @@ h2 {
 .btn {
   width: 8rem;
   margin-top: auto;
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*margin-top: 3rem;*/
-  /*width: 50vw!important;*/
-  /*gap: 12px;*/
-
 }
 
-.no-persons {
-  text-align: center;
-  font-style: italic;
-  color: #666;
-  padding: 40px 20px;
-  font-size: 1.1rem;
+.person-card-header img:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 480px) {
@@ -146,7 +140,7 @@ h2 {
   }
 }
 @media (max-width: 768px) {
-  .person-card {
+  .credits-person-card {
     width: 100%;
     max-width: 320px;
   }

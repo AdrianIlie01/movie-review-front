@@ -1,6 +1,15 @@
+<div class="search-list-container">
+  <app-search-filter
+    [hideCategorySelect]="true"
+    [categoryDisplayed]="'cast'"
+    (search)="loadFilteredPeople($event)"
+    (reset)="resetToUnfiltered()"
+  ></app-search-filter>
+</div>
+
 <div *ngIf="loadingFirstPersons" class="person-list-container">
 
-  <div *ngFor="let _ of dataLimit" class="person-card"
+  <div *ngFor="let _ of dataLimit" class="credits-person-card"
   >
     <div *ngIf="loadingFirstPersons" class="movie-skeleton-container"
          [ngClass]="{ 'hide': !loadingFirstPersons }"
@@ -20,34 +29,37 @@
 </div>
 
 
-<div *ngIf="showPeople; else noPeople">
+<div *ngIf="showPeople">
   <div class="person-list-container" #castContainer>
-    <div *ngFor="let person of people" class="person-card">
+    <div *ngFor="let person of people" class="credits-person-card">
 
       <div *ngIf="!loadingFirstPersons" class="person-card-header">
         <img  class="image-container"
              [src]="getPersonImage(person)"
-             (error)="onImageError($event, person)"
+              (click)="onImgClick($event, person)"
+              (error)="onImageError($event, person)"
              alt="{{ person.name }}" />
         <h2   title="{{ person.name }}">{{ person.name }}</h2>
         <div  class="underline"></div>
       </div>
 
-      <p  class="role" *ngIf="person.roles?.length && !loadingFirstPersons">
-        <span class="label">Roles:</span> {{ getRoleList(person.roles) }}
-      </p>
+      <div class="info-container">
+        <p  class="role" *ngIf="person.roles?.length && !loadingFirstPersons">
+          <span class="label">Roles:</span> {{ getRoleList(person.roles) }}
+        </p>
 
-      <p  class="description" *ngIf="person.description && !loadingFirstPersons">
-        <span class="label">About:</span> {{ person.description }}
-      </p>
+        <p  class="description" *ngIf="person.description && !loadingFirstPersons">
+          <span class="label">About:</span> {{ person.description }}
+        </p>
 
-      <p  class="born" *ngIf="person.born && !loadingFirstPersons">
-        <span class="label">Born:</span> {{ person.born | date:'dd MMM yyyy' }}
-      </p>
+        <p  class="born" *ngIf="person.born && !loadingFirstPersons">
+          <span class="label">Born:</span> {{ person.born | date:'dd MMM yyyy' }}
+        </p>
 
-      <p class="movies" *ngIf="person.movieRoles?.length && !loadingFirstPersons">
-        <span class="label">Movies:</span> {{ getPersonMovies(person) }}
-      </p>
+        <p class="movies" *ngIf="person.movieRoles?.length && !loadingFirstPersons">
+          <span class="label">Movies:</span> {{ getPersonMovies(person) }}
+        </p>
+      </div>
 
 
       <div *ngIf="!loadingFirstPersons" class="buttons-container">
@@ -68,9 +80,7 @@
 
 <div *ngIf="loading && loadingFirstPersons && people.length > 0" class="loader"></div>
 
-<ng-template #noPeople>
-  <div *ngIf="!loadingFirstPersons && people.length === 0" class="no-persons">
-    No people available.
-  </div>
-</ng-template>
+<div *ngIf="!loadingFirstPersons && people.length === 0" class="no-data">
+  No people available.
+</div>
 
