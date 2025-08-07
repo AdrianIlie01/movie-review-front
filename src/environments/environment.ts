@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   // apiUrl: 'https://vercel-movie-back-production.up.railway.app',
   apiUrl: 'https://movie-review-back.onrender.com',
+  imageCloudApi: 'https://res.cloudinary.com/dr5b9dgkf/image/upload/movie-review-images',
   // apiUrl: 'https://vercel-movie-back.vercel.app',
 
   firebaseConfig: {

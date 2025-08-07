@@ -2,6 +2,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000',
   // apiUrl: 'https://backend-session-auth-video.onrender.com'
+  imageCloudApi: 'https://res.cloudinary.com/dr5b9dgkf/image/upload/movie-review-images',
   firebaseConfig: {
     apiKey: "AIzaSyAjvXJ6zIgwo2EHeFhaB_NS2jmjnDQuguE",
     authDomain: "moview-review-bdb60.firebaseapp.com",
