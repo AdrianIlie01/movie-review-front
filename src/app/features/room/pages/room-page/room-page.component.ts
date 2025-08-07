@@ -227,7 +227,7 @@ export class RoomPageComponent implements OnInit {
       next: () => {
         comment.status = 'banned';
         this.firebaseService.updateCommentsStatusByUserInRoom(comment.userId, this.roomId, {status: 'banned'}).subscribe({
-          next: () => console.log('All comments marked banned'),
+          next: () => {},
           error: err => console.error('Failed to update comment statuses', err)
         });
       },
@@ -243,7 +243,7 @@ export class RoomPageComponent implements OnInit {
       next: () => {
         comment.status = 'inactive';
         this.firebaseService.updateCommentsStatusByUserInRoom(comment.userId, this.roomId, {status: 'inactive'}).subscribe({
-          next: () => console.log('All comments marked active'),
+          next: () => {},
           error: err => console.error('Failed to update comment statuses', err)
         });
       },
