@@ -1,7 +1,11 @@
 <div class="form-container">
-
-  <div id="title" *ngIf="title" class="form-title">
+<!--  Show plain title if provided, otherwise display projected custom title content from element with [form-title] attribute -->
+  <div *ngIf="title" class="form-title title">
     {{ title }}
+  </div>
+
+  <div *ngIf="!title && hasSpecialTitle" class="form-title title">
+    <ng-content select="[form-title]"></ng-content>
   </div>
 
   <form [autocomplete]="autocomplete" [formGroup]="formGroup" (ngSubmit)="formFunction()">

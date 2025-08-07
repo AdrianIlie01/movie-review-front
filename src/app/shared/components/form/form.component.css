@@ -13,7 +13,7 @@ body {
   height: 100vh;
 }
 
-#title {
+.title {
   max-width: 60%;
   text-align: center;
   word-break: break-word;
@@ -59,4 +59,15 @@ h2 {
 
 .error-messages ul {
   list-style-type: none;
+}
+
+@media (max-width: 470px) {
+  form {
+    width: 85%;
+  }
+}
+@media (max-width: 510px) {
+  .title {
+    font-size: 1.1rem;
+  }
 }
