@@ -100,3 +100,21 @@
   background-color: darkgreen;
   transform: translateY(-2px);
 }
+@media (max-width: 510px) {
+  .action-button.save,
+  .action-button.login,
+  .action-button.register,
+  .action-button.next,
+  .action-button.enable,
+  .action-button.disable,
+  .action-button.reset-password,
+  .action-button.verify-otp,
+  .action-button.manage-movies,
+  .action-button.add-movie,
+  .action-button.add-cast,
+  .action-button.movies,
+  .action-button.cast,
+  .action-button.manage-cast {
+    font-size: 0.9rem;
+  }
+}
