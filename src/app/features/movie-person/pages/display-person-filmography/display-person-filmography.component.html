@@ -1,18 +1,19 @@
 <div *ngIf="loading" class="cast-container">
-  <div class="container-header grouped-role-header-skeleton role-header-skeleton">
-    <div class="user-name-skeleton skeleton-credits-username "></div>
-    <div class="user-name-skeleton skeleton-button-header "></div>
+  <div class="container-header grouped-role-header-skeleton role-header-skeleton skeleton"
+       [ngClass]="isDarkTheme ? 'header-credits-dark' : 'header-credits-light'"
+       style="height: 4.5rem"
+  >
   </div>
 
   <div *ngFor="let i of [1, 2, 3 ]" class="role-group ">
 
       <div class="role-header role-group-skeleton-container">
-        <div class="user-name-skeleton skeleton-roles-user "></div>
+        <div class="user-name-skeleton skeleton-roles-user"></div>
         <div class="user-name-skeleton skeleton-button-header "></div>
       </div>
 
     <div class="person-list">
-      <div  *ngFor="let i2 of [1, 2, 3, 4]" class="person-card">
+      <div  *ngFor="let i2 of [1, 2, 3, 4]" class="credits-person-card">
         <div class="placeholder-avatar user-avatar-skeleton"></div>
         <div class="user-name-skeleton center-name-skeleton-card"></div>
       </div>
@@ -22,7 +23,9 @@
 
 
 <div *ngIf="!loading" class="cast-container">
-  <div class="container-header">
+  <div class="container-header "
+       [ngClass]="isDarkTheme ? 'header-credits-dark' : 'header-credits-light'"
+  >
 
     <div>
       <h1 class="person-title">{{personName}}</h1>
@@ -49,8 +52,8 @@
 
     <ng-container *ngIf="groupedMovies[role] as moviesForRole">
       <div class="person-list" *ngIf="moviesForRole.length > 0">
-        <div (click)="redirectMovie(item)"  *ngFor="let item of moviesForRole" class="person-card">
-          <div class="placeholder-avatar">{{ item.person?.name?.charAt(0) }}</div>
+        <div (click)="redirectMovie(item)"  *ngFor="let item of moviesForRole" class="credits-person-card">
+          <div class="placeholder-avatar">{{ item.room?.name?.charAt(0) }}</div>
           <div class="person-name">{{ item.room?.name }}</div>
         </div>
       </div>

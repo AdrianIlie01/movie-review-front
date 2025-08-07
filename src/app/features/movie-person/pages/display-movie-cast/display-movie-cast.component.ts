@@ -5,6 +5,7 @@ import {ButtonName} from '../../../../shared/enums/button-name';
 import {PersonRoles} from '../../../../shared/enums/person-roles';
 import {PersonInterface} from '../../../../shared/interfaces/person.interface';
 import {RoomService} from '../../../room/services/room.service';
+import {PersonService} from '../../../person/services/person.service';
 
 @Component({
   selector: 'app-display-movie-cast',
@@ -18,6 +19,7 @@ export class DisplayMovieCastComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private personService: PersonService,
     private castService: MoviePersonService,
     private movieService: RoomService
   ) {
@@ -30,8 +32,8 @@ export class DisplayMovieCastComponent implements OnInit {
   protected readonly ButtonName = ButtonName;
   protected movieName!: string;
   protected loading: boolean = true;
+  protected isDarkTheme = false;
   ngOnInit() {
-    console.log('init')
     this.route.params.subscribe(params => {
         this.movieId = params['movieId'];
 
@@ -50,6 +52,8 @@ export class DisplayMovieCastComponent implements OnInit {
         }
       });
     });
+    const theme = localStorage.getItem('theme') || 'light';
+    this.isDarkTheme = theme == 'dark';
   }
 
   getCast(movieId: string) {
@@ -64,7 +68,8 @@ export class DisplayMovieCastComponent implements OnInit {
       acc[role].push(curr);
       return acc;
     }, {} as { [role: string]: any[] });
-    this.groupedCastKeys = Object.keys(this.groupedCast) as PersonRoles[];
+    this.groupedCastKeys = Object.keys(this.groupedCast)
+      .sort() as PersonRoles[];
   }
   manageCast(role: PersonRoles)  {
     this.router.navigateByUrl(`credits/manage-cast/${this.movieId}/${role}`);
@@ -77,5 +82,20 @@ export class DisplayMovieCastComponent implements OnInit {
   personInfo(item: any){
     // this.router.navigateByUrl(`/person/${item.person.id}`);
     this.router.navigateByUrl(`/cast/edit/${item.person.id}`);
+  }
+
+  getPersonImage(data: any): string {
+    const person = data.person;
+    if (person.images && person.images.length > 0) {
+      return this.personService.getImage(person.images[0]);
+    } else {
+      return this.personService.getDefaultImage('default_person.jpg');
+    }
+  }
+
+  onImageError(event: Event, video: any) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.personService.getDefaultImage('default_person.jpg');
+
   }
 }

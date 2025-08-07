@@ -29,6 +29,8 @@ export class DisplayPersonFilmographyComponent implements OnInit {
   protected readonly ButtonName = ButtonName;
   protected personName!: string;
   protected loading: boolean = true;
+  protected isDarkTheme = false;
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.personId = params['personId'];
@@ -48,6 +50,8 @@ export class DisplayPersonFilmographyComponent implements OnInit {
         }
       });
     });
+    const theme = localStorage.getItem('theme') || 'light';
+    this.isDarkTheme = theme == 'dark';
   }
 
   groupMoviesByRole() {
@@ -65,7 +69,8 @@ export class DisplayPersonFilmographyComponent implements OnInit {
       this.groupedMovies[role] = grouped[role] ?? [];
     }
 
-    this.groupedMovieKeys = Object.keys(grouped) as PersonRoles[];
+    this.groupedMovieKeys = Object.keys(grouped)
+      .sort() as PersonRoles[];
   }
 
   manageMovies(role: PersonRoles)  {
