@@ -32,4 +32,8 @@
       <span id="sign-up" (click)="register()">Sign up!</span>
     </p>
   </div>
+
+  <app-redirect-loader *ngIf="loading">
+  </app-redirect-loader>
 </div>
+

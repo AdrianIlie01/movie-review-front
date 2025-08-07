@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ButtonName } from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,9 +16,11 @@ export class LoginPageComponent {
   protected readonly ActionButton = ButtonName;
   errorMessage: string[] | null = null;
   submitted = false;
+  loading!:boolean;
 
   constructor(
     private authService: AuthService,
+    private formValidators: FormValidatorsService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -32,7 +35,8 @@ export class LoginPageComponent {
     if (this.registerForm.invalid) return;
 
     this.errorMessage = null;
-
+    this.formValidators.trimSelectedStringControls(this.registerForm, ['username']);
+    this.loading = true;
     this.authService.login(this.registerForm.value).subscribe({
       next: (response: any) => {
         const data = response.access_token_2fa;
@@ -41,8 +45,10 @@ export class LoginPageComponent {
           const id = data.user_id;
           this.authService.generateOtp(id);
           this.router.navigateByUrl('auth/login/verify-otp').then();
+          this.loading = false;
         } else {
           this.router.navigateByUrl('home').then();
+          this.loading = false;
         }
       },
       error: (error) => {
@@ -55,6 +61,7 @@ export class LoginPageComponent {
         else {
           this.errorMessage = ['Authentication failed.'];
         }
+        this.loading = false;
       },
     });
   }

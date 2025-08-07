@@ -1,1 +1,31 @@
+.form-footer {
+  text-align: center;
+}
 
+#forgot-pass, #sign-up {
+  font-weight: bold;
+  color: var(--question-text);
+  cursor: pointer;
+  margin: 0.3rem 0;
+}
+
+#forgot-pass:hover {
+  cursor: pointer;
+  color: var(--login-hover-text);
+}
+
+#sign-up, #forgot-pass {
+  font-weight: bold;
+  color: var(--question-text);
+}
+
+#sign-up:hover {
+  cursor: pointer;
+  color: var(--login-hover-text);
+}
+
+@media (max-width: 510px) {
+  #forgot-pass, #sign-up, p {
+    font-size: 0.9rem;
+  }
+}
