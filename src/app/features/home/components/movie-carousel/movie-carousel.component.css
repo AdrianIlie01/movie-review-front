@@ -95,37 +95,6 @@
   font-style: italic;
 }
 
-@keyframes slideInFromRight {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
-}
-@keyframes slideInFromLeft {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(0); }
-}
-@keyframes slideOutToLeft {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
-@keyframes slideOutToRight {
-  from { transform: translateX(0); }
-  to   { transform: translateX(100%); }
-}
-
-.slide-in-left {
-  animation: slideInFromRight 0.4s ease forwards;
-}
-.slide-out-left {
-  animation: slideOutToLeft 0.4s ease forwards;
-}
-.slide-in-right {
-  animation: slideInFromLeft 0.4s ease forwards;
-}
-.slide-out-right {
-  animation: slideOutToRight 0.4s ease forwards;
-}
-
-
 @media (max-width: 1024px) {
   .movie-title {
     font-size: 1.2rem;

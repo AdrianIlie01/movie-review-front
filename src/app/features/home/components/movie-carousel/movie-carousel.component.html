@@ -19,6 +19,8 @@
       draggable="false"
     />
 
+    <div class="image-skeleton-loader frame" *ngIf="!firstImageLoaded"></div>
+
     <!-- current img -->
     <img
       class="thumb current-thumb"
@@ -28,13 +30,15 @@
     'slide-in-left': animationDirection === 'left',
     'slide-in-right': animationDirection === 'right'
   }"
+      [style.display]="!firstImageLoaded ? 'none' : null"
       (error)="onImageError($event, currentMovie)"
       (click)="goToMovie(currentMovie.id)"
       (load)="onImageLoad()"
       draggable="false"
     />
 
-
+<!-- show left arrow only if we are not on the first movie or if there are noMore data to load-->
+<!--    <button *ngIf="(this.currentPageIndex !== 0 || this.currentIndex !== 0 ) || noMorePages" class="nav prev" aria-label="Previous" (click)="previous()">‹</button>-->
     <button class="nav prev" aria-label="Previous" (click)="previous()">‹</button>
     <button class="nav next" aria-label="Next" (click)="next()">›</button>
   </div>
@@ -47,4 +51,4 @@
   <div class="placeholder">No movies available…</div>
 </ng-template>
 
-<div *ngIf="loading && !firstImageLoaded" class="image-skeleton-loader frame"></div>
+<div *ngIf="loading && !firstImageLoaded" class="image-skeleton-loader frame mt-0_5"></div>
