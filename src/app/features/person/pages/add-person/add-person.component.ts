@@ -4,6 +4,7 @@ import {ButtonName} from '../../../../shared/enums/button-name';
 import {PersonRoles} from '../../../../shared/enums/person-roles';
 import {PersonService} from '../../services/person.service';
 import {Router} from '@angular/router';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-add-person',
@@ -21,13 +22,14 @@ export class AddPersonComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
+    private formValidators: FormValidatorsService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.personForm = this.fb.group({
       name: ['', {
-        validators: [Validators.required],
+        validators: [this.formValidators.requiredTrimmed],
         asyncValidators: [this.personService.validatePersonName()],
         updateOn: 'blur'
       }],
@@ -68,9 +70,6 @@ export class AddPersonComponent implements OnInit {
     if (bornControl) {
       const bornValue = bornControl.value;
 
-      console.log('bornValue');
-      console.log(bornValue);
-
       if (!bornValue || bornValue.trim() === '') {
         this.bornValueEmpty = true;
         bornControl.setValue(null);
@@ -78,6 +77,8 @@ export class AddPersonComponent implements OnInit {
         this.bornValueEmpty = false;
       }
     }
+
+    this.formValidators.trimAllStringControls(this.personForm);
 
     this.personService.addPerson(this.personForm.value).subscribe({
       next: () => {
