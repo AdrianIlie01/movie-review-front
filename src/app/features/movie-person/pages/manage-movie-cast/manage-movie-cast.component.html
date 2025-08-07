@@ -1,11 +1,14 @@
 <div class="cast-wrapper ">
   <app-form
-    title="Add or remove cast members for the role {{ role }} in movie {{ movieTitle }}"
     [formGroup]="personForm"
     [formButtonName]="ButtonName.Save"
     [formFunction]="onSubmit.bind(this)"
     [errorMessage]="errorMessage"
+    [hasSpecialTitle] = true
   >
+    <div form-title>
+      Assign or remove cast members for the role <span class="highlight-name">{{ role }}</span> in movie <span class="highlight-name">{{ movieTitle }}</span>
+    </div>
     <app-form-select
       label="Cast Members"
       controlName="persons"
