@@ -11,6 +11,8 @@ import { RatingComponent } from './components/rating/rating.component';
 import { RedirectLoaderComponent } from './components/redirect-loader/redirect-loader.component';
 import { RatingColorPipe } from './pipes/rating-color.pipe';
 import { FooterComponent } from './components/footer/footer.component';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 
 
@@ -26,11 +28,13 @@ import { FooterComponent } from './components/footer/footer.component';
     RedirectLoaderComponent,
     RatingColorPipe,
     FooterComponent,
+    SearchFilterComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FaIconComponent,
+    ],
   exports: [
     ActionButtonComponent,
     NavigationMenuComponent,
@@ -39,7 +43,8 @@ import { FooterComponent } from './components/footer/footer.component';
     RatingComponent,
     RedirectLoaderComponent,
     RatingColorPipe,
-    FooterComponent
+    FooterComponent,
+    SearchFilterComponent,
   ]
 })
 export class SharedModule { }
