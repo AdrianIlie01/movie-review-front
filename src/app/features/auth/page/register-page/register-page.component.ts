@@ -3,6 +3,7 @@ import {AuthService} from '../../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ButtonName} from '../../../../shared/enums/button-name';
+import {FormValidatorsService} from '../../../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-register-page',
@@ -21,6 +22,7 @@ export class RegisterPageComponent {
 
   constructor(
     private authService: AuthService,
+    private formValidators: FormValidatorsService,
     private router: Router,
     private fb: FormBuilder
 ) {
@@ -54,9 +56,10 @@ export class RegisterPageComponent {
     this.isSubmitting = true;
     this.errorMessage = null;
 
+    this.formValidators.trimSelectedStringControls(this.registerForm, ['username', 'email']);
+
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {
-        console.log('Register successful', response);
         this.isSubmitting = false;
         this.router.navigateByUrl('home').then()
       },
