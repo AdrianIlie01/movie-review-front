@@ -25,7 +25,7 @@
   object-fit: cover;
   top: 0;
   left: 0;
-  border-radius: inherit;
+  border-radius: 24px;
 }
 
 .current-thumb {
@@ -93,37 +93,6 @@ img:hover {
   color: #888;
   font-style: italic;
 }
-
-@keyframes slideInFromRight {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
-}
-@keyframes slideInFromLeft {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(0); }
-}
-@keyframes slideOutToLeft {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
-@keyframes slideOutToRight {
-  from { transform: translateX(0); }
-  to   { transform: translateX(100%); }
-}
-
-.slide-in-left {
-  animation: slideInFromRight 0.4s ease forwards;
-}
-.slide-out-left {
-  animation: slideOutToLeft 0.4s ease forwards;
-}
-.slide-in-right {
-  animation: slideInFromLeft 0.4s ease forwards;
-}
-.slide-out-right {
-  animation: slideOutToRight 0.4s ease forwards;
-}
-
 @media (max-width: 1024px) {
   .movie-title {
     font-size: 1.2rem;
@@ -178,3 +147,24 @@ img:hover {
     display: none;
   }
 }
+.person-thumb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  border-radius: 24px;
+  transform: translate(-50%, -50%);
+}
+
+.person-thumb-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+

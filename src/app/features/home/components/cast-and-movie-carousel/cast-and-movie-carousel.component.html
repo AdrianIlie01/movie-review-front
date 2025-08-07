@@ -1,6 +1,6 @@
 <div class="carousel" *ngIf="currentItem">
   <div
-    class="frame"
+    class="frame person-frame"
     (pointerdown)="onDragStart($event)"
     (pointermove)="onDragMove($event)"
     (pointerup)="onDragEnd($event)"
@@ -8,34 +8,46 @@
   >
     <!-- Previous -->
     <img
-      class="thumb previous-thumb"
+      class="previous-thumb"
       *ngIf="previousItem"
       [src]="searchParams.category === 'movie' ? getThumbnailUrl(previousItem) : getPersonImage(previousItem)"
       [ngClass]="{
-        'slide-out-left': animationDirection === 'left',
-        'slide-out-right': animationDirection === 'right'
+        'slide-out-left': animationDirection === 'left' && searchParams.category === 'movie',
+        'slide-out-right': animationDirection === 'right' && searchParams.category === 'movie',
+        'slide-out-left-person': animationDirection === 'left' && searchParams.category === 'cast',
+        'slide-out-right-person': animationDirection === 'right' && searchParams.category === 'cast',
+
+        'thumb': searchParams.category === 'movie',
+        'person-thumb': searchParams.category === 'cast'
       }"
       (error)="onImageError($event, previousItem)"
       draggable="false"
     />
-
+    <div class="image-skeleton-loader frame" *ngIf="!firstImageLoaded"></div>
     <!-- Current -->
     <img
-      class="thumb current-thumb"
+      class="current-thumb"
       *ngIf="currentItem"
-      [src]="getThumbnailUrl(currentItem)"
+      [src]="searchParams.category === 'movie' ? getThumbnailUrl(currentItem) : getPersonImage(currentItem)"
+
       [ngClass]="{
-        'slide-in-left': animationDirection === 'left',
-        'slide-in-right': animationDirection === 'right'
+       'slide-in-left': animationDirection === 'left' && searchParams.category === 'movie',
+       'slide-in-right': animationDirection === 'right' && searchParams.category === 'movie',
+       'slide-in-left-person': animationDirection === 'left' && searchParams.category === 'cast',
+       'slide-in-right-person': animationDirection === 'right' && searchParams.category === 'cast',
+
+        'thumb': searchParams.category === 'movie',
+        'person-thumb': searchParams.category === 'cast'
       }"
       (error)="onImageError($event, currentItem)"
       (click)="goToDetails(currentItem)"
+      (load)="onImageLoad()"
       draggable="false"
     />
 
     <!-- Nav Buttons -->
-    <button class="nav prev" aria-label="Previous" (click)="previous()">‹</button>
-    <button class="nav next" aria-label="Next" (click)="next()">›</button>
+    <button *ngIf="currentPage.length > 1" class="nav prev" aria-label="Previous" (click)="previous()">‹</button>
+    <button *ngIf="currentPage.length > 1" class="nav next" aria-label="Next" (click)="next()">›</button>
   </div>
 
   <div class="movie-title">{{ currentItem.name }}</div>
@@ -45,4 +57,4 @@
   <div class="placeholder">No content available…</div>
 </ng-template>
 
-<div *ngIf="loading" class="image-skeleton-loader frame"></div>
+<div *ngIf="loading" class="image-skeleton-loader frame mt-0_5"></div>

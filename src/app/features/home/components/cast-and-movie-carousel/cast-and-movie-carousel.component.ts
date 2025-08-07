@@ -31,18 +31,22 @@ export class CastAndMovieCarouselComponent implements OnChanges{
     private router: Router,
   ) {}
 
-  cachedItems: (RoomDataInterface | PersonDataInterface)[][] = [];
-  currentPageIndex = 0;
-  currentIndex = 0;
+  protected cachedItems: (RoomDataInterface | PersonDataInterface)[][] = [];
+  protected currentPageIndex = 0;
+  protected currentIndex = 0;
   readonly pageSize = 10;
-  previousItem: RoomDataInterface | PersonDataInterface | null = null;
+  protected previousItem: RoomDataInterface | PersonDataInterface | null = null;
 
-  loading = false;
+  protected loading = false;
   private noMorePages = false;
+  protected firstImageLoaded = false;
 
-  animationDirection: 'left' | 'right' | '' = '';
+  protected animationDirection: 'left' | 'right' | '' = '';
   private dragStartX = 0;
   private dragging = false;
+  protected cameFromFirstToLastMoreDataAvailable: boolean = false;
+  readonly clickDelayMs = 500;
+  private clickDisabled = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchParams']) {
@@ -90,10 +94,21 @@ export class CastAndMovieCarouselComponent implements OnChanges{
     }
   }
 
+  onImageLoad(): void {
+    if (!this.firstImageLoaded) {
+      this.firstImageLoaded = true;
+    }
+  }
 
   previous(): void {
+    if (this.clickDisabled) return;
+    this.disableClickTemporarily();
+
     this.previousItem = this.currentItem;
     this.animationDirection = 'right';
+    if ( (this.currentIndex == 0 && this.currentPageIndex == 0 ) && !this.noMorePages) {
+      this.cameFromFirstToLastMoreDataAvailable = true
+    }
     if (this.currentIndex > 0) {
       this.currentIndex--;
     } else if (this.currentPageIndex > 0) {
@@ -107,12 +122,34 @@ export class CastAndMovieCarouselComponent implements OnChanges{
   }
 
   next(): void {
+    if (this.clickDisabled) return;
+    this.disableClickTemporarily();
+
     this.previousItem = this.currentItem;
     this.animationDirection = 'left';
-    if (this.currentIndex < this.currentPage.length - 1) {
+
+    if( this.cameFromFirstToLastMoreDataAvailable ) {
+      this.currentIndex = 0;
+      this.currentPageIndex = 0;
+      this.cameFromFirstToLastMoreDataAvailable = false;
+    }
+
+   else if (this.currentIndex < this.currentPage.length - 1) {
       this.currentIndex++;
       this.resetAnimationDirection();
-    } else if (!this.noMorePages) {
+    }
+    else if (this.cachedItems[this.currentPageIndex + 1]  ) {
+      // function role: load next page from movieCached if cached (not applying on 1st page),
+      // and go on first movie of the next page
+
+      // triggered:on the last movie of the current page - if the next page is cached
+
+      this.currentPageIndex++;
+      this.currentIndex = 0;
+      this.resetAnimationDirection();
+    }
+
+   else if (!this.noMorePages) {
       this.loadPage(this.currentPageIndex + 1, () => {
         this.animationDirection = 'left';
         this.resetAnimationDirection();
@@ -123,7 +160,12 @@ export class CastAndMovieCarouselComponent implements OnChanges{
       this.resetAnimationDirection();
     }
   }
-
+  private disableClickTemporarily(): void {
+    this.clickDisabled = true;
+    setTimeout(() => {
+      this.clickDisabled = false;
+    }, this.clickDelayMs);
+  }
   private resetAnimationDirection() {
     setTimeout(() => {
       this.animationDirection = '';
@@ -158,10 +200,13 @@ export class CastAndMovieCarouselComponent implements OnChanges{
 
     serviceCall.pipe(finalize(() => (this.loading = false))).subscribe({
       next: (data: any) => {
-        if (!data.length) {
+        if (data.length === 0) {
           this.noMorePages = true;
+          this.currentPageIndex = 0;
+          this.currentIndex = 0;
           return;
         }
+
         this.cachedItems[pageIndex] = data;
         this.currentPageIndex = pageIndex;
         this.currentIndex = 0;
