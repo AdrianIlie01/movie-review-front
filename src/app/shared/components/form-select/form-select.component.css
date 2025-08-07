@@ -28,6 +28,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1rem;
 }
 
 .arrow {
@@ -82,20 +83,31 @@
   color: var(--text-color-option-hover);
 }
 
-.option.selected {
+.options {
+  border: 1px solid var(--bg-color-inverted);
 }
-
 .option input {
   margin-right: 8px;
   pointer-events: none;
-
-  accent-color: var(--checkbox-accent-color) /* check mark color */
-
+  accent-color:  gold;
 }
-
 .error {
   color: #d9534f;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+}
+@media (max-width: 510px) {
+  .form-title {
+    font-size: 1rem;
+  }
+  label {
+    font-size: 0.9rem;
+  }
+  .selected-text {
+    font-size: 0.8rem;
+  }
+  .error {
+    font-size: 0.7rem;
+  }
 }
 
