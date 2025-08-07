@@ -34,19 +34,9 @@ export class AddRolesForMovieComponent implements OnInit {
   protected personName!: string;
 
   protected readonly roleOptions = Object.values(PersonRoles);
-
-  // protected roleOptions = Object.entries(PersonRoles).map(([label, value]) => ({
-  //   label,
-  //   value
-  // }));
-
-//todo select multiple: false - ma lasa sa selectez mai multe variante, odata ce il deschid din nou si selectez una noua la a 3 incercare
-// selecteaza toate numele ce incep asemanator cu cel selectat
-
   protected readonly ButtonName = ButtonName;
 
   ngOnInit() {
-
     this.route.params.subscribe((p) => {
       this.personId = p['personId'];
     })
@@ -94,12 +84,9 @@ export class AddRolesForMovieComponent implements OnInit {
       movie: value.movie
     };
 
-    console.log('id');
-    console.log(this.personId);
 
     this.castService.addPersonRolesToMovie(this.personId, value).subscribe({
       next: () => {
-        console.log('succesfull added')
         this.router.navigate(['credits/filmography', this.personId]);
       },
       error: (err) => {

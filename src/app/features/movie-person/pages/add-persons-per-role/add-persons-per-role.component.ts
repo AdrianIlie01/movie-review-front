@@ -49,15 +49,10 @@ export class AddPersonsPerRoleComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((p) => {
       this.movieId = p['movieId'];
-
-      console.log(this.movieId)
-
     })
 
     this.personService.getAllPersons().subscribe(d => {
       this.personOptions = d.map((p) => {
-        console.log('p')
-        console.log(p)
         return p.name
       })
     })
@@ -101,7 +96,6 @@ export class AddPersonsPerRoleComponent implements OnInit {
 
     this.castService.addPersonsToRoleInMovie(this.movieId, value).subscribe({
       next: () => {
-        console.log('succesfull added')
         this.router.navigate(['credits/cast', this.movieId]);
       },
       error: (err) => {
