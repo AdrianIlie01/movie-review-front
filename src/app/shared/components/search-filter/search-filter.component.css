@@ -350,9 +350,9 @@ input[type=number] {
 }
 
 @media (max-width: 510px) {
- .search-input, .label, .filter-item, select, .sort-label, button {
-   font-size: 0.8rem;
- }
+  .search-input, .label, .filter-item, select, .sort-label, button {
+    font-size: 0.8rem;
+  }
   .error-message {
     font-size: 0.7rem;
   }

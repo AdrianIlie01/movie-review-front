@@ -1,28 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { MovieTypes } from '../../../../shared/enums/movie-types';
-import { PersonRoles } from '../../../../shared/enums/person-roles';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HomeService } from '../../services/home.service';
-
-interface Option {
-  key: string;
-  label: string;
-  type: string;
-  options: { value: string; label: string }[] | [];
-}
-
-interface SortOption {
-  value: string;
-  label: string;
-}
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MovieTypes} from '../../enums/movie-types';
+import {PersonRoles} from '../../enums/person-roles';
+import {HomeService} from '../../../features/home/services/home.service';
+import {FilterOption} from '../../interfaces/filter-option.interface';
+import {SortOption} from '../../interfaces/sort-option.interface';
 
 @Component({
   selector: 'app-search-filter',
@@ -52,13 +34,31 @@ export class SearchFilterComponent implements OnInit {
     label: value.charAt(0).toUpperCase() + value.slice(1)
   }));
 
-  filtersMovie: Option[] = [
+  @Output() search = new EventEmitter<{
+    name: string;
+    category: 'movie' | 'cast';
+    filterValue: any;
+    sortField: string;
+    sortOrder: 'ASC' | 'DESC';
+  }>();
+
+  @Output() reset = new EventEmitter<void>();
+  @Input() hideCategorySelect = false;
+  @Input() categoryDisplayed: "movie" | "cast" = 'movie';
+
+  constructor(
+    private homeService: HomeService,
+    private fb: FormBuilder,
+    private el: ElementRef,
+  ) {}
+
+  filtersMovie: FilterOption[] = [
     { key: 'type', label: 'Genres', type: 'select', options: this.movieTypeOptions },
     { key: 'releaseYear', label: 'Release Year', type: 'number', options: [] },
     { key: 'ratingMin', label: 'Rating From', type: 'number', options: [] }
   ];
 
-  filtersCast: Option[] = [
+  filtersCast: FilterOption[] = [
     { key: 'roles', label: 'Roles', type: 'select', options: this.personRoleOptions },
     { key: 'born', label: 'Year of Birth', type: 'number', options: [] },
     { key: 'ratingMin', label: 'Rating From', type: 'number', options: [] }
@@ -78,7 +78,7 @@ export class SearchFilterComponent implements OnInit {
     { value: 'roles', label: 'Role' }
   ];
 
-  sortOrderOptions: Option[] = [
+  sortOrderOptions: FilterOption[] = [
     { key: 'ASC', label: '▲ ASC', type: 'text', options: [] },
     { key: 'DESC', label: '▼ DESC', type: 'text', options: [] }
   ];
@@ -92,25 +92,6 @@ export class SearchFilterComponent implements OnInit {
     { value: 'movie', label: 'Movie' },
     { value: 'cast', label: 'Cast' }
   ];
-
-
-  @Output() search = new EventEmitter<{
-    name: string;
-    category: 'movie' | 'cast';
-    filterValue: any;
-    sortField: string;
-    sortOrder: 'ASC' | 'DESC';
-  }>();
-
-  @Output() reset = new EventEmitter<void>();
-  @Input() hideCategorySelect = false;
-  @Input() categoryDisplayed: "movie" | "cast" = 'movie';
-
-  constructor(
-    private homeService: HomeService,
-    private fb: FormBuilder,
-    private el: ElementRef,
-  ) {}
 
   ngOnInit(): void {
     let controlsConfig: any = {
@@ -158,7 +139,7 @@ export class SearchFilterComponent implements OnInit {
     this.form = this.fb.group(controlsConfig);
   }
 
-  get activeFilters(): Option[] {
+  get activeFilters(): FilterOption[] {
     if (this.categoryDisplayed == 'cast') {
       return this.category === 'cast' ? this.filtersCast : this.filtersMovie;
     }
