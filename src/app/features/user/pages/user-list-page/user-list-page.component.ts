@@ -23,7 +23,7 @@ export class UserListPageComponent implements OnInit {
   ) {
   }
 
-  protected users: UserInterface[] = [];
+  protected users: any[] = [];
   protected currentUserId!: string;
   protected loadingUserId: string | null = null;
   protected loading = false;
@@ -37,11 +37,22 @@ export class UserListPageComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe((loggedIn) => {
       if (loggedIn) {
-        this.userService.getUserInfo().subscribe((user: any) => {
-          this.currentUserId = user.id;
-          this.currentUserData = user;
-          this.users = [user];
-          this.checkIfInitialLoadNeeded();
+        this.userService.getUserInfo().subscribe({
+          next: (user: any) => {
+            const currentUser = {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              role: user.roles,
+              status: user.status,
+              is_2_fa_active: user._2fa,
+              create_date: user.create_date
+            }
+            this.currentUserId = user.id;
+            this.currentUserData = user;
+            this.users = [currentUser];
+            this.checkIfInitialLoadNeeded();
+          }
         });
       }
     });
@@ -136,7 +147,6 @@ export class UserListPageComponent implements OnInit {
     if (user.status === 'banned') {
       this.userService.unBanUser(user.id).subscribe({
         next: () => {
-          console.log(`User ${user.id} unbanned successfully.`);
           this.loadingUserId = null;
           // Actualizează statusul userului local
           this.users = this.users.map(u =>
@@ -152,7 +162,6 @@ export class UserListPageComponent implements OnInit {
       // Dacă nu e banat, apelăm ban
       this.userService.banUser(user.id).subscribe({
         next: () => {
-          console.log(`User ${user.id} banned successfully.`);
           this.loadingUserId = null;
           // Actualizează statusul userului local
           this.users = this.users.map(u =>

@@ -1,7 +1,7 @@
 
 <div *ngIf="loadingFirstUsers" class="person-list-container">
 
-  <div *ngFor="let _ of dataLimit" class="person-card"
+  <div *ngFor="let _ of dataLimit" class="credits-person-card"
   >
 
     <div *ngIf="loadingFirstUsers" class="user-card-skeleton"
@@ -20,7 +20,7 @@
 <div #container *ngIf="users?.length" class="person-list-container">
 
 
-<div *ngFor="let user of users" class="person-card">
+<div *ngFor="let user of users" class="credits-person-card">
 
     <div *ngIf="!loadingFirstUsers" class="avatar">
       {{ user.username.charAt(0) }}
@@ -31,7 +31,7 @@
     <div *ngIf="!loadingFirstUsers" class="underline"></div>
 
     <p *ngIf="!loadingFirstUsers" class="role">
-      <span class="label"><i class="fa fa-user-tag"></i> Role:</span> {{ user.role }}
+      <span class="label"><i></i> Role:</span> {{ user.role}}
     </p>
     <p *ngIf="!loadingFirstUsers" class="email">
       <span class="label">Email:</span> {{ user.email }}
@@ -39,9 +39,8 @@
     <p *ngIf="!loadingFirstUsers" class="status">
       <span class="label">Status:</span> {{ user.status }}
     </p>
-    <p *ngIf="!loadingFirstUsers" class="fa" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
+    <p class="two_fa" *ngIf="!loadingFirstUsers" [ngClass]="user.is_2_fa_active ? 'fa-enabled' : 'fa-disabled'">
   <span *ngIf="!loadingFirstUsers" class="label">
-    <i class="fa" [ngClass]="user.is_2_fa_active ? 'fa-lock' : 'fa-unlock'"></i>
     2FA
   </span> {{ user.is_2_fa_active ? 'enabled' : 'disabled' }}
     </p>
@@ -80,6 +79,6 @@
 
 <div *ngIf="loading && !loadingFirstUsers && users.length > 0" class="loader"></div>
 
-<div *ngIf="!loadingFirstUsers && users.length === 0" class="no-data">
+<div *ngIf="!loadingFirstUsers && users.length === 0" class="no-data-message-centered">
   No user found
 </div>
