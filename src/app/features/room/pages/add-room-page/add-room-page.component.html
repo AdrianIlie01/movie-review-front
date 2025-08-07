@@ -32,7 +32,7 @@
       placeholder="Paste the stream URL"
       controlName="stream_url"
       [submitted]="submitted"
-      [errors]="{ required: 'Please enter the stream URL.' }"
+      [errors]="{ requiredTrimmed: 'Please enter the stream URL.' }"
     ></app-form-input>
 
     <app-form-input
@@ -40,7 +40,7 @@
       placeholder="e.g. 2024"
       controlName="release_year"
       [submitted]="submitted"
-      [errors]="{ required: 'Please enter the release year.' }"
+      [errors]="{ requiredTrimmed: 'Please enter the release year.' }"
     ></app-form-input>
   </app-form>
 </div>

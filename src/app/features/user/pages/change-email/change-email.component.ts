@@ -23,9 +23,9 @@ export class ChangeEmailComponent implements OnInit{
     private fb: FormBuilder,
   ) {
     this.emailForm = this.fb.group({
-      otp: ['', Validators.required],
+      otp: ['', this.formValidators.requiredTrimmed],
       email: ['', {
-        validators: [Validators.required, Validators.email],
+        validators: [this.formValidators.requiredTrimmed, Validators.email],
         asyncValidators:
           [
             this.authService.validateEmail()

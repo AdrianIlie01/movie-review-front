@@ -12,7 +12,7 @@
       controlName="name"
       [submitted]="submitted"
       [errors]="{
-        required: 'Please enter a movie name.',
+        requiredTrimmed: 'Please enter a movie name.',
         nameTaken: 'This name is already taken!'
       }"
     ></app-form-input>
@@ -31,7 +31,7 @@
       controlName="stream_url"
       [submitted]="submitted"
       [errors]="{
-        required: 'Please enter an url for this movie.',
+        requiredTrimmed: 'Please enter an url for this movie.',
          }"
     ></app-form-input>
 
@@ -41,7 +41,7 @@
       controlName="release_year"
       [submitted]="submitted"
       [errors]="{
-        required: 'Please enter the release year.'
+        requiredTrimmed: 'Please enter the release year.'
       }"
     ></app-form-input>
   </app-form>

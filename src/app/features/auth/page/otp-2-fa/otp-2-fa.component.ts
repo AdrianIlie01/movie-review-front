@@ -30,7 +30,7 @@ export class Otp2FaComponent implements OnInit, OnDestroy {
 
 
     this.otpForm = this.fb.group({
-      otp: ['', Validators.required]
+      otp: ['', this.formValidator.requiredTrimmed]
     });
   }
 

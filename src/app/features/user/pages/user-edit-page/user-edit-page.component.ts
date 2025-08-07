@@ -30,7 +30,7 @@ export class UserEditPageComponent implements OnInit{
   ) {
     this.editForm = this.fb.group({
       username: ['', {
-        validators: [Validators.required, Validators.minLength(3)],
+        validators: [this.formValidators.requiredTrimmed, Validators.minLength(3)],
         // asyncValidators:
         //   [
         //     this.authService.validateUsername()

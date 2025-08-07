@@ -12,7 +12,7 @@
       placeholder="Insert otp"
       controlName="otp"
       [submitted]="submitted"
-      [errors]="{ required: 'OTP is required!' }"
+      [errors]="{ requiredTrimmed: 'OTP is required!' }"
     ></app-form-input>
 
     <app-form-input
@@ -22,7 +22,7 @@
       controlName="email"
       [submitted]="submitted"
       [errors]="{
-       required: 'Email is required!',
+       requiredTrimmed: 'Email is required!',
        email: 'Please enter a valid email address!',
        emailTaken: 'Email is already taken!'
        }"

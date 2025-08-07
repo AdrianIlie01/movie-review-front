@@ -43,8 +43,8 @@ export class AddRoomPageComponent implements OnInit {
       type: [[], [
         // Validators.required,
       ]],
-      stream_url: ['', Validators.required],
-      release_year: ['', Validators.required],
+      stream_url: ['', this.formValidators.requiredTrimmed],
+      release_year: ['', this.formValidators.requiredTrimmed],
     })
   }
 

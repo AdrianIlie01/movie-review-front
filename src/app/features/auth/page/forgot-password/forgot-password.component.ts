@@ -24,7 +24,7 @@ export class ForgotPasswordComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.identifierForm = this.fb.group({
-      userIdentifier: ['', Validators.required],
+      userIdentifier: ['', this.formValidatorsService.requiredTrimmed],
     });
   }
 

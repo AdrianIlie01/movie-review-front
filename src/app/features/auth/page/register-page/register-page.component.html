@@ -13,7 +13,7 @@
       controlName="username"
       [submitted]="submitted"
       [errors]="{
-       required: 'Username is required!',
+       requiredTrimmed: 'Username is required!',
        minlength: 'Username must be at least 3 characters long!',
        usernameTaken: 'Username is already taken!'
        }"
@@ -26,7 +26,7 @@
       controlName="email"
       [submitted]="submitted"
       [errors]="{
-       required: 'Email is required!',
+       requiredTrimmed: 'Email is required!',
        email: 'Please enter a valid email address!',
        emailTaken: 'Email is already taken!'
        }"

@@ -37,14 +37,14 @@ export class RoomEditComponent implements OnInit {
 
     this.roomForm = this.fb.group({
       name: ['', {
-        validators: [Validators.required],
+        validators: [this.formValidators.requiredTrimmed],
         asyncValidators:
           [
             this.roomService.validateRoomNameEdit(this.roomId),
           ]
       }],      type: [[], []],
-      stream_url: ['', Validators.required],
-      release_year: ['', Validators.required],
+      stream_url: ['', this.formValidators.requiredTrimmed],
+      release_year: ['', this.formValidators.requiredTrimmed],
     });
 
     if (this.roomId) {
