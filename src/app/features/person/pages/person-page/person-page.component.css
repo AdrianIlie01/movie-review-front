@@ -147,7 +147,7 @@ h2 {
   position: relative;
   width: 100%;
   /*height: 100%;    !* Face carousel să ocupe tot containerul *!*/
-  height: 10rem;
+  /*height: 10rem;*/
   display: flex;
   align-items: center;
   justify-content: center;
