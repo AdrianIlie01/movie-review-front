@@ -7,6 +7,10 @@
     [formFunction]="onSubmit.bind(this)"
     [errorMessage]="errorMessage"
   >
+    <app-test-accounts
+      [form]="registerForm"
+    ></app-test-accounts>
+
     <app-form-input
       label="Username or Email"
       placeholder="username/email"
