@@ -1,0 +1,91 @@
+.demo-accounts {
+  display: block;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px var(--form-box-shadow);
+  background: var(--form-background, #f9f9f9);
+  text-align: center;
+  max-width: 400px;
+}
+
+ h3 {
+   margin-top: -1rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  /*color: var(--text-color);*/
+  text-align: center;
+  color: gold;
+}
+
+.accounts-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+ button {
+  margin: 0.3rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 15px;
+}
+
+ button:hover {
+  cursor: pointer;
+  background-color: #0056b3;
+  transform: translateY(-0.1rem);
+  transition: transform 0.5s ease;
+}
+
+.warning {
+  cursor: default;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 0.5rem;
+  border: 1px solid #ffeeba;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 1rem auto 1rem;
+  width: 85%;
+}
+
+@media (max-width: 470px) {
+  h3 {
+    font-size: 1.1rem;
+  }
+  .demo-accounts {
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  .accounts-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .accounts-list button {
+    /*width: 50%;*/
+  }
+
+  .warning {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+}
+
+.break-line {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+

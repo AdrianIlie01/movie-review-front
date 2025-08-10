@@ -1,0 +1,12 @@
+  <h3>Test Accounts</h3>
+  <div class="accounts-list">
+    <button *ngFor="let acc of accounts"
+            (click)="fillCredentials(acc.username, acc.password)">
+      <span class="icon">{{ acc.icon }}</span> {{ acc.role }}
+    </button>
+  </div>
+  <p class="warning">
+    ⚠ Email-related features (OTP, password and email reset) will not work for test accounts.
+  </p>
+
+<!--  <hr class="break-line">-->
