@@ -11,6 +11,7 @@ import {SharedModule} from "../../shared/shared.module";
 import {FormComponent} from '../../shared/components/form/form.component';
 import {FormInputComponent} from '../../shared/components/form-input/form-input.component';
 import { TwoFactorAuthComponent } from './page/two-factor-auth/two-factor-auth.component';
+import { TestAccountsComponent } from './components/test-accounts/test-accounts.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TwoFactorAuthComponent } from './page/two-factor-auth/two-factor-auth.c
     ForgotPasswordComponent,
     ResetForgottenPasswordComponent,
     TwoFactorAuthComponent,
+    TestAccountsComponent,
   ],
   imports: [
     CommonModule,
